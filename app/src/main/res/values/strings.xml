@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">GTT</string>
+    <string name="app_name_large">Gestión Trabajo Temporal</string>
+    <string name="action_settings">Settings</string>
+    <string name="dni_usuario">DNI Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="repetir_password">Repetir contraseña</string>
+    <string name="login">Login</string>
+    <string name="link_to_register">¿No estás registardo? Registrate aquí</string>
+    <string name="logo">Logo</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="email">Email</string>
+    <string name="telefono">Teléfono</string>
+    <string name="dni">Dni</string>
+    <string name="registrar">Registrar</string>
+    <string name="codigo_operario">Código de operario</string>
+    <string name="Confirmar_Password">Confirmar Password</string>
+    <string name="direccion">Dirección</string>
+    <string name="nss">Número Seguridad Social</string>
+    <string name="iniciarSesion">Iniciar sesión</string>
+    <string name="passwordOlvidada">¿Has olvidado tu contraseña?</string>
+
+</resources>

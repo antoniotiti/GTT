@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.antonio.gestiontrabajotemporal.ui.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dip">
+
+            <TextView
+                android:id="@+id/txt_CodigoOperario"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/codigo_operario"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_CodigoOperarioToLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editText_CodigoOperarioToLogin"
+                android:inputType="number">
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/txt_DniToRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/dni_usuario"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_DniToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:labelFor="@+id/editText_DniToRegister"/>
+
+
+            <TextView
+                android:id="@+id/txt_NombreToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/nombre"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_NombreToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:labelFor="@+id/editText_NombreToRegister" />
+
+            <TextView
+                android:id="@+id/txt_ApellidoToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/apellidos"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_ApellidoToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:labelFor="@+id/editText_ApellidoToRegister" />
+
+            <TextView
+                android:id="@+id/txt_FechaNacimientoToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/fecha_nacimiento"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_FechaNacimientoToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:labelFor="@+id/editText_FechaNacimientoToRegister" />
+
+            <TextView
+                android:id="@+id/txt_NSSToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/nss"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_NSSToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:labelFor="@+id/editText_NSSToRegister" />
+
+            <TextView
+                android:id="@+id/txt_DireccionToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/direccion"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_DireccionToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPostalAddress"
+                android:labelFor="@+id/editText_DireccionToRegister" />
+
+            <TextView
+                android:id="@+id/txt_TelefonoToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/telefono"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_TelefonoToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:labelFor="@+id/editText_TelefonoToRegister" />
+
+            <TextView
+                android:id="@+id/txt_EmailToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/email"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_EmailToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:labelFor="@+id/editText_EmailToRegister" />
+
+
+            <TextView
+                android:id="@+id/txt_PasswordToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/password"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_PasswordToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:labelFor="@+id/editText_PasswordToRegister" />
+
+            <TextView
+                android:id="@+id/txt_ConfirmarPasswordToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/Confirmar_Password"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/editText_ConfirmarPasswordToRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:labelFor="@+id/editText_ConfirmarPasswordToRegister" />
+
+            <Button
+                android:id="@+id/button_CreateAccount"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                android:text="@string/registrar" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
