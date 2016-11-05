@@ -6,6 +6,7 @@ import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,7 +27,7 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import java.io.File;
 import java.util.Calendar;
 
-import static com.example.antonio.gestiontrabajotemporal.ui.Validar.*;
+import static com.example.antonio.gestiontrabajotemporal.util.Validar.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         //Eliminar Tabla
         //getApplicationContext().deleteDatabase("Fichajes.db");
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         // get the Refferences of views
         txtRegister = (TextView) findViewById(R.id.txt_LinkToRegister);
         editTextCodigoOperario = (EditText) findViewById(R.id.editText_CodigoOperarioToLogin);
+
         editTextCodigoOperario.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
         });
+
         /*.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });*/
+
         editTextPassword = (EditText) findViewById(R.id.editText_PasswordToLogin);
         editTextPassword.addTextChangedListener(new TextWatcher() {
 
