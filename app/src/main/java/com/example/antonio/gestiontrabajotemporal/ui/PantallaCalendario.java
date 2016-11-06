@@ -4,13 +4,18 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.antonio.gestiontrabajotemporal.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -53,6 +58,9 @@ public class PantallaCalendario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_calendario);
 
+        setToolbar();// Añadir la Toolbar
+
+
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
         // Setup caldroid fragment
@@ -62,7 +70,7 @@ public class PantallaCalendario extends AppCompatActivity {
         // //////////////////////////////////////////////////////////////////////
         // **** This is to show customized fragment. If you want customized
         // version, uncomment below line ****
-//		 caldroidFragment = new PantallaCalendarioFragment();
+        //caldroidFragment = new PantallaCalendarioFragment();
 
         // Setup arguments
 
@@ -260,6 +268,15 @@ public class PantallaCalendario extends AppCompatActivity {
     }
 
     /**
+     *
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+
+    /**
      * Save current states of the Caldroid here
      */
     @Override
@@ -275,6 +292,43 @@ public class PantallaCalendario extends AppCompatActivity {
             dialogCaldroidFragment.saveStatesToKey(outState,
                     "DIALOG_CALDROID_SAVED_STATE");
         }
+    }
+
+    /**
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    /**
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_settings:
+                showSnackBar("Se abren los ajustes");
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Proyecta una {@link Snackbar} con el string usado
+     *
+     * @param msg Mensaje
+     */
+    private void showSnackBar(String msg) {
+        Snackbar
+                .make(findViewById(R.id.coordinator), msg, Snackbar.LENGTH_LONG)
+                .show();
     }
 
 }

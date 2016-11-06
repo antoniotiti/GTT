@@ -16,13 +16,18 @@
     <string name="dni">Dni</string>
     <string name="registrar">Registrar</string>
     <string name="codigo_operario">Código de operario</string>
-    <string name="Confirmar_Password">Confirmar Password</string>
+    <string name="confirmar_Password">Confirmar Contraseña</string>
     <string name="direccion">Dirección</string>
     <string name="nss">Número Seguridad Social</string>
-    <string name="iniciarSesion">Iniciar sesión</string>
+    <string name="titulo_iniciar_sesion">Iniciar sesión</string>
+    <string name="titulo_registro">Regístrate</string>
     <string name="passwordOlvidada">¿Has olvidado tu contraseña?</string>
     <string name="customize">Customize</string>
     <string name="show_dialog">Show Dialog</string>
     <string name="undo">Undo</string>
+    <string name="action_search">Buscar</string>
+    <string name="crear_turno">Crear Turno</string>
+    <string name="crear_puesto">Crear Puesto</string>
+    <string name="crear_calendario">Crear nuvo calendario</string>
 
 </resources>

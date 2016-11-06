@@ -5,10 +5,13 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+
 
     <style name="colorEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">#FF757575</item>

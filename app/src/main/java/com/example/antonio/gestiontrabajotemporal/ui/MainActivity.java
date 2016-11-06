@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +28,12 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import java.io.File;
 import java.util.Calendar;
 
-import static com.example.antonio.gestiontrabajotemporal.util.Validar.*;
+import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarCodigoOperario;
+import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarPassword;
 
+/**
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     Button btnLogin;
@@ -38,11 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
     OperacionesBaseDatos datos;
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setToolbar();// Añadir la Toolbar
 
 
         //Eliminar Tabla
@@ -66,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                codigoOperarioValidado=validarCodigoOperario(getApplicationContext(), editTextCodigoOperario);
+                codigoOperarioValidado = validarCodigoOperario(getApplicationContext(), editTextCodigoOperario);
             }
 
             @Override
@@ -93,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                passwordValidado= validarPassword(getApplicationContext(), editTextPassword);
+                passwordValidado = validarPassword(getApplicationContext(), editTextPassword);
             }
 
             @Override
@@ -115,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 editTextCodigoOperario.setText("8246");
                 editTextPassword.setText("Bart16tyti");
 
-               // boolean codigoOperarioValidado, passwordValidado;
+                // boolean codigoOperarioValidado, passwordValidado;
                 // get The User name and Password
                 String codigoOperario = editTextCodigoOperario.getText().toString();
                 String password = editTextPassword.getText().toString();
@@ -123,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 //codigoOperarioValidado = validarCodigoOperario(getApplicationContext(), editTextCodigoOperario);
 
                 //editTextCodigoOperario.setBackgroundColor(Color.WHITE);
-               // passwordValidado = validarPassword(getApplicationContext(), editTextPassword);
+                // passwordValidado = validarPassword(getApplicationContext(), editTextPassword);
                 //editTextPassword.setBackgroundColor(Color.WHITE);
 
                 if ((validarCodigoOperario(getApplicationContext(), editTextCodigoOperario)) && (validarPassword(getApplicationContext(), editTextPassword))) {
@@ -175,6 +184,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Inicio);
+        setSupportActionBar(toolbar);
+    }
+
+    /**
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_inicio, menu);
+        return true;
+    }
+
+    /**
+     * @return
+     */
     public boolean checkDataBase() {
         File fileDB;
         fileDB = getApplicationContext().getDatabasePath("Fichajes.db");
@@ -182,6 +212,9 @@ public class MainActivity extends AppCompatActivity {
         return (checkDB);
     }
 
+    /**
+     *
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -189,6 +222,10 @@ public class MainActivity extends AppCompatActivity {
         datos.close();
     }
 
+
+    /**
+     *
+     */
     public class TareaInsertarDatosPredeterminados extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
