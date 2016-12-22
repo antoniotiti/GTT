@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.antonio.prueba2.MainActivity">
+    tools:context="com.example.antonio.gestiontrabajotemporal.ui.PantallaCalendario">
     <item
         android:id="@+id/crear_turno"
         android:orderInCategory="100"

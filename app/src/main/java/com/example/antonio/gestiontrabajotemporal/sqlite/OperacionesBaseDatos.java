@@ -257,11 +257,11 @@ public final class OperacionesBaseDatos {
         valores.put(Turnos.PRECIO_HORA_NOCTURNAS, turno.precioHoraNocturnas);
         valores.put(Turnos.PRECIO_HORA_EXTRA, turno.precioHoraExtra);
         valores.put(Turnos.AVISO, turno.aviso);
-        valores.put(Turnos.SONIDO_ALARMA, turno.sonidoAlarma);
         valores.put(Turnos.AVISO_DIA_ANTES, turno.avisoDiaAntes);
         valores.put(Turnos.HORA_AVISO, turno.horaAviso);
         valores.put(Turnos.MODO_TELEFONO, turno.modoTelefono);
-
+        valores.put(Turnos.COLOR_FONDO, turno.colorFondo);
+        valores.put(Turnos.COLOR_TEXTO, turno.colorTexto);
 
         db.insertOrThrow(Tablas.TURNO, null, valores);
 
@@ -285,10 +285,11 @@ public final class OperacionesBaseDatos {
         valores.put(Turnos.PRECIO_HORA_NOCTURNAS, turno.precioHoraNocturnas);
         valores.put(Turnos.PRECIO_HORA_EXTRA, turno.precioHoraExtra);
         valores.put(Turnos.AVISO, turno.aviso);
-        valores.put(Turnos.SONIDO_ALARMA, turno.sonidoAlarma);
         valores.put(Turnos.AVISO_DIA_ANTES, turno.avisoDiaAntes);
         valores.put(Turnos.HORA_AVISO, turno.horaAviso);
         valores.put(Turnos.MODO_TELEFONO, turno.modoTelefono);
+        valores.put(Turnos.COLOR_FONDO, turno.colorFondo);
+        valores.put(Turnos.COLOR_TEXTO, turno.colorTexto);
 
         String whereClause = String.format("%s=?", Turnos.ID);
         String[] whereArgs = {turno.idTurno};

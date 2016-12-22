@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:bottomLeftRadius="10dp"
+                android:topLeftRadius="10dp" />
+            <solid android:color="@color/color_radio_button_on" />
+        </shape>
+    </item>
+    <item
+        android:bottom="7dp"
+        android:drawable="@drawable/wifi"
+        android:left="7dp"
+        android:right="7dp"
+        android:top="7dp" />
+</layer-list>

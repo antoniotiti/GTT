@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Visibilidad de Miniaturas de las Entradas -->
+    <!-- Cantidad máxima de entradas -->
+    <ListPreference
+        android:key="primerDiaSemana"
+        android:title="@string/pref_primer_dia_semana"
+        android:defaultValue="7"
+        android:entries="@array/pref_primer_dia_semana_entradas"
+        android:entryValues="@array/pref_primer_dia_semana_valores"
+        android:summary="@string/pref_primer_dia_semana_resumen" />
+
+</PreferenceScreen>

@@ -43,10 +43,11 @@ public class NombresColumnasBaseDatos {
         String PRECIO_HORA_NOCTURNAS = "precioHoraNocturnas";
         String PRECIO_HORA_EXTRA = "precioHoraExtra";
         String AVISO = "aviso";
-        String SONIDO_ALARMA = "sonidoAlarma";
         String AVISO_DIA_ANTES = "avisoDiaAntes";
         String HORA_AVISO = "horaAviso";
         String MODO_TELEFONO = "modoTelefono";
+        String COLOR_FONDO = "colorFondo";
+        String COLOR_TEXTO = "colorTexto";
     }
 
     interface ColumnasFichaje {

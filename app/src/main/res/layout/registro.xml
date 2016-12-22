@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contenedor"
+    android:id="@+id/contenedorRegistro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -17,7 +17,7 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ScrollView
-        android:id="@+id/scroll"
+        android:id="@+id/layout_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -25,7 +25,7 @@
         <!--android:background="@android:color/background_light">-->
 
         <LinearLayout
-            android:id="@+id/contenedor_scroll"
+            android:id="@+id/layout_contenedor_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -79,11 +79,11 @@
                     android:drawableStart="@drawable/account_blue"
                     android:hint="@string/dni"
                     android:imeOptions="flagNoExtractUi"
-                    android:inputType="text"
                     android:labelFor="@+id/editText_DniToRegister"
                     android:maxLength="9"
                     android:maxLines="1"
-                    android:theme="@style/colorEditText" />
+                    android:theme="@style/colorEditText"
+                    android:inputType="textVisiblePassword" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -161,11 +161,11 @@
                     android:drawableStart="@drawable/account_blue"
                     android:hint="@string/nss"
                     android:imeOptions="flagNoExtractUi"
-                    android:inputType="text"
                     android:labelFor="@+id/editText_NSSToRegister"
                     android:maxLines="1"
-                    android:maxLength="10"
-                    android:theme="@style/colorEditText" />
+                    android:maxLength="12"
+                    android:theme="@style/colorEditText"
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -263,7 +263,7 @@
                     android:drawableStart="@drawable/account_blue"
                     android:hint="@string/confirmar_Password"
                     android:imeOptions="flagNoExtractUi"
-                    android:inputType="phone"
+                    android:inputType="textPassword"
                     android:labelFor="@+id/editText_ConfirmarPasswordToRegister"
                     android:maxLines="1"
                     android:theme="@style/colorEditText" />

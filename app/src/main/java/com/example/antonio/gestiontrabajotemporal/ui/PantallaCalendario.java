@@ -1,9 +1,12 @@
 package com.example.antonio.gestiontrabajotemporal.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -59,18 +62,26 @@ public class PantallaCalendario extends AppCompatActivity {
         setContentView(R.layout.pantalla_calendario);
 
         setToolbar();// Añadir la Toolbar
+        //Recibimos el código de usuario y password de la página de logeo.
 
+        Bundle bundle = getIntent().getExtras();
+        String codigoOperario = getIntent().getExtras().getString("codigoOperario");
+        String password = getIntent().getExtras().getString("password");
+
+        //Obtenemos las preferencias.
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean modoCompacto = sharedPref.getBoolean("pref_switch_modo_compacto", false);
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
         // Setup caldroid fragment
         // **** If you want normal CaldroidFragment, use below line ****
-        caldroidFragment = new CaldroidFragment();
+       // caldroidFragment = new CaldroidFragment();
 
         // //////////////////////////////////////////////////////////////////////
-        // **** This is to show customized fragment. If you want customized
-        // version, uncomment below line ****
-        //caldroidFragment = new PantallaCalendarioFragment();
+        // **** This is to show customized fragment. If you want customized version, uncomment below line ****
+        caldroidFragment = new PantallaCalendarioFragment();
 
         // Setup arguments
 
@@ -88,15 +99,14 @@ public class PantallaCalendario extends AppCompatActivity {
             args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
             args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
 
-            // Uncomment this to customize startDayOfWeek
-            // args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
-            // CaldroidFragment.TUESDAY); // Tuesday
+            // Día que comienza la semana.
+            args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY); //
 
-            // Uncomment this line to use Caldroid in compact mode
-            // args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
+            // Activar desactivar modo compacto.
+             args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, !modoCompacto);
 
-            // Uncomment this line to use dark theme
-//            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+            // Activar dark theme
+           //args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
 
             caldroidFragment.setArguments(args);
         }
@@ -267,11 +277,27 @@ public class PantallaCalendario extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        /*// Actualizar visibilidad de miniaturas
+        boolean miniaturasPref = sharedPref.getBoolean("miniaturas", true);
+        adapter.setConMiniaturas(miniaturasPref);
+
+        // Actualizar cantidad de items
+        cantidadItems = Integer.parseInt(sharedPref.getString("numArticulos", "8"));
+        updateAdapter(ConjuntoListas.randomList(cantidadItems));*/
+
+    }
+
     /**
      *
      */
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }
 
@@ -312,8 +338,13 @@ public class PantallaCalendario extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
+            case R.id.crear_turno:
+                //showSnackBar("Se abren los ajustes");
+                startActivity(new Intent(this, CrearTurno.class));
+                return true;
             case R.id.action_settings:
-                showSnackBar("Se abren los ajustes");
+                //showSnackBar("Se abren los ajustes");
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
         }
 
@@ -327,7 +358,7 @@ public class PantallaCalendario extends AppCompatActivity {
      */
     private void showSnackBar(String msg) {
         Snackbar
-                .make(findViewById(R.id.coordinator), msg, Snackbar.LENGTH_LONG)
+                .make(findViewById(R.id.contenedorRegistro), msg, Snackbar.LENGTH_LONG)
                 .show();
     }
 

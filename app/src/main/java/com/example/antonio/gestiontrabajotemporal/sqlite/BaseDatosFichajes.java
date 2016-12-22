@@ -94,14 +94,15 @@ public class BaseDatosFichajes extends SQLiteOpenHelper {
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, " +
                         "%s TEXT NOT NULL, %s INTEGER NOT NULL, %s TEXT, %s TEXT, %s REAL NOT NULL," +
-                        "%s REAL NOT NULL, %s REAL NOT NULL, %s REAL NOT NULL, %s REAL NOT NULL," +
-                        "%s INTEGER NOT NULL, %s TEXT, %s INTEGER NOT NULL, %s TEXT, %s TEXT)",
+                        "%s REAL, %s REAL NOT NULL, %s REAL, %s REAL," +
+                        "%s INTEGER NOT NULL, %s INTEGER NOT NULL, %s TEXT, %s TEXT, " +
+                        "%s INTEGER, %s INTEGER)",
                 Tablas.TURNO, Turnos.ID, Turnos.NOMBRE, Turnos.ABREVIATURA_NOMBRE_TURNO,
                 Turnos.HORA_INICIO_1, Turnos.HORA_FIN_1, Turnos.TURNO_PARTIDO, Turnos.HORA_INICIO_2,
                 Turnos.HORA_FIN_2, Turnos.HORAS_TRABAJADAS, Turnos.HORAS_TRABAJADAS_NOCTURNAS,
                 Turnos.PRECIO_HORA, Turnos.PRECIO_HORA_NOCTURNAS, Turnos.PRECIO_HORA_EXTRA,
-                Turnos.AVISO, Turnos.SONIDO_ALARMA, Turnos.AVISO_DIA_ANTES, Turnos.HORA_AVISO,
-                Turnos.MODO_TELEFONO));
+                Turnos.AVISO, Turnos.AVISO_DIA_ANTES, Turnos.HORA_AVISO,
+                Turnos.MODO_TELEFONO, Turnos.COLOR_FONDO,Turnos.COLOR_TEXTO));
         // Crear tabla Fichajes.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY %s," +
                         "%s TEXT UNIQUE NOT NULL, %s INTEGER NOT NULL %s , %s INTEGER NOT NULL %s," +

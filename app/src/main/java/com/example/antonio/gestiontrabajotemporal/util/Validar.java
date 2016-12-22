@@ -1,11 +1,8 @@
 package com.example.antonio.gestiontrabajotemporal.util;
 
 
-import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +13,8 @@ import java.util.regex.Pattern;
 public class Validar {
 
     private static final int MAX_LENGHT_TELEFONO = 9;
+    private static final int MAX_LENGHT_CODIGO_OPERARIO = 4;
+    private static final String INICIO_CODIGO_OPERARIO = "8";
 
 
     /**
@@ -25,25 +24,21 @@ public class Validar {
      * @param eTCodigoOperario Código del Operario introducido por el usuario a validar.
      * @return Si el código de operario introducido es correcto o no lo es.
      */
-    public static boolean validarCodigoOperario(Context context, EditText eTCodigoOperario) {
+    public static boolean validarCodigoOperario(EditText eTCodigoOperario) {
 
-        String codigoOperario= eTCodigoOperario.getText().toString();
+        String codigoOperario = eTCodigoOperario.getText().toString();
 
         boolean validado = false;
         try {
-            if (codigoOperario.length() == 4 && codigoOperario.startsWith("8")) {
+            if (codigoOperario.length() == MAX_LENGHT_CODIGO_OPERARIO && codigoOperario.startsWith(INICIO_CODIGO_OPERARIO)) {
                 Integer.parseInt(codigoOperario);
                 validado = true;
                 eTCodigoOperario.setError(null);
-                //eTCodigoOperario.setBackgroundColor(Color.WHITE);
             } else {
-                //eTCodigoOperario.requestFocus();
                 eTCodigoOperario.setError("Código de operario no válido");
-                //Toast.makeText(context, "Código de operario no válido", Toast.LENGTH_LONG).show();
-                Log.d("Error", "Error. El Código de Operario debe tener " + 4 + " dígitos, comenzando por 8.");
             }
         } catch (NumberFormatException e) {
-            Log.d("Error", "Error. Debe introducir el Código de Operario compuesto por cuatro dígitos.");
+            eTCodigoOperario.setError("Código de operario no válido");
         }
         return validado;
     }
@@ -57,87 +52,157 @@ public class Validar {
      * @param eTPassword Password introducido por el usuario a validar.
      * @return Si el passwordintroducido es correcto o no lo es.
      */
-    public static boolean validarPassword(Context context, EditText eTPassword) {
+    public static boolean validarPassword(EditText eTPassword) {
 
-        String password= eTPassword.getText().toString();
-        boolean correcto = false;
+        String password = eTPassword.getText().toString();
+        boolean validado = false;
 
         Pattern p = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
         Matcher m = p.matcher(password);
         if ((m.matches())) {
-            correcto = true;
-            eTPassword.setError(null);
-            //eTPassword.setBackgroundColor(Color.WHITE);
-        }else{
-            //eTPassword.requestFocus();
-            eTPassword.setError("Password no válido");
-            //eTPassword.setBackgroundColor(Color.RED);
-            //Toast.makeText(context, "Password no válido", Toast.LENGTH_LONG).show();
-            Log.d("Error","Error, password no válido");
-        }
-        return correcto;
-    }
-
-    /**
-     * Método que se encarga de comprobar que el nombre del titular de la cuenta
-     * sea correcto, (que no sea null o que no este vacio).
-     *
-     * @param nombreTitularCuenta El nombre del titular de la cuenta
-     * @return Si el nombre del titular de la cuenta es corrcto o no.
-     */
-    public static boolean validarDatosCliente(String nombreTitularCuenta) {
-        return ((nombreTitularCuenta != null) && (!nombreTitularCuenta.equals("")));
-    }
-
-    /**
-     * Método que se encarga de comprobar que la fecha introducida por el
-     * usuario sea correcta y en el siguiente formato: dd-MM-yyyy.
-     *
-     * @param fecha Fecha introducida por el usuario.
-     * @return Si la fecha es correcta o no lo es.
-     */
-    public static boolean validarFecha(String fecha) {
-
-        boolean validado = false;
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-        formateador.setLenient(false);
-        try {
-            Date fechacorrecta = formateador.parse(fecha);
             validado = true;
-        } catch (ParseException e) {
-            // ES.msgErrln("La Fecha introducida no es válida. Debe introducirla en este formato: dd-MM-yyyy");
+            eTPassword.setError(null);
+        } else {
+            eTPassword.setError("Password no válido");
         }
         return validado;
     }
 
     /**
+     * @param eTTexto
+     * @return
+     */
+    public static boolean validarEditTextVacio(EditText eTTexto) {
+
+        String texto = eTTexto.getText().toString();
+        boolean validado = false;
+
+        if (!texto.isEmpty()){
+            validado=true;
+            eTTexto.setError(null);
+        } else{
+            eTTexto.setError("Campo vacío");
+        }
+        return validado;
+    }
+
+
+    /**
+     * Método que se encarga de comprobar que la fecha introducida por el
+     * usuario sea correcta y en el siguiente formato: dd-MM-yyyy.
+     *
+     * @param eTTfecha Fecha introducida por el usuario.
+     * @return Si la fecha es correcta o no lo es.
+     */
+    public static boolean validarFecha(EditText eTTfecha) {
+
+        String fecha = eTTfecha.getText().toString();
+
+        boolean validado = false;
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        formateador.setLenient(false);
+        try {
+            //TODO que coja el año bien
+            Date fechacorrecta = formateador.parse(fecha);
+            validado = true;
+            eTTfecha.setError(null);
+        } catch (ParseException e) {
+            eTTfecha.setError("Formato fecha correcto dd/MM/yyyy");
+        }
+        return validado;
+    }
+
+    /**
+     *
+     * @param eTNSS
+     * @return
+     */
+    public static boolean validarNSS(EditText eTNSS) {
+
+        String nSS = eTNSS.getText().toString();
+
+        long resultado, controlObtenido;
+        boolean validado = false;
+        if (nSS.length()==12) {
+
+            int provincia = Integer.valueOf(nSS.substring(0,2));
+            int numero = Integer.valueOf(nSS.substring(2,10));
+            int control = Integer.valueOf(nSS.substring(10));
+
+            if (numero < 10000000) {
+                resultado= (numero+provincia)*10000000;
+            } else {
+                resultado= Long.valueOf(nSS.substring(0,10));
+            }
+            controlObtenido = (resultado % 97);
+
+            if (control ==controlObtenido) {
+                validado = true;
+                eTNSS.setError(null);
+            } else {
+                eTNSS.setError("EL NSS no es válido.");
+            }
+        } else {
+            eTNSS.setError("El NSS debe tener 12 dígitos");
+        }
+        return validado;
+    }
+
+
+    /**
      * Método que se encarga de comprobar que el número de teléfono introducido
      * por el usuario sea correcto.
      *
-     * @param telefono Número de teléfono introducido por el usuario.
+     * @param eTTelefono Número de teléfono introducido por el usuario.
      * @return Si el número de teléfono es correcto o no lo es.
      */
-    public static boolean validarTelefono(String telefono) {
+    public static boolean validarTelefono(EditText eTTelefono) {
+
+        String telefono = eTTelefono.getText().toString();
 
         boolean validado = false;
         if ((telefono.length() == MAX_LENGHT_TELEFONO) && ((telefono.charAt(0) == '6')
                 || (telefono.charAt(0) == '7') || (telefono.charAt(0) == '8')
                 || (telefono.charAt(0) == '9'))) {
             validado = true;
+            eTTelefono.setError(null);
         } else {
-            //ES.msgErrln("El teléfono introducido no es válido.");
+            eTTelefono.setError("El teléfono introducido no es válido.");
         }
         return validado;
     }
 
     /**
-     * Método que se encarga de comprobar que el NIE o NIF introducido por el
-     * usuario sea correcto.
-     *
-     * @param nieONif NIE o NIF introducido por el usuario.
-     * @return Si el NIE o NIFes correcto o no lo es.
+     * Método que se encarga de comprobar que el email introducido por el usuario sea correcto.
+     * @param eTEmail Email introducido por el usuario.
+     * @returnSi el email es correcto o no
      */
-    public static boolean validarNieONif(String nieONif) {
+    public static boolean validarEmail(EditText eTEmail) {
+
+        String email = eTEmail.getText().toString();
+
+        boolean validado = false;
+        Pattern p = android.util.Patterns.EMAIL_ADDRESS;
+        Matcher m = p.matcher(email);
+        if ((m.matches())) {
+            validado = true;
+            eTEmail.setError(null);
+        } else {
+            eTEmail.setError("Email no válido");
+        }
+        return validado;
+    }
+
+    /**
+     * Método que se encarga de validar el NIE o NIF introducido por el
+     * usuario.
+     *
+     * @param eTNieONif NIE o NIF introducido por el usuario.
+     * @return Si el NIE o NIF es correcto o no lo es.
+     */
+    public static boolean validarNieONif(EditText eTNieONif) {
+
+        String nieONif = eTNieONif.getText().toString();
 
         int resultado;
         boolean validado = false;
@@ -152,10 +217,12 @@ public class Validar {
             if ((obtenerLetra(resultado).equalsIgnoreCase(letra))) {
                 validado = true;
             } else {
-                // ES.msgErrln("La letra del NIE o NIF no es válida.");
+                eTNieONif.setError("La letra del NIE o NIF no es válida.");
+                Log.d("Error", "Error. La letra del NIE o NIF no es válida.");
             }
         } else {
-            //ES.msgErrln("El NIE o NIF no es válido.");
+            eTNieONif.setError("El NIE o NIF no es válido.");
+            Log.d("Error", "Error. El NIE o NIF no es válido..");
         }
         return validado;
     }
@@ -168,13 +235,13 @@ public class Validar {
      * @return Si el NIE o NIF es correcto o no lo es.
      */
     private static boolean esCorrecto(String nieONif) {
-        boolean correcto = false;
+        boolean validado = false;
         Pattern p = Pattern.compile("([0-9]{8}[a-zA-Z])|([XxYyZz][0-9]{7}[a-zA-Z])");
         Matcher m = p.matcher(nieONif);
         if ((nieONif.length() == 9) && (m.matches())) {
-            correcto = true;
+            validado = true;
         }
-        return correcto;
+        return validado;
     }
 
     /**

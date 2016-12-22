@@ -3,44 +3,12 @@ package com.example.antonio.gestiontrabajotemporal.modelo;
 
 public class Turno {
 
-    public String idTurno;
+    public String idTurno, nombreTurno, abreviaturaNombreTurno, horaInicio1, horaFin1, horaInicio2, horaFin2, horaAviso, modoTelefono;
+    public int turnoPartido, aviso, avisoDiaAntes, colorFondo, colorTexto;
+    public float horasTrabajadas, horasTrabajadasNocturnas;
+    public double precioHora, precioHoraNocturnas, precioHoraExtra;
 
-    public String nombreTurno;
-
-    public String abreviaturaNombreTurno;
-
-    public String horaInicio1;
-
-    public String horaFin1;
-
-    public int turnoPartido;
-
-    public String horaInicio2;
-
-    public String horaFin2;
-
-    public float horasTrabajadas;
-
-    public float horasTrabajadasNocturnas;
-
-    public double precioHora;
-
-    public double precioHoraNocturnas;
-
-    public double precioHoraExtra;
-
-    public int aviso;
-
-    public String sonidoAlarma;
-
-    public int avisoDiaAntes;
-
-    public String horaAviso;
-
-    public String modoTelefono;
-
-
-    public Turno(String idTurno, String nombreTurno, String abreviaturaNombreTurno, String horaInicio1, String horaFin1, int turnoPartido, String horaInicio2, String horaFin2, float horasTrabajadas, float horasTrabajadasNocturnas, double precioHora, double precioHoraNocturnas, double precioHoraExtra, int aviso, String sonidoAlarma, int avisoDiaAntes, String horaAviso, String modoTelefono) {
+    public Turno(String idTurno, String nombreTurno, String abreviaturaNombreTurno, String horaInicio1, String horaFin1, int turnoPartido, String horaInicio2, String horaFin2, float horasTrabajadas, float horasTrabajadasNocturnas, double precioHora, double precioHoraNocturnas, double precioHoraExtra, int aviso, int avisoDiaAntes, String horaAviso, String modoTelefono, int colorFondo, int colorTexto) {
         this.idTurno = idTurno;
         this.nombreTurno = nombreTurno;
         this.abreviaturaNombreTurno = abreviaturaNombreTurno;
@@ -55,10 +23,33 @@ public class Turno {
         this.precioHoraNocturnas = precioHoraNocturnas;
         this.precioHoraExtra = precioHoraExtra;
         this.aviso = aviso;
-        this.sonidoAlarma = sonidoAlarma;
         this.avisoDiaAntes = avisoDiaAntes;
         this.horaAviso = horaAviso;
         this.modoTelefono = modoTelefono;
+        this.colorFondo = colorFondo;
+        this.colorTexto = colorTexto;
+    }
+
+    public Turno(String nombreTurno, String abreviaturaNombreTurno, String horaInicio1, String horaFin1, int turnoPartido, String horaInicio2, String horaFin2, float horasTrabajadas, float horasTrabajadasNocturnas, double precioHora, double precioHoraNocturnas, double precioHoraExtra, int aviso, int avisoDiaAntes, String horaAviso, String modoTelefono, int colorFondo, int colorTexto) {
+        this.idTurno = null;
+        this.nombreTurno = nombreTurno;
+        this.abreviaturaNombreTurno = abreviaturaNombreTurno;
+        this.horaInicio1 = horaInicio1;
+        this.horaFin1 = horaFin1;
+        this.turnoPartido = turnoPartido;
+        this.horaInicio2 = horaInicio2;
+        this.horaFin2 = horaFin2;
+        this.horasTrabajadas = horasTrabajadas;
+        this.horasTrabajadasNocturnas = horasTrabajadasNocturnas;
+        this.precioHora = precioHora;
+        this.precioHoraNocturnas = precioHoraNocturnas;
+        this.precioHoraExtra = precioHoraExtra;
+        this.aviso = aviso;
+        this.avisoDiaAntes = avisoDiaAntes;
+        this.horaAviso = horaAviso;
+        this.modoTelefono = modoTelefono;
+        this.colorFondo = colorFondo;
+        this.colorTexto = colorTexto;
     }
 
     public String getIdTurno() {
@@ -173,14 +164,6 @@ public class Turno {
         this.aviso = aviso;
     }
 
-    public String getSonidoAlarma() {
-        return sonidoAlarma;
-    }
-
-    public void setSonidoAlarma(String sonidoAlarma) {
-        this.sonidoAlarma = sonidoAlarma;
-    }
-
     public int getAvisoDiaAntes() {
         return avisoDiaAntes;
     }
@@ -205,10 +188,26 @@ public class Turno {
         this.modoTelefono = modoTelefono;
     }
 
+    public int getColorFondo() {
+        return colorFondo;
+    }
+
+    public void setColorFondo(int colorFondo) {
+        this.colorFondo = colorFondo;
+    }
+
+    public int getColorTexto() {
+        return colorTexto;
+    }
+
+    public void setColorTexto(int colorTexto) {
+        this.colorTexto = colorTexto;
+    }
+
     @Override
     public String toString() {
         return "Turno{" +
-                "idTurno=" + idTurno +
+                "idTurno='" + idTurno + '\'' +
                 ", nombreTurno='" + nombreTurno + '\'' +
                 ", abreviaturaNombreTurno='" + abreviaturaNombreTurno + '\'' +
                 ", horaInicio1='" + horaInicio1 + '\'' +
@@ -222,10 +221,11 @@ public class Turno {
                 ", precioHoraNocturnas=" + precioHoraNocturnas +
                 ", precioHoraExtra=" + precioHoraExtra +
                 ", aviso=" + aviso +
-                ", sonidoAlarma='" + sonidoAlarma + '\'' +
                 ", avisoDiaAntes=" + avisoDiaAntes +
                 ", horaAviso='" + horaAviso + '\'' +
                 ", modoTelefono='" + modoTelefono + '\'' +
+                ", colorFondo='" + colorFondo + '\'' +
+                ", colorTexto='" + colorTexto + '\'' +
                 '}';
     }
 }
