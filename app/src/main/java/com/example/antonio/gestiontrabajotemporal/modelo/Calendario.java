@@ -30,7 +30,7 @@ public class Calendario {
     @Override
     public String toString() {
         return "Calendario{" +
-                "idCalendario=" + idCalendario +
+                "idTurno=" + idCalendario +
                 ", nombreCalendario='" + nombreCalendario + '\'' +
                 '}';
     }

@@ -33,16 +33,16 @@ public class BaseDatosFichajes extends SQLiteOpenHelper {
 
     interface Referencias {
 
-        String ID_CALENDARIO = String.format("REFERENCES %s(%s)",
+        String ID_CALENDARIO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
                 Tablas.CALENDARIO, Calendarios.ID);
 
-        String ID_PUESTO = String.format("REFERENCES %s(%s)",
+        String ID_PUESTO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
                 Tablas.PUESTO, Puestos.ID);
 
         String ID_OPERARIO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
                 Tablas.OPERARIO, Operarios.ID);
 
-        String ID_TURNO = String.format("REFERENCES %s(%s)",
+        String ID_TURNO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
                 Tablas.TURNO, Turnos.ID);
 
     }
@@ -75,39 +75,43 @@ public class BaseDatosFichajes extends SQLiteOpenHelper {
 
         // Crear tabla Calendarios.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT NOT NULL UNIQUE)",
-                Tablas.CALENDARIO, Calendarios.ID, Calendarios.NOMBRE));
+                        "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL UNIQUE)",
+                Tablas.CALENDARIO, BaseColumns._ID, Calendarios.ID, Calendarios.NOMBRE));
+
         // Crear tabla Puestos.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT NOT NULL UNIQUE)",
-                Tablas.PUESTO, Puestos.ID, Puestos.NOMBRE));
+                        "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL UNIQUE)",
+                Tablas.PUESTO, BaseColumns._ID, Puestos.ID, Puestos.NOMBRE));
+
         //Crear tabla Operarios.
-        db.execSQL(String.format("CREATE TABLE %s (%s TEXT PRIMARY KEY," +
-                        "%s TEXT NOT NULL UNIQUE, %s TEXT NOT NULL, %s TEXT NOT NULL," +
-                        "%s TEXT, %s TEXT NOT NULL, %s DATETIME NOT NULL, %s TEXT NOT NULL," +
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "%s TEXT NOT NULL UNIQUE, %s TEXT NOT NULL UNIQUE, %s TEXT NOT NULL, " +
+                        "%s TEXT NOT NULL, %s TEXT, %s TEXT NOT NULL, %s DATETIME NOT NULL, %s TEXT NOT NULL," +
                         "%s TEXT NOT NULL, %s DATETIME, %s TEXT NOT NULL, %s TEXT NOT NULL)",
-                Tablas.OPERARIO, Operarios.ID, Operarios.DNI, Operarios.NOMBRE,
+                Tablas.OPERARIO, BaseColumns._ID, Operarios.ID, Operarios.DNI, Operarios.NOMBRE,
                 Operarios.APELLIDOS, Operarios.FOTO, Operarios.DIRECCION, Operarios.FECHA_NACIMIENTO,
                 Operarios.TELEFONO, Operarios.EMAIL, Operarios.FECHA_INICIO, Operarios.NUMERO_S_S,
                 Operarios.PASSWORD));
+
         //Crear tabla Turnos.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, " +
+                        "%s TEXT UNIQUE NOT NULL, %s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, " +
                         "%s TEXT NOT NULL, %s INTEGER NOT NULL, %s TEXT, %s TEXT, %s REAL NOT NULL," +
                         "%s REAL, %s REAL NOT NULL, %s REAL, %s REAL," +
                         "%s INTEGER NOT NULL, %s INTEGER NOT NULL, %s TEXT, %s TEXT, " +
                         "%s INTEGER, %s INTEGER)",
-                Tablas.TURNO, Turnos.ID, Turnos.NOMBRE, Turnos.ABREVIATURA_NOMBRE_TURNO,
+                Tablas.TURNO, BaseColumns._ID, Turnos.ID, Turnos.NOMBRE, Turnos.ABREVIATURA_NOMBRE_TURNO,
                 Turnos.HORA_INICIO_1, Turnos.HORA_FIN_1, Turnos.TURNO_PARTIDO, Turnos.HORA_INICIO_2,
                 Turnos.HORA_FIN_2, Turnos.HORAS_TRABAJADAS, Turnos.HORAS_TRABAJADAS_NOCTURNAS,
                 Turnos.PRECIO_HORA, Turnos.PRECIO_HORA_NOCTURNAS, Turnos.PRECIO_HORA_EXTRA,
                 Turnos.AVISO, Turnos.AVISO_DIA_ANTES, Turnos.HORA_AVISO,
-                Turnos.MODO_TELEFONO, Turnos.COLOR_FONDO,Turnos.COLOR_TEXTO));
+                Turnos.MODO_TELEFONO, Turnos.COLOR_FONDO, Turnos.COLOR_TEXTO));
+
         // Crear tabla Fichajes.
-        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY %s," +
-                        "%s TEXT UNIQUE NOT NULL, %s INTEGER NOT NULL %s , %s INTEGER NOT NULL %s," +
-                        "%s INTEGER NOT NULL %s , %s REAL)",
-                Tablas.FICHAJE, Fichajes.ID_OPERARIO, Referencias.ID_OPERARIO, Fichajes.FECHA,
+        db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL %s," +
+                        "%s TEXT NOT NULL, %s TEXT NOT NULL %s , %s TEXT NOT NULL %s," +
+                        "%s TEXT NOT NULL %s , %s REAL)",
+                Tablas.FICHAJE, BaseColumns._ID, Fichajes.ID_OPERARIO, Referencias.ID_OPERARIO, Fichajes.FECHA,
                 Fichajes.ID_TURNO, Referencias.ID_TURNO, Fichajes.ID_PUESTO, Referencias.ID_PUESTO,
                 Fichajes.ID_CALENDARIO, Referencias.ID_CALENDARIO, Fichajes.HORA_EXTRA));
 

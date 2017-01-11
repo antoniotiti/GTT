@@ -52,11 +52,11 @@ public class NombresColumnasBaseDatos {
 
     interface ColumnasFichaje {
 
-        String ID_OPERARIO= "idOperario";
+        String ID_OPERARIO= "id_operario";
         String FECHA= "fecha";
-        String ID_TURNO= "idTurno";
-        String ID_PUESTO ="idPuesto";
-        String ID_CALENDARIO= "idCalendario";
+        String ID_TURNO= "id_turno";
+        String ID_PUESTO ="id_puesto";
+        String ID_CALENDARIO= "id_calendario";
         String HORA_EXTRA= "horaExtra";
     }
 

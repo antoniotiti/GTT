@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+
+//////////////////Borrar///////////////////
+
 public class LoginDataBaseAdapter {
     static final String DATABASE_NAME = "LOGIN.db";
     static final int DATABASE_VERSION = 1;
@@ -54,7 +57,7 @@ public class LoginDataBaseAdapter {
     }
 
     public int deleteEntry(int codigoOperario) {
-        //String idPuesto=String.valueOf(ID);
+        //String idTurno=String.valueOf(ID);
         String where = "CODIGO_OPERARIO=?";
         int numberOFEntriesDeleted = db.delete("LOGIN", where, new String[]{Integer.toString(codigoOperario)});
         // Toast.makeText(context, "Number fo Entry Deleted Successfully : "+numberOFEntriesDeleted, Toast.LENGTH_LONG).show();

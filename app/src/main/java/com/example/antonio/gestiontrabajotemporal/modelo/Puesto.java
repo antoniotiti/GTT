@@ -30,7 +30,7 @@ public class Puesto {
     @Override
     public String toString() {
         return "Puesto{" +
-                "idPuesto='" + idPuesto + '\'' +
+                "idTurno='" + idPuesto + '\'' +
                 ", nombrePuesto='" + nombrePuesto + '\'' +
                 '}';
     }

@@ -1,15 +1,22 @@
-package com.example.antonio.gestiontrabajotemporal.ui;
+package com.example.antonio.gestiontrabajotemporal.turnodetalle;
 
+
+import android.app.Activity;
 import android.app.TimePickerDialog;
-import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -36,28 +43,29 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraDecimal;
-import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEditTextVacio;
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHorasTrabajadas;
+import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEditTextVacio;
 
-public class CrearTurno extends AppCompatActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, SimpleDialog.OnSimpleDialogListener {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link TurnoDetailFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class TurnoDetailFragment extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, SimpleDialog.OnSimpleDialogListener {
 
     static final int TIME_DIALOG_ID = 0;
 
+    private static final String ARG_TURNO_ID = "turnoId";
+
     OperacionesBaseDatos datos;
-
-    Button btnSeleccionColorFondo, btnSeleccionColorTexto, btnPrevisualizacion, btnBorrar, btnGuardar;
-
+    Button btnSeleccionColorFondo, btnSeleccionColorTexto, btnBorrar, btnGuardar;
     EditText editTextNombreTurno, editTextAbreviaturaTurno, editTextHoraInicio1, editTextHoraFin1,
             editTextHoraInicio2, editTextHoraFin2, editTextPrecioHora, editTextPrecioHoraNocturna,
             editTextPrecioHoraExtra, editTextAvisoHora, activeTimeDisplay, editTextHoraTrabajadaNoche;
-
-    TextView textViewHoraTrabajada;
-
+    TextView textViewHoraTrabajada,textViewPrevisualizacionTurno;
     Switch switchTurnoPartido, switchAviso, switchAvisoDiaAntes, switchModosTelefono;
-
     RadioGroup radioGroupWifiInicio, radioGroupWifiFin, radioGroupBluetoothInicio, radioGroupBluetoothFin,
             radioGroupSonidoInicio, radioGroupSonidoFin;
-
     RadioButton radioButtonWifiInicioActivar, radioButtonWifiInicioDesactivar,
             radioButtonWifiInicioNoCambiar, radioButtonWifiFinActivar, radioButtonWifiFinDesactivar,
             radioButtonWifiFinNoCambiar, radioButtonBluetoothInicioActivar, radioButtonBluetoothInicioDesactivar,
@@ -65,37 +73,51 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
             radioButtonBluetoothFinNoCambiar, radioButtonSonidoInicio, radioButtonVibracionInicio,
             radioButtonSilencioInicio, radioButtonSonidoInicioNoCambiar, radioButtonSonidoFin, radioButtonVibracionFin,
             radioButtonSilencioFin, radioButtonSonidoFinNoCambiar;
-
     Calendar activeTime;
-
     RelativeLayout relativeLayoutHorioTurnoPartido, relativeLayoutAviso;
     LinearLayout linearLayoutModosTelefono;
-
     int mSelectedColor;
-
     //Campos validados
     Boolean nombreTurnoValidado = false, abreviaturaTurnoValidado = false, horaInicio1Validado = false, horaFin1Validado = false, horaInicio2Validado = true, horaFin2Validado = true, precioHoraValidado = false,
             avisoHoraValidado = true;
-
     //Formato de hora.
     SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
-
     //Diálogo selección de color.
     ColorPickerDialog colorPickerDialog;
+    private String mTurnoId;
+    private CollapsingToolbarLayout mCollapsingView;
 
 
-    //Diálogo selección de hora.
-    // private TimePickerDialog.OnTimeSetListener timeSetListener;
+    public TurnoDetailFragment() {
+        // Required empty public constructor
+    }
+
+    public static TurnoDetailFragment newInstance(String turnoId) {
+        TurnoDetailFragment fragment = new TurnoDetailFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_TURNO_ID, turnoId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.crear_turno);
 
-        setToolbar();// Añadir la Toolbar.
+        if (getArguments() != null) {
+            mTurnoId = getArguments().getString(ARG_TURNO_ID);
+        }
 
-        // Obtenemos la instancia del adaptador de Base de Datos.
-        datos = OperacionesBaseDatos.obtenerInstancia(getApplicationContext());
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View root = inflater.inflate(R.layout.fragment_turno_detail, container, false);
+
+        mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout);
 
         activeTime = Calendar.getInstance();
         activeTime.set(0, 0, 0, 0, 0, 0);
@@ -116,7 +138,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
         int[] mColors = getResources().getIntArray(R.array.colores_dialogo);
 
         //Color seleccionado por defecto.
-        mSelectedColor = ContextCompat.getColor(this, R.color.grey05);
+        mSelectedColor = ContextCompat.getColor(getActivity(), R.color.grey05);
 
         //Creamos el diálogo selección de color.
         colorPickerDialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title,
@@ -129,109 +151,107 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
                 switch (colorPickerDialog.getTag()) {
                     case "colorFondo":
                         btnSeleccionColorFondo.setBackgroundColor(mSelectedColor);
-                        btnPrevisualizacion.setBackgroundColor(mSelectedColor);
+                        textViewPrevisualizacionTurno.setBackgroundColor(mSelectedColor);
                         break;
                     case "colorTexto":
                         btnSeleccionColorTexto.setBackgroundColor(mSelectedColor);
-                        btnPrevisualizacion.setTextColor(mSelectedColor);
+                        textViewPrevisualizacionTurno.setTextColor(mSelectedColor);
                         break;
                 }
             }
         });
 /////////////////////Fin Diálogo selección de color///////////////
-
-        // Obtenemos las referencias de las vistas.
-
-        editTextNombreTurno = (EditText) findViewById(R.id.editText_NombreTurno);//
+        editTextNombreTurno = (EditText) root.findViewById(R.id.editText_NombreTurno);//
         editTextNombreTurno.addTextChangedListener(new MyTextWatcher(editTextNombreTurno));
 
-        editTextAbreviaturaTurno = (EditText) findViewById(R.id.editText_AbreviaturaTurno);
+        editTextAbreviaturaTurno = (EditText) root.findViewById(R.id.editText_AbreviaturaTurno);
         editTextAbreviaturaTurno.addTextChangedListener(new MyTextWatcher(editTextAbreviaturaTurno));
 
-        btnPrevisualizacion = (Button) findViewById(R.id.btn_previsualizacion);
+        textViewPrevisualizacionTurno =(TextView) root.findViewById(R.id.textView_prev_turno);
+        //btnPrevisualizacion = (Button) root.findViewById(R.id.btn_previsualizacion);
 
-        btnSeleccionColorFondo = (Button) findViewById(R.id.btn_SeleccionColorFondo);
+        btnSeleccionColorFondo = (Button) root.findViewById(R.id.btn_SeleccionColorFondo);
         btnSeleccionColorFondo.setOnClickListener(this);
 
-        btnSeleccionColorTexto = (Button) findViewById(R.id.btn_SeleccionColorTexto);
+        btnSeleccionColorTexto = (Button) root.findViewById(R.id.btn_SeleccionColorTexto);
         btnSeleccionColorTexto.setOnClickListener(this);
 
-        editTextHoraInicio1 = (EditText) findViewById(R.id.editText_valor_hora_inicio_1);
+        editTextHoraInicio1 = (EditText) root.findViewById(R.id.editText_valor_hora_inicio_1);
         editTextHoraInicio1.setOnClickListener(this);
         editTextHoraInicio1.addTextChangedListener(new MyTextWatcher(editTextHoraInicio1));
 
-        editTextHoraFin1 = (EditText) findViewById(R.id.editText_valor_hora_fin_1);
+        editTextHoraFin1 = (EditText) root.findViewById(R.id.editText_valor_hora_fin_1);
         editTextHoraFin1.setOnClickListener(this);
         editTextHoraFin1.addTextChangedListener(new MyTextWatcher(editTextHoraFin1));
 
-        editTextHoraInicio2 = (EditText) findViewById(R.id.editText_valor_hora_inicio_2);
+        editTextHoraInicio2 = (EditText) root.findViewById(R.id.editText_valor_hora_inicio_2);
         editTextHoraInicio2.setOnClickListener(this);
         editTextHoraInicio2.addTextChangedListener(new MyTextWatcher(editTextHoraInicio2));
 
-        editTextHoraFin2 = (EditText) findViewById(R.id.editText_valor_hora_fin_2);
+        editTextHoraFin2 = (EditText) root.findViewById(R.id.editText_valor_hora_fin_2);
         editTextHoraFin2.setOnClickListener(this);
         editTextHoraFin2.addTextChangedListener(new MyTextWatcher(editTextHoraFin2));
 
-        textViewHoraTrabajada = (TextView) findViewById((R.id.textView_valor_horas_trabajadas));
+        textViewHoraTrabajada = (TextView) root.findViewById((R.id.textView_valor_horas_trabajadas));
 
-        editTextHoraTrabajadaNoche = (EditText) findViewById((R.id.editText_valor_horas_trabajadas_noche));
+        editTextHoraTrabajadaNoche = (EditText) root.findViewById((R.id.editText_valor_horas_trabajadas_noche));
         editTextHoraTrabajadaNoche.setOnClickListener(this);
 
-        editTextPrecioHora = (EditText) findViewById((R.id.editTextValorPrecioHoras));
+        editTextPrecioHora = (EditText) root.findViewById((R.id.editTextValorPrecioHoras));
         editTextPrecioHora.addTextChangedListener(new MyTextWatcher(editTextPrecioHora));
 
-        editTextPrecioHoraNocturna = (EditText) findViewById((R.id.editTextValorPrecioNoche));
+        editTextPrecioHoraNocturna = (EditText) root.findViewById((R.id.editTextValorPrecioNoche));
         // editTextPrecioHoraNocturna.addTextChangedListener(new MyTextWatcher(editTextPrecioHoraNocturna));
 
-        editTextPrecioHoraExtra = (EditText) findViewById((R.id.editTextValorPrecioExtra));
+        editTextPrecioHoraExtra = (EditText) root.findViewById((R.id.editTextValorPrecioExtra));
         // editTextPrecioHoraExtra.addTextChangedListener(new MyTextWatcher(editTextPrecioHoraExtra));
 
-        editTextAvisoHora = (EditText) findViewById(R.id.editText_valor_aviso_hora);
+        editTextAvisoHora = (EditText) root.findViewById(R.id.editText_valor_aviso_hora);
         editTextAvisoHora.setOnClickListener(this);
         editTextAvisoHora.addTextChangedListener(new MyTextWatcher(editTextAvisoHora));
 
-        relativeLayoutHorioTurnoPartido = (RelativeLayout) findViewById(R.id.layout_turno_partido);//Layout para mostrar el turno partido
+        relativeLayoutHorioTurnoPartido = (RelativeLayout) root.findViewById(R.id.layout_turno_partido);//Layout para mostrar el turno partido
         relativeLayoutHorioTurnoPartido.setVisibility(View.GONE);//Por defecto está invisible y no ocupa espacio en el layout
 
-        relativeLayoutAviso = (RelativeLayout) findViewById(R.id.layout_seleccion_hora_aviso);//Layout para mostrar el aviso
+        relativeLayoutAviso = (RelativeLayout) root.findViewById(R.id.layout_seleccion_hora_aviso);//Layout para mostrar el aviso
         relativeLayoutAviso.setVisibility(View.GONE);//Por defecto está invisible y no ocupa espacio en el layout
 
-        linearLayoutModosTelefono = (LinearLayout) findViewById(R.id.layout_modos_telefono);//Layout para mostrar los modos del telefonoo
+        linearLayoutModosTelefono = (LinearLayout) root.findViewById(R.id.layout_modos_telefono);//Layout para mostrar los modos del telefonoo
         linearLayoutModosTelefono.setVisibility(View.GONE);//Por defecto está invisible y no ocupa espacio en el layout
 
 //////////////////RadioGroup y RadioButton
-        radioGroupWifiInicio = (RadioGroup) findViewById(R.id.radioGroup_modo_wifi_inicio);
+        radioGroupWifiInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_wifi_inicio);
 
         radioButtonWifiInicioActivar = (RadioButton) radioGroupWifiInicio.getChildAt(0);
         radioButtonWifiInicioDesactivar = (RadioButton) radioGroupWifiInicio.getChildAt(1);
         radioButtonWifiInicioNoCambiar = (RadioButton) radioGroupWifiInicio.getChildAt(2);
 
-        radioGroupWifiFin = (RadioGroup) findViewById(R.id.radioGroup_modo_wifi_fin);
+        radioGroupWifiFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_wifi_fin);
 
         radioButtonWifiFinActivar = (RadioButton) radioGroupWifiFin.getChildAt(0);
         radioButtonWifiFinDesactivar = (RadioButton) radioGroupWifiFin.getChildAt(1);
         radioButtonWifiFinNoCambiar = (RadioButton) radioGroupWifiFin.getChildAt(2);
 
-        radioGroupBluetoothInicio = (RadioGroup) findViewById(R.id.radioGroup_modo_bluetooth_inicio);
+        radioGroupBluetoothInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_bluetooth_inicio);
 
         radioButtonBluetoothInicioActivar = (RadioButton) radioGroupBluetoothInicio.getChildAt(0);
         radioButtonBluetoothInicioDesactivar = (RadioButton) radioGroupBluetoothInicio.getChildAt(1);
         radioButtonBluetoothInicioNoCambiar = (RadioButton) radioGroupBluetoothInicio.getChildAt(2);
 
-        radioGroupBluetoothFin = (RadioGroup) findViewById(R.id.radioGroup_modo_bluetooth_fin);
+        radioGroupBluetoothFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_bluetooth_fin);
 
         radioButtonBluetoothFiniActivar = (RadioButton) radioGroupBluetoothFin.getChildAt(0);
         radioButtonBluetoothFinDesactivar = (RadioButton) radioGroupBluetoothFin.getChildAt(1);
         radioButtonBluetoothFinNoCambiar = (RadioButton) radioGroupBluetoothFin.getChildAt(2);
 
-        radioGroupSonidoInicio = (RadioGroup) findViewById(R.id.radioGroup_modo_sonido_inicio);
+        radioGroupSonidoInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_sonido_inicio);
 
         radioButtonSonidoInicio = (RadioButton) radioGroupSonidoInicio.getChildAt(0);
         radioButtonVibracionInicio = (RadioButton) radioGroupSonidoInicio.getChildAt(1);
         radioButtonSilencioInicio = (RadioButton) radioGroupSonidoInicio.getChildAt(2);
         radioButtonSonidoInicioNoCambiar = (RadioButton) radioGroupSonidoInicio.getChildAt(3);
 
-        radioGroupSonidoFin = (RadioGroup) findViewById(R.id.radioGroup_modo_sonido_fin);
+        radioGroupSonidoFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_sonido_fin);
 
         radioButtonSonidoFin = (RadioButton) radioGroupSonidoFin.getChildAt(0);
         radioButtonVibracionFin = (RadioButton) radioGroupSonidoFin.getChildAt(1);
@@ -239,7 +259,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
         radioButtonSonidoFinNoCambiar = (RadioButton) radioGroupSonidoFin.getChildAt(3);
 //////////////////RadioGroup y RadioButton
 
-        switchTurnoPartido = (Switch) findViewById(R.id.switch_turno_partido);
+        switchTurnoPartido = (Switch) root.findViewById(R.id.switch_turno_partido);
         switchTurnoPartido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -258,7 +278,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-        switchAviso = (Switch) findViewById(R.id.switch_avisos);
+        switchAviso = (Switch) root.findViewById(R.id.switch_avisos);
         switchAviso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -275,7 +295,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-        switchAvisoDiaAntes = (Switch) findViewById(R.id.switch_aviso_dia_antes);
+        switchAvisoDiaAntes = (Switch) root.findViewById(R.id.switch_aviso_dia_antes);
         switchAvisoDiaAntes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -284,7 +304,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-        switchModosTelefono = (Switch) findViewById(R.id.switch_modo_telefono);
+        switchModosTelefono = (Switch) root.findViewById(R.id.switch_modo_telefono);
         switchModosTelefono.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -303,29 +323,89 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-        btnBorrar = (Button) findViewById(R.id.button_borrar);
+        btnBorrar = (Button) root.findViewById(R.id.button_borrar);
         btnBorrar.setOnClickListener(this);
 
-        btnGuardar = (Button) findViewById(R.id.button_guardar);
+        btnGuardar = (Button) root.findViewById(R.id.button_guardar);
         btnGuardar.setOnClickListener(this);
+
+        // Instancia de helper
+        // Obtenemos la instancia del adaptador de Base de Datos.
+        datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
+
+        loadTurno();
+
+        return root;
+    }
+
+    private void loadTurno() {
+        new GetTurnoByIdTask().execute();
+    }
+
+    private void showTurno(Turno turno) {
+
+        mCollapsingView.setTitle(turno.getNombreTurno());
+
+        textViewPrevisualizacionTurno.setBackgroundColor(turno.getColorFondo());
+        textViewPrevisualizacionTurno.setTextColor(turno.getColorTexto());
+        textViewPrevisualizacionTurno.setText(turno.getAbreviaturaNombreTurno());
+
+        editTextNombreTurno.setText(turno.getNombreTurno());
+        editTextAbreviaturaTurno.setText(turno.getAbreviaturaNombreTurno());
+        btnSeleccionColorFondo.setBackgroundColor(turno.getColorFondo());
+        btnSeleccionColorTexto.setBackgroundColor(turno.getColorTexto());
+        editTextHoraInicio1.setText(turno.getHoraInicio1());
+        editTextHoraFin1.setText(turno.getHoraFin1());
+        if (turno.getTurnoPartido() == 1) {//0(falso) o 1(verdadero)
+            switchTurnoPartido.setChecked(true);
+            editTextHoraInicio2.setText(turno.getHoraInicio2());
+            editTextHoraFin2.setText(turno.getHoraFin2());
+        }
+        editTextHoraTrabajadaNoche.setText(String.valueOf(turno.getHorasTrabajadasNocturnas()));
+        editTextPrecioHora.setText(String.valueOf(turno.getPrecioHora()));
+        editTextPrecioHoraNocturna.setText(String.valueOf(turno.getPrecioHoraNocturnas()));
+        editTextPrecioHoraExtra.setText(String.valueOf(turno.getPrecioHoraExtra()));
+        if (turno.getAviso() == 1) {
+            switchAviso.setChecked(true);
+            editTextAvisoHora.setText(turno.getHoraAviso());
+            switchAvisoDiaAntes.setChecked(turno.getAvisoDiaAntes() == 1);
+        }
+        //TODO modo telefono
+        // if(turno.getModoTelefono()==1){}
 
 
     }
 
-    /**
-     *
-     */
-    private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Inicio);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
-        setSupportActionBar(toolbar);
+    private void showEditScreen() {
+        /*Intent intent = new Intent(getActivity(), AddEditLawyerActivity.class);
+        intent.putExtra(LawyersActivity.EXTRA_LAWYER_ID, mLawyerId);
+        startActivityForResult(intent, LawyersFragment.REQUEST_UPDATE_DELETE_LAWYER);*/
+        //TODO edita el turno
+    }
+
+    private void showTurnoScreen(boolean requery) {
+        if (!requery) {
+            showDeleteError();
+        }
+        getActivity().setResult(requery ? Activity.RESULT_OK : Activity.RESULT_CANCELED);
+        getActivity().finish();
+    }
+
+    private void showLoadError() {
+        Toast.makeText(getActivity(),
+                "Error al cargar información", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showDeleteError() {
+        Toast.makeText(getActivity(),
+                "Error al eliminar el Turno seleccionado", Toast.LENGTH_SHORT).show();
     }
 
     public void showTimeDialog(EditText dateDisplay) {
         activeTimeDisplay = dateDisplay;
 
         TimeDialog newFragment = new TimeDialog();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
+        newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
         //showDialog(TIME_DIALOG_ID);
     }
 
@@ -335,29 +415,15 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    /*private void unregisterDateDisplay() {
-        activeTime.set(0, 0, 0, 0, 0, 0);
-    }*/
-
-  /*  @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case TIME_DIALOG_ID:
-                return new TimePickerDialog(this, timeSetListener, activeTime.get(Calendar.HOUR), activeTime.get(Calendar.MINUTE), true);
-        }
-        return null;
-    }*/
-
-
     @Override
     public void onClick(View v) {
 
         switch (v.getId() /*to get clicked view id**/) {
             case R.id.btn_SeleccionColorFondo:
-                colorPickerDialog.show(getFragmentManager(), "colorFondo");
+                colorPickerDialog.show(getActivity().getFragmentManager(), "colorFondo");
                 break;
             case R.id.btn_SeleccionColorTexto:
-                colorPickerDialog.show(getFragmentManager(), "colorTexto");
+                colorPickerDialog.show(getActivity().getFragmentManager(), "colorTexto");
                 break;
             case R.id.editText_valor_hora_inicio_1:
                 showTimeDialog(editTextHoraInicio1);
@@ -378,7 +444,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
                 showTimeDialog(editTextHoraTrabajadaNoche);
                 break;
             case R.id.button_borrar:
-                new SimpleDialog().show(getSupportFragmentManager(), "SimpleDialog");
+                new SimpleDialog().show(getActivity().getSupportFragmentManager(), "SimpleDialog");
                 break;
             case R.id.button_guardar:
                 boolean formularioValidado = validarFormulario();
@@ -405,13 +471,13 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onNegativeButtonClick() {
-        Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Cancelar", Toast.LENGTH_LONG).show();
 
     }
 
 
     private void limpiarFormularioCreacionTurno() {
-        Toast.makeText(this, "Borrar Formulario", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Borrar Formulario", Toast.LENGTH_LONG).show();
 
     }
 
@@ -454,17 +520,68 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
 
             Turno turnoInsertar = new Turno(nombreTurno, abreviaturaTurno, horaInicio1, horaFin1, turnoPartido, horaInicio2, horaFin2, horasTrabajadas, horasTrabajadasNoche, precioHora, precioHoraNocturna, precioHoraExtra, aviso, avisoDiaAntes, horaAviso, modotelefono, colorFondo, colorTexto);
             String turnoInsertado = datos.insertarTurno(turnoInsertar);
-            if (turnoInsertado!=null) {
-                Toast.makeText(getApplicationContext(), "Turno Creado", Toast.LENGTH_LONG).show();
+            if (turnoInsertado != null) {
+                Toast.makeText(getActivity(), "Turno Creado", Toast.LENGTH_LONG).show();
                 datos.close();
-                finish();
+                getActivity().finish();
             } else {
-                Toast.makeText(getApplicationContext(), "Turno " + nombreTurno + " repetido", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Turno " + nombreTurno + " repetido", Toast.LENGTH_LONG).show();
             }
         }
 
 
         return validado;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                showEditScreen();
+                break;
+            case R.id.action_delete:
+                new DeleteLawyerTask().execute();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Acciones
+    }
+
+    private class GetTurnoByIdTask extends AsyncTask<Void, Void, Cursor> {
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            return datos.obtenerTurnoById(mTurnoId);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            if (cursor != null && cursor.moveToLast()) {
+                showTurno(new Turno(cursor));
+            } else {
+                showLoadError();
+            }
+        }
+
+    }
+
+    private class DeleteLawyerTask extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return datos.eliminarTurno(mTurnoId);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            showTurnoScreen(integer > 0);
+        }
+
     }
 
     private class MyTextWatcher implements TextWatcher {
@@ -488,7 +605,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
                     break;
                 case R.id.editText_AbreviaturaTurno:
                     abreviaturaTurnoValidado = validarEditTextVacio(editTextAbreviaturaTurno);
-                    btnPrevisualizacion.setText(editTextAbreviaturaTurno.getText());
+                    textViewPrevisualizacionTurno.setText(editTextAbreviaturaTurno.getText());
                     break;
                 case R.id.editText_valor_hora_inicio_1:
                     validarEditTextVacio(editTextHoraInicio1);
@@ -519,5 +636,5 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
             }
         }
     }
-}
 
+}

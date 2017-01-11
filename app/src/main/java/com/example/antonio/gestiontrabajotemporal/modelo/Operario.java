@@ -156,7 +156,7 @@ public class Operario {
     @Override
     public String toString() {
         return "Operario{" +
-                "idOperario=" + idOperario +
+                "idTurno=" + idOperario +
                 ", dni='" + dni + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +

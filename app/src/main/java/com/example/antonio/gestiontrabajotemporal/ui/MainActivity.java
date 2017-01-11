@@ -5,7 +5,6 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -26,9 +25,6 @@ import com.example.antonio.gestiontrabajotemporal.modelo.Puesto;
 import com.example.antonio.gestiontrabajotemporal.modelo.Turno;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 
-import org.xdty.preference.colorpicker.ColorPickerDialog;
-import org.xdty.preference.colorpicker.ColorPickerSwatch;
-
 import java.io.File;
 import java.util.Calendar;
 
@@ -46,11 +42,8 @@ public class MainActivity extends AppCompatActivity {
     boolean codigoOperarioValidado, passwordValidado;
 
     OperacionesBaseDatos datos;
-
-
-    private int mSelectedColor;
-
     TextView textView;
+    private int mSelectedColor;
 
     /**
      * @param savedInstanceState
@@ -129,9 +122,11 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                //Pruebas
+                //TODO borrar Pruebas
                 editTextCodigoOperario.setText("8246");
                 editTextPassword.setText("Bart16tyti");
+                //borrar Puebas
+
 
                 // boolean codigoOperarioValidado, passwordValidado;
                 // get The User name and Password
@@ -168,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } else {
                         Toast.makeText(MainActivity.this, "El Código de operario debe contener 4 dígitos comenzando por 8", Toast.LENGTH_LONG).show();
-
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Campos vacios", Toast.LENGTH_LONG).show();
@@ -254,10 +248,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // Inserción Truno
                 String turno1 = datos.insertarTurno(new Turno(null, "Mañana CPD", "M_CPD", "06:50", "15:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "06:30", "modotelefono", -16776961, -16777216));
-                String turno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "13:50", "22:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "13:30", "modotelefono",-16776961, -16777216));
+                String turno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "13:50", "22:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "13:30", "modotelefono", -16776961, -16777216));
 
                 // Inserción Fichaje
-                datos.insertarFichaje(new Fichaje("8246", "01/01/2016", "1", "1", "1", 1.5));
+                datos.insertarFichaje(new Fichaje(operario1, "01/01/2016", turno1, puesto1, calendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(operario1, "02/01/2016", turno2, puesto2, calendario1, 1.5));
 
                 datos.getDb().setTransactionSuccessful();
             } finally {

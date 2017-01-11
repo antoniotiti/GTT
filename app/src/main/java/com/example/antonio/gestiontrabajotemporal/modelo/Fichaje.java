@@ -75,11 +75,11 @@ public class Fichaje {
     @Override
     public String toString() {
         return "Fichaje{" +
-                "idOperario=" + idOperario +
+                "idTurno=" + idOperario +
                 ", fecha='" + fecha + '\'' +
                 ", idTurno=" + idTurno +
-                ", idPuesto=" + idPuesto +
-                ", idCalendario=" + idCalendario +
+                ", idTurno=" + idPuesto +
+                ", idTurno=" + idCalendario +
                 ", horaExtra=" + horaExtra +
                 '}';
     }

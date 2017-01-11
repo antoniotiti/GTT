@@ -62,17 +62,17 @@
                         android:text="@string/show_dialog" />
 
                     <!-- FAB -->
+
+
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
-                        android:layout_margin="@dimen/activity_horizontal_margin"
-                        android:src="@drawable/plus_white"
-                        app:borderWidth="0dp"
-                        app:elevation="8dp"
-                        app:layout_anchor="@id/fab"
-                        app:layout_anchorGravity="bottom|right|end" />
+                        android:layout_margin="@dimen/fab_margin"
+                        android:tint="@android:color/white"
+                        app:fabSize="normal"
+                        app:srcCompat="@drawable/plus_white" />
 
                 </LinearLayout>
 

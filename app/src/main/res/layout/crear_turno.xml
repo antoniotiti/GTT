@@ -97,7 +97,7 @@
                     android:imeOptions="flagNoExtractUi"
                     android:inputType="text"
                     android:labelFor="@+id/editText_AbreviaturaTurno"
-                    android:maxLength="4"
+                    android:maxLength="5"
                     android:maxLines="1"
                     android:theme="@style/colorEditText" />
                 <!-- Color iconos #1E88E5
@@ -194,7 +194,7 @@
                     android:paddingStart="@dimen/color_swatch_margins_small" />
 
                 <TextView
-                    android:id="@+id/textViwe_hora_fin_1"
+                    android:id="@+id/textView_hora_fin_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -208,9 +208,9 @@
                     android:id="@+id/editText_valor_hora_fin_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textViwe_hora_fin_1"
-                    android:layout_alignBottom="@+id/textViwe_hora_fin_1"
-                    android:layout_toEndOf="@+id/textViwe_hora_fin_1"
+                    android:layout_alignBaseline="@+id/textView_hora_fin_1"
+                    android:layout_alignBottom="@+id/textView_hora_fin_1"
+                    android:layout_toEndOf="@+id/textView_hora_fin_1"
                     android:focusable="false"
                     android:hint="@string/hora_00"
                     android:inputType="time"

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
@@ -50,6 +51,20 @@ public final class OperacionesBaseDatos {
         return db.rawQuery(sql, null);
     }
 
+    public Cursor obtenerPuestosById(String puestoId) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        Cursor c = db.query(
+                Tablas.PUESTO,
+                null,
+                Puestos.ID + " LIKE ?",
+                new String[]{puestoId},
+                null,
+                null,
+                null);
+        return c;
+    }
+
     public String insertarPuesto(Puesto puesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
@@ -57,12 +72,12 @@ public final class OperacionesBaseDatos {
         String idPuesto = Puestos.generarIdPuesto();
 
         ContentValues valores = new ContentValues();
-        valores.put(Puestos.ID, puesto.idPuesto);
+        valores.put(Puestos.ID, idPuesto);
         valores.put(Puestos.NOMBRE, puesto.nombrePuesto);
 
         db.insertOrThrow(Tablas.PUESTO, null, valores);
 
-        return puesto.nombrePuesto;
+        return idPuesto;
 
     }
 
@@ -101,6 +116,20 @@ public final class OperacionesBaseDatos {
         return db.rawQuery(sql, null);
     }
 
+    public Cursor obtenerCalendarioById(String calendarioId) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        Cursor c = db.query(
+                Tablas.CALENDARIO,
+                null,
+                Calendarios.ID + " LIKE ?",
+                new String[]{calendarioId},
+                null,
+                null,
+                null);
+        return c;
+    }
+
     public String insertarCalendario(Calendario calendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
@@ -109,12 +138,12 @@ public final class OperacionesBaseDatos {
 
 
         ContentValues valores = new ContentValues();
-        valores.put(Calendarios.ID, calendario.idCalendario);
+        valores.put(Calendarios.ID, idCalendario);
         valores.put(Calendarios.NOMBRE, calendario.nombreCalendario);
 
         db.insertOrThrow(Tablas.CALENDARIO, null, valores);
 
-        return calendario.nombreCalendario;
+        return idCalendario;
 
     }
 
@@ -151,6 +180,19 @@ public final class OperacionesBaseDatos {
         String sql = String.format("SELECT * FROM %s", Tablas.OPERARIO);
 
         return db.rawQuery(sql, null);
+    }
+    public Cursor obtenerOperarioById(String operarioId) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        Cursor c = db.query(
+                Tablas.OPERARIO,
+                null,
+                Operarios.ID + " LIKE ?",
+                new String[]{operarioId},
+                null,
+                null,
+                null);
+        return c;
     }
 
     public String insertarOperario(Operario operario) {
@@ -217,7 +259,14 @@ public final class OperacionesBaseDatos {
 
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
-        Cursor cursor = db.query("Operario", new String[]{Operarios.PASSWORD}, Operarios.ID+"=?", new String[]{idOperario}, null, null, null);
+        Cursor cursor = db.query(
+                Tablas.OPERARIO,
+                new String[]{Operarios.PASSWORD},
+                Operarios.ID + "=?",
+                new String[]{idOperario},
+                null,
+                null,
+                null);
 
         cursor.moveToFirst();
         String password = cursor.getString(cursor.getColumnIndex(Operarios.PASSWORD));
@@ -235,15 +284,30 @@ public final class OperacionesBaseDatos {
         return db.rawQuery(sql, null);
     }
 
+    public Cursor obtenerTurnoById(String turnoId) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        Cursor c = db.query(
+                Tablas.TURNO,
+                null,
+                Turnos.ID + " LIKE ?",
+                new String[]{turnoId},
+                null,
+                null,
+                null);
+        return c;
+    }
+
     public String insertarTurno(Turno turno) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
+        String  turnoInsertado=null;
 
         // Generar Pk
         String idTurno = Turnos.generarIdTurno();
 
         ContentValues valores = new ContentValues();
 
-        valores.put(Turnos.ID, turno.idTurno);
+        valores.put(Turnos.ID, idTurno);
         valores.put(Turnos.NOMBRE, turno.nombreTurno);
         valores.put(Turnos.ABREVIATURA_NOMBRE_TURNO, turno.abreviaturaNombreTurno);
         valores.put(Turnos.HORA_INICIO_1, turno.horaInicio1);
@@ -262,10 +326,13 @@ public final class OperacionesBaseDatos {
         valores.put(Turnos.MODO_TELEFONO, turno.modoTelefono);
         valores.put(Turnos.COLOR_FONDO, turno.colorFondo);
         valores.put(Turnos.COLOR_TEXTO, turno.colorTexto);
+        try {
+            db.insertOrThrow(Tablas.TURNO, null, valores);
+            turnoInsertado=idTurno;
+        } catch (SQLiteConstraintException e) {
 
-        db.insertOrThrow(Tablas.TURNO, null, valores);
-
-        return turno.idTurno;
+        }
+        return turnoInsertado;
 
     }
 
@@ -299,7 +366,7 @@ public final class OperacionesBaseDatos {
         return resultado > 0;
     }
 
-    public boolean eliminarTurno(String idTurno) {
+    /*public boolean eliminarTurno(String idTurno) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
         String whereClause = String.format("%s=?", Turnos.ID);
@@ -309,6 +376,26 @@ public final class OperacionesBaseDatos {
 
         return resultado > 0;
     }
+
+    public int eliminarTurno(String idTurno) {
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+
+        return db.delete(
+                Tablas.TURNO,
+                Turnos.ID + " LIKE ?",
+                new String[]{idTurno});
+    }*/
+
+    public int eliminarTurno(String idTurno) {
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+
+        String whereClause = String.format("%s=?", Turnos.ID);
+        String[] whereArgs = {idTurno};
+
+        return db.delete(Tablas.TURNO, whereClause, whereArgs);
+    }
+
+
     // [/OPERACIONES_TURNO]
 
     // [OPERACIONES_FICHAJE
@@ -398,13 +485,13 @@ public final class OperacionesBaseDatos {
 
     private static final String FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO = "FICHAJE " +
             "INNER JOIN OPERARIO " +
-            "ON FICHAJE.idOperario= OPERARIO.idOperario " +
+            "ON FICHAJE.idTurno= OPERARIO.idTurno " +
             "INNER JOIN TURNO " +
             "ON FICHAJE.idTurno = TURNO.idTurno" +
             "INNER JOIN PUESTO " +
-            "ON FICHAJE.idPuesto = PUESTO.idPuesto" +
+            "ON FICHAJE.idTurno = PUESTO.idTurno" +
             "INNER JOIN CALENDARIO " +
-            "ON FICHAJE.idCalendario = CALENDARIO.idCalendario";
+            "ON FICHAJE.idTurno = CALENDARIO.idTurno";
 
 
     private final String[] proyFichaje = new String[]{

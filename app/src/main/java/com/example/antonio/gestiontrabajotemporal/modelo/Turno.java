@@ -1,6 +1,10 @@
 package com.example.antonio.gestiontrabajotemporal.modelo;
 
 
+import android.database.Cursor;
+
+import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
+
 public class Turno {
 
     public String idTurno, nombreTurno, abreviaturaNombreTurno, horaInicio1, horaFin1, horaInicio2, horaFin2, horaAviso, modoTelefono;
@@ -50,6 +54,28 @@ public class Turno {
         this.modoTelefono = modoTelefono;
         this.colorFondo = colorFondo;
         this.colorTexto = colorTexto;
+    }
+
+    public Turno(Cursor cursor) {
+        this.idTurno = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.ID));
+        this.nombreTurno = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.NOMBRE));
+        this.abreviaturaNombreTurno = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
+        this.horaInicio1 = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORA_INICIO_1));
+        this.horaFin1 = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORA_FIN_1));
+        this.turnoPartido = cursor.getInt(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.TURNO_PARTIDO));
+        this.horaInicio2 = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORA_INICIO_2));
+        this.horaFin2 = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORA_FIN_2));
+        this.horasTrabajadas = cursor.getFloat(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORAS_TRABAJADAS));
+        this.horasTrabajadasNocturnas = cursor.getFloat(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORAS_TRABAJADAS_NOCTURNAS));
+        this.precioHora = cursor.getDouble(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.PRECIO_HORA));
+        this.precioHoraNocturnas = cursor.getDouble(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.PRECIO_HORA_NOCTURNAS));
+        this.precioHoraExtra = cursor.getDouble(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.PRECIO_HORA_EXTRA));
+        this.aviso = cursor.getInt(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.AVISO));
+        this.avisoDiaAntes = cursor.getInt(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.AVISO_DIA_ANTES));
+        this.horaAviso = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORA_AVISO));
+        this.modoTelefono = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.MODO_TELEFONO));
+        this.colorFondo = cursor.getInt(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_FONDO));
+        this.colorTexto = cursor.getInt(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_TEXTO));
     }
 
     public String getIdTurno() {

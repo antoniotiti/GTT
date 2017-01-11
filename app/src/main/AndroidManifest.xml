@@ -46,7 +46,6 @@
             -->
 
         </activity>
-
         <activity
             android:name=".ui.CrearTurno"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -59,9 +58,6 @@
             -->
 
         </activity>
-
-
-
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -70,7 +66,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.antonio.gestiontrabajotemporal.ui.PantallaCalendario" />
         </activity>
-
+        <activity
+            android:name=".turnos1.TurnosActivity1"
+            android:label="@string/title_activity_turnos"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".turnodetalle.TurnoDetalleActivity"
+            android:label="@string/title_activity_turno_detalle"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".puestos.PuestosActivity"
+            android:label="@string/title_activity_puestos"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".turnos.TurnosActivity"
+            android:label="@string/title_activity_turnos"
+            android:theme="@style/AppTheme" />
 
 
     </application>

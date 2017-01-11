@@ -5,19 +5,19 @@
     <item
         android:id="@+id/crear_turno"
         android:orderInCategory="100"
-        android:title="@string/crear_turno"
+        android:title="@string/turnos"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/crear_puesto"
         android:orderInCategory="100"
-        android:title="@string/crear_puesto"
+        android:title="@string/puestos"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/acrear_calendario"
+        android:id="@+id/crear_calendario"
         android:orderInCategory="100"
-        android:title="@string/crear_calendario"
+        android:title="@string/calendarios"
         app:showAsAction="never" />
 
     <item

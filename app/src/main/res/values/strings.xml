@@ -68,11 +68,17 @@
     <string name="modo_vibracion">Modo Vibración</string>
     <string name="modo_silencio">Modo Silencio</string>
     <string name="€">€</string>
+    <string name="title_activity_turnos">Turnos</string>
+    <string name="title_activity_turno_detalle">Turno Detalle</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="turnos">Turnos</string>
+    <string name="puestos">Puestos</string>
+    <string name="calendarios">Calendarios</string>
+    <string name="title_activity_puestos">Puestos</string>
 
-
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

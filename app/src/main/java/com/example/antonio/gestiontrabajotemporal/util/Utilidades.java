@@ -20,11 +20,17 @@ public class Utilidades {
      * @return La hora en formato decimal.
      */
     public static float calcularHoraDecimal(String hora) {
+        float horaDecimal = 0;
 
-        String[] parts = hora.split(":");
-        int horas = Integer.parseInt(parts[0]);
-        int minutos = Integer.parseInt(parts[1]);
-        float horaDecimal = (horas * 60 + minutos) / 60;//Multiplicas las horas por 60 y le sumas los minutos, para obtener los minutos totales. Lo dividimos por 60 para calcular las horas con decimales.
+        try {
+            String[] parts = hora.split(":");
+            int horas = Integer.parseInt(parts[0]);
+            int minutos = Integer.parseInt(parts[1]);
+            horaDecimal = (horas * 60 + minutos) / 60;//Multiplicas las horas por 60 y le sumas los minutos, para obtener los minutos totales. Lo dividimos por 60 para calcular las horas con decimales.
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         return horaDecimal;
     }
 

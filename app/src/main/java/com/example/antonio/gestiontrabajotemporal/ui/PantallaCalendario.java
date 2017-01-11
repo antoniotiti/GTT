@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
+import com.example.antonio.gestiontrabajotemporal.puestos.PuestosActivity;
+import com.example.antonio.gestiontrabajotemporal.turnos.TurnosActivity;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
@@ -63,6 +66,15 @@ public class PantallaCalendario extends AppCompatActivity {
 
         setToolbar();// Añadir la Toolbar
         //Recibimos el código de usuario y password de la página de logeo.
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         String codigoOperario = getIntent().getExtras().getString("codigoOperario");
@@ -340,10 +352,13 @@ public class PantallaCalendario extends AppCompatActivity {
         switch (id) {
             case R.id.crear_turno:
                 //showSnackBar("Se abren los ajustes");
-                startActivity(new Intent(this, CrearTurno.class));
+                //startActivity(new Intent(this, CrearTurno.class));
+                startActivity(new Intent(this, TurnosActivity.class));
+                return true;
+            case R.id.crear_puesto:
+                startActivity(new Intent(this, PuestosActivity.class));
                 return true;
             case R.id.action_settings:
-                //showSnackBar("Se abren los ajustes");
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
         }
