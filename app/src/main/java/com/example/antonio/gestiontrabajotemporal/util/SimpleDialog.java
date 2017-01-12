@@ -12,16 +12,20 @@ import android.support.v7.app.AlertDialog;
  * Fragmento con diálogo básico
  */
 public class SimpleDialog extends DialogFragment {
-    // Interfaz de comunicación
-    OnSimpleDialogListener listener;
 
     public SimpleDialog() {
     }
+    public interface OnSimpleDialogListener {
+        void onPossitiveButtonClick();// Eventos Botón Positivo
+
+        void onNegativeButtonClick();// Eventos Botón Negativo
+    }
+    // Interfaz de comunicación
+    OnSimpleDialogListener listener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        String tipo= getTag();
         return createSimpleDialog();
     }
 
@@ -31,10 +35,10 @@ public class SimpleDialog extends DialogFragment {
      * @return Nuevo diálogo
      */
     public AlertDialog createSimpleDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder.setTitle("Atención")
-                .setMessage("Está seguro que desea borrar los datos introducidos")
+                .setMessage("¿Está seguro que desea borrar el turno seleccionado? Se borraran todos los fichajes realizados en este turno")
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -54,11 +58,7 @@ public class SimpleDialog extends DialogFragment {
         return builder.create();
     }
 
-    public interface OnSimpleDialogListener {
-        void onPossitiveButtonClick();// Eventos Botón Positivo
 
-        void onNegativeButtonClick();// Eventos Botón Negativo
-    }
 
     @Override
     public void onAttach(Activity activity) {

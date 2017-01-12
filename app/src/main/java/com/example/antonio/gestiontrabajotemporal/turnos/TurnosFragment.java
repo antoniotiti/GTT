@@ -85,7 +85,7 @@ public class TurnosFragment extends Fragment {
         datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
 
         // Carga de datos
-        cargarTurnos();
+       // cargarTurnos();
         return root;
     }
 
@@ -136,13 +136,17 @@ public class TurnosFragment extends Fragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mTurnosAdapter.swapCursor(cursor);
             } else {
-
                 Toast.makeText(getActivity(),
                         "No hay turnos", Toast.LENGTH_SHORT).show();
-                // TODO Mostrar empty state
-                getActivity().finish();
+                //getActivity().finish();
             }
         }
     }
+
+  /*  @Override
+    public void onResume() {
+        super.onResume();
+        cargarTurnos();
+        }*/
 
 }

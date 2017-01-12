@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
 import com.example.antonio.gestiontrabajotemporal.turnos.TurnosActivity;
+import com.example.antonio.gestiontrabajotemporal.util.SimpleDialog;
 
-public class TurnoDetalleActivity extends AppCompatActivity {
+public class TurnoDetalleActivity extends AppCompatActivity implements  SimpleDialog.OnSimpleDialogListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,4 +46,24 @@ public class TurnoDetalleActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onPossitiveButtonClick() {
+        TurnoDetailFragment fragment =(TurnoDetailFragment)getSupportFragmentManager().findFragmentById(R.id.turno_detail_container);
+        if (fragment instanceof TurnoDetailFragment){
+            fragment.borrarTurno();
+        }
+
+    }
+
+    @Override
+    public void onNegativeButtonClick() {
+        Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
+
+    }
+
+
+    /*private void borrarTurno() {
+        Toast.makeText(this, "Borrar Formulario", Toast.LENGTH_LONG).show();
+
+    }*/
 }

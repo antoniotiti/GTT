@@ -9,7 +9,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -51,7 +53,7 @@ import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEdi
  * Use the {@link TurnoDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TurnoDetailFragment extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, SimpleDialog.OnSimpleDialogListener {
+public class TurnoDetailFragment extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener{
 
     static final int TIME_DIALOG_ID = 0;
 
@@ -404,10 +406,23 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     public void showTimeDialog(EditText dateDisplay) {
         activeTimeDisplay = dateDisplay;
 
-        TimeDialog newFragment = new TimeDialog();
-        newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+       // TimeDialog newFragment = new TimeDialog();
+        //newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
         //showDialog(TIME_DIALOG_ID);
+
+        DialogFragment newFragment = new TimeDialog(); // creating DialogFragment which creates DatePickerDialog
+        newFragment.setTargetFragment(TurnoDetailFragment.this,0);  // Passing this fragment DatePickerFragment.
+        // As i figured out this is the best way to keep the reference to calling activity when using FRAGMENT.
+        newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
     }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        activeTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        activeTime.set(Calendar.MINUTE, minute);
+        updateDisplay(activeTimeDisplay, activeTime);
+    }
+
 
     private void updateDisplay(EditText dateDisplay, Calendar time) {
         String hora = formatter.format(time.getTime());
@@ -417,6 +432,8 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        // Obtención del manejador de fragmentos
+        FragmentManager fragmentManager = getFragmentManager();
 
         switch (v.getId() /*to get clicked view id**/) {
             case R.id.btn_SeleccionColorFondo:
@@ -444,7 +461,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                 showTimeDialog(editTextHoraTrabajadaNoche);
                 break;
             case R.id.button_borrar:
-                new SimpleDialog().show(getActivity().getSupportFragmentManager(), "SimpleDialog");
+                new SimpleDialog().show(fragmentManager, "SimpleDialog");
                 break;
             case R.id.button_guardar:
                 boolean formularioValidado = validarFormulario();
@@ -456,30 +473,12 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     }
 
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        activeTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        activeTime.set(Calendar.MINUTE, minute);
-        updateDisplay(activeTimeDisplay, activeTime);
-    }
-
-    @Override
-    public void onPossitiveButtonClick() {
-        limpiarFormularioCreacionTurno();
+    public void borrarTurno() {
+        new DeleteLawyerTask().execute();
+        Toast.makeText(getActivity(), "Turno Borrado", Toast.LENGTH_LONG).show();
 
     }
 
-    @Override
-    public void onNegativeButtonClick() {
-        Toast.makeText(getActivity(), "Cancelar", Toast.LENGTH_LONG).show();
-
-    }
-
-
-    private void limpiarFormularioCreacionTurno() {
-        Toast.makeText(getActivity(), "Borrar Formulario", Toast.LENGTH_LONG).show();
-
-    }
 
 
     private boolean validarFormulario() {
@@ -541,7 +540,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                 showEditScreen();
                 break;
             case R.id.action_delete:
-                new DeleteLawyerTask().execute();
+                new SimpleDialog().show(getFragmentManager(), "SimpleDialog");
+
+                //new DeleteLawyerTask().execute();
                 break;
         }
         return super.onOptionsItemSelected(item);
