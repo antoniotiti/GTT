@@ -336,7 +336,7 @@
                     android:textStyle="normal|bold" />
 
                 <EditText
-                    android:id="@+id/editText_valor_horas_trabajadas_noche"
+                    android:id="@+id/editText_valor_horas_trabajadas_noche1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/textHorasTrabajadasNoche"
@@ -345,7 +345,7 @@
                     android:focusable="false"
                     android:hint="@string/hora_00"
                     android:inputType="time"
-                    android:labelFor="@+id/editText_valor_horas_trabajadas_noche"
+                    android:labelFor="@+id/editText_valor_horas_trabajadas_noche1"
                     android:maxLength="5"
                     android:paddingEnd="@dimen/color_swatch_margins_small"
                     android:paddingStart="@dimen/color_swatch_margins_small" />

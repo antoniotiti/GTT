@@ -15,15 +15,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
-import com.example.antonio.gestiontrabajotemporal.puestos.PuestosCursorAdapter;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.turnodetalle.TurnoDetalleActivity;
-import com.example.antonio.gestiontrabajotemporal.turnos1.TurnosActivity1;
 
 
 public class TurnosFragment extends Fragment {
 
+    public static final int REQUEST_ADD_TURNO = 1;
     public static final int REQUEST_UPDATE_DELETE_TURNO = 2;
 
     OperacionesBaseDatos datos;
@@ -35,7 +34,6 @@ public class TurnosFragment extends Fragment {
     public TurnosFragment() {
         // Required empty public constructor
     }
-
 
     public static TurnosFragment newInstance() {
         return new TurnosFragment();
@@ -54,23 +52,12 @@ public class TurnosFragment extends Fragment {
         // Setup
         mTurnosList.setAdapter(mTurnosAdapter);
 
-
         // Eventos
         mTurnosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
                 Cursor currentItem = (Cursor) mTurnosAdapter.getItem(i);
-               /* String currentTurnoNombre = currentItem.getString(
-                        currentItem.getColumnIndex(NombresColumnasBaseDatos.Turnos.NOMBRE));
-
-                Toast.makeText(getActivity(), "Detalle "+ currentTurnoNombre, Toast.LENGTH_LONG).show();*/
-
-
-                String currentTurnoId = currentItem.getString(
-                        currentItem.getColumnIndex(NombresColumnasBaseDatos.Turnos.ID));
-
+                String currentTurnoId = currentItem.getString(currentItem.getColumnIndex(NombresColumnasBaseDatos.Turnos.ID));
                 showDetailScreen(currentTurnoId);
             }
         });
@@ -78,52 +65,65 @@ public class TurnosFragment extends Fragment {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // showAddScreen();
+                showAddScreen();
             }
         });
+
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
 
         // Carga de datos
-       // cargarTurnos();
+        cargarTurnos();
         return root;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Activity.RESULT_OK == resultCode) {
-            switch (requestCode) {
-                /*case AddEditLawyerActivity.REQUEST_ADD_LAWYER:
-                    showSuccessfullSavedMessage();
-                    cargarTurnos();
-                    break;*/
-                case REQUEST_UPDATE_DELETE_TURNO:
+            cargarTurnos();
+          /*  switch (requestCode) {
+                case REQUEST_ADD_TURNO:
+                    Toast.makeText(getActivity(),"Turno guardado correctamente", Toast.LENGTH_SHORT).show();
                     cargarTurnos();
                     break;
-            }
+                case REQUEST_UPDATE_DELETE_TURNO:
+                    Toast.makeText(getActivity(),"Turno eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    cargarTurnos();
+                    break;
+            }*/
         }
     }
 
+    /**
+     * Método encargado de lanzar la tarea en segundo plano de cargar los turnos.
+     */
     private void cargarTurnos() {
         new TurnosLoadTask().execute();
     }
 
-    private void showSuccessfullSavedMessage() {
-        Toast.makeText(getActivity(),
-                "Turno guardado correctamente", Toast.LENGTH_SHORT).show();
+    /**
+     * Método encargado de mostrar la ventana de detalle del Turno vacía para crear un Turno nuevo.
+     */
+    private void showAddScreen() {
+        Intent intent = new Intent(getActivity(), TurnoDetalleActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_TURNO);
     }
 
-    /*private void showAddScreen() {
-        Intent intent = new Intent(getActivity(), AddEditLawyerActivity.class);
-        startActivityForResult(intent, AddEditLawyerActivity.REQUEST_ADD_LAWYER);
-    }*/
-
+    /**
+     * Método encargado de mostrar la ventana de detalle del Turno, mostrando los datos del mismo
+     * obtenidos mediante el id del turno seleccionado de la lista, para editarlo.
+     *
+     * @param turnoId Turno seleccionada de la lista.
+     */
     private void showDetailScreen(String turnoId) {
         Intent intent = new Intent(getActivity(), TurnoDetalleActivity.class);
         intent.putExtra(TurnosActivity.EXTRA_TURNO_ID, turnoId);
         startActivityForResult(intent, REQUEST_UPDATE_DELETE_TURNO);
     }
 
+    /**
+     *
+     */
     private class TurnosLoadTask extends AsyncTask<Void, Void, Cursor> {
 
         @Override
@@ -138,15 +138,9 @@ public class TurnosFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(),
                         "No hay turnos", Toast.LENGTH_SHORT).show();
+               // cargarTurnos();//TODO no se si va, cuando no haya turnos recargar para no mostrar nada?
                 //getActivity().finish();
             }
         }
     }
-
-  /*  @Override
-    public void onResume() {
-        super.onResume();
-        cargarTurnos();
-        }*/
-
 }

@@ -1,1016 +1,991 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/layout_principal"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical">
-
-<android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar_Inicio"
+    android:id="@+id/layout_principal"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    app:layout_scrollFlags="scroll|enterAlways"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<LinearLayout
-    android:id="@+id/layout_foco"
-    android:layout_width="0px"
-    android:layout_height="0px"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
-
-    <requestFocus /><!-- <requestFocus /> Dándole el foco a este layout que esta vacio hacemos que los edittext no tengan el foco al iniciar-->
-</LinearLayout>
-
-<ScrollView
-    android:id="@+id/layout_scroll"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/color_swatch_margins_large"
-    android:paddingStart="@dimen/color_swatch_margins_large">
-    <!--android:background="@android:color/background_light">-->
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_Inicio"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <LinearLayout
-        android:id="@+id/layout_contenedor_scroll"
+        android:id="@+id/layout_foco"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <requestFocus /><!-- <requestFocus /> Dándole el foco a este layout que esta vacio hacemos que los edittext no tengan el foco al iniciar-->
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/layout_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txt_Titulo_Crear_Turno"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="@dimen/color_swatch_margins_small"
-            android:paddingTop="@dimen/color_swatch_margins_small"
-            android:text="@string/titulo_crear_turno"
-            android:textColor="@color/colorPrimary"
-            android:textSize="40sp" />
-
-        <TextView
-            android:id="@+id/textView_prev_turno"
-            android:layout_width="45dp"
-            android:layout_height="55dp"
-            android:background="@color/grey05"
-            android:clickable="false"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textIsSelectable="false"
-            android:textSize="12sp"
-            android:textStyle="normal|bold"
-            android:paddingTop="@dimen/color_swatch_margins_small"/>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/editText_NombreTurno"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="@string/nombre_turno"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="text"
-                android:labelFor="@+id/editText_NombreTurno"
-                android:maxLines="1"
-                android:theme="@style/colorEditText" />
-            <!-- Color iconos #1E88E5
-             android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/editText_AbreviaturaTurno"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="@string/abreviatura_turno"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="text"
-                android:labelFor="@+id/editText_AbreviaturaTurno"
-                android:maxLength="5"
-                android:maxLines="1"
-                android:theme="@style/colorEditText" />
-            <!-- Color iconos #1E88E5
-             android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
-        </android.support.design.widget.TextInputLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/layout_colores"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/color_swatch_margins_small"
-            android:paddingTop="@dimen/color_swatch_margins_small">
-
-            <Button
-                android:id="@+id/btn_SeleccionColorFondo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/textColorFondo"
-                android:background="@color/grey05" />
-
-            <Button
-                android:id="@+id/btn_SeleccionColorTexto"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/textColorTexto"
-                android:background="@color/grey05"
-                android:paddingEnd="@dimen/activity_vertical_margin"
-                android:paddingStart="@dimen/activity_vertical_margin" />
-
-            <TextView
-                android:id="@+id/textColorTexto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/btn_SeleccionColorFondo"
-                android:layout_alignBottom="@+id/btn_SeleccionColorFondo"
-                android:layout_toEndOf="@+id/btn_SeleccionColorFondo"
-                android:paddingEnd="@dimen/activity_vertical_margin"
-                android:paddingStart="@dimen/activity_vertical_margin"
-                android:text="@string/color_texto"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:id="@+id/textColorFondo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/btn_SeleccionColorFondo"
-                android:layout_alignBottom="@+id/btn_SeleccionColorFondo"
-                android:layout_alignParentStart="true"
-                android:paddingEnd="@dimen/activity_vertical_margin"
-                android:paddingStart="@dimen/activity_vertical_margin"
-                android:text="@string/color_fondo"
-                android:textStyle="normal|bold" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_turno_normal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/color_swatch_margins_large"
-            android:paddingTop="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:id="@+id/textView_hora_inicio_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horario_inicio"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editText_valor_hora_inicio_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView_hora_inicio_1"
-                android:layout_alignBottom="@+id/textView_hora_inicio_1"
-                android:layout_toEndOf="@+id/textView_hora_inicio_1"
-                android:focusable="false"
-                android:hint="@string/hora_00"
-                android:inputType="time"
-                android:labelFor="@+id/editText_valor_hora_inicio_1"
-                android:maxLength="5"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small" />
-
-            <TextView
-                android:id="@+id/textView_hora_fin_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/editText_valor_hora_inicio_1"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horario_fin"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editText_valor_hora_fin_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView_hora_fin_1"
-                android:layout_alignBottom="@+id/textView_hora_fin_1"
-                android:layout_toEndOf="@+id/textView_hora_fin_1"
-                android:focusable="false"
-                android:hint="@string/hora_00"
-                android:inputType="time"
-                android:labelFor="@+id/editText_valor_hora_fin_1"
-                android:maxLength="5"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small" />
-        </RelativeLayout>
-
-        <Switch
-            android:id="@+id/switch_turno_partido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingEnd="@dimen/color_swatch_margins_small"
-            android:paddingStart="@dimen/color_swatch_margins_small"
-            android:text="@string/turno_partido"
-            android:textStyle="normal|bold" />
-
-        <RelativeLayout
-            android:id="@+id/layout_turno_partido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/color_swatch_margins_small"
-            android:paddingTop="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:id="@+id/textView_hora_inicio_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horario_inicio"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editText_valor_hora_inicio_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView_hora_inicio_2"
-                android:layout_alignBottom="@+id/textView_hora_inicio_2"
-                android:layout_toEndOf="@+id/textView_hora_inicio_2"
-                android:focusable="false"
-                android:hint="@string/hora_00"
-                android:inputType="time"
-                android:labelFor="@+id/editText_valor_hora_inicio_2"
-                android:maxLength="5"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small" />
-
-            <TextView
-                android:id="@+id/textView_hora_fin_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/editText_valor_hora_inicio_2"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horario_fin"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editText_valor_hora_fin_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView_hora_fin_2"
-                android:layout_alignBottom="@+id/textView_hora_fin_2"
-                android:layout_toEndOf="@+id/textView_hora_fin_2"
-                android:focusable="false"
-                android:hint="@string/hora_00"
-                android:inputType="time"
-                android:labelFor="@+id/editText_valor_hora_fin_2"
-                android:maxLength="5"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_horas_trabajadas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/color_swatch_margins_large"
-            android:paddingTop="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:id="@+id/textHorasTrabajadas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horas_trabajadas"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:id="@+id/textView_valor_horas_trabajadas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textHorasTrabajadas"
-                android:layout_alignBottom="@+id/textHorasTrabajadas"
-                android:layout_toEndOf="@+id/textHorasTrabajadas"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/hora_00"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textHorasTrabajadasNoche"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/textView_valor_horas_trabajadas"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horas_trabajadas_nocturnas"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editText_valor_horas_trabajadas_noche"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textHorasTrabajadasNoche"
-                android:layout_alignBottom="@+id/textHorasTrabajadasNoche"
-                android:layout_toEndOf="@+id/textHorasTrabajadasNoche"
-                android:focusable="false"
-                android:hint="@string/hora_00"
-                android:inputType="time"
-                android:labelFor="@+id/editText_valor_horas_trabajadas_noche"
-                android:maxLength="5"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/textPrecioHorasTrabajadas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingBottom="@dimen/color_swatch_margins_small"
-            android:paddingEnd="@dimen/color_swatch_margins_small"
-            android:paddingStart="@dimen/color_swatch_margins_small"
-            android:paddingTop="@dimen/color_swatch_margins_large"
-            android:text="@string/precio_hora"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
-
-        <RelativeLayout
-            android:id="@+id/layout_valor_precio_horas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/color_swatch_margins_large">
-
-            <TextView
-                android:id="@+id/textPrecioHoras"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horas_trabajadas_normal"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editTextValorPrecioHoras"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textPrecioHoras"
-                android:layout_alignBottom="@+id/textPrecioHoras"
-                android:layout_toEndOf="@+id/textPrecioHoras"
-                android:hint="@string/valor_precio_hora"
-                android:inputType="numberDecimal"
-                android:maxLength="6" />
-
-            <TextView
-                android:id="@+id/textPrecioHoras€"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/editTextValorPrecioHoras"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="0dp"
-                android:text="@string/€"
-                android:textStyle="normal|bold" />
-
-
-            <TextView
-                android:id="@+id/textPrecioHorasNoche"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/textPrecioHoras€"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horas_trabajadas_nocturnas"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editTextValorPrecioNoche"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textPrecioHoras"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/textPrecioHorasNoche"
-                android:hint="@string/valor_precio_hora"
-                android:inputType="numberDecimal"
-                android:maxLength="6" />
-
-            <TextView
-                android:id="@+id/textPrecioNoche€"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/editTextValorPrecioNoche"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="0dp"
-                android:text="@string/€"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:id="@+id/textPrecioHorasExtra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/textPrecioNoche€"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/horas_trabajadas_extras"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editTextValorPrecioExtra"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignBaseline="@+id/textPrecioHoras"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/textPrecioHorasExtra"
-                android:hint="@string/valor_precio_hora"
-                android:inputType="numberDecimal"
-                android:maxLength="6" />
-
-            <TextView
-                android:id="@+id/textPrecioExtra€"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/editTextValorPrecioExtra"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="0dp"
-                android:text="@string/€"
-                android:textStyle="normal|bold" />
-
-
-        </RelativeLayout>
-
-        <Switch
-            android:id="@+id/switch_avisos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingBottom="@dimen/color_swatch_margins_large"
-            android:paddingEnd="@dimen/color_swatch_margins_small"
-            android:paddingStart="@dimen/color_swatch_margins_small"
-            android:text="@string/avisos"
-            android:textStyle="normal|bold" />
-
-        <RelativeLayout
-            android:id="@+id/layout_seleccion_hora_aviso"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/color_swatch_margins_large"
-            android:paddingTop="@dimen/color_swatch_margins_large">
-
-            <TextView
-                android:id="@+id/text_aviso_hora"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/hora"
-                android:textStyle="normal|bold" />
-
-            <EditText
-                android:id="@+id/editText_valor_aviso_hora"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/text_aviso_hora"
-                android:layout_alignBottom="@+id/text_aviso_hora"
-                android:layout_toEndOf="@+id/text_aviso_hora"
-                android:focusable="false"
-                android:hint="@string/hora_00"
-                android:maxLength="5"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small" />
-
-            <Switch
-                android:id="@+id/switch_aviso_dia_antes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/editText_valor_aviso_hora"
-                android:layout_alignBottom="@+id/editText_valor_aviso_hora"
-                android:layout_toEndOf="@+id/editText_valor_aviso_hora"
-                android:paddingEnd="@dimen/color_swatch_margins_small"
-                android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/avisar_dia_antes"
-                android:textStyle="normal|bold" />
-        </RelativeLayout>
-
-        <!-- <RelativeLayout
-             android:id="@+id/layout_seleccion_sonido_aviso"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_alignParentStart="true"
-             android:layout_alignParentTop="true"
-             android:gravity="center_horizontal"
-             android:orientation="horizontal">
-
-             <android.support.design.widget.TextInputLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
-
-                 <EditText
-                     android:id="@+id/editText_seleccion_sonido_aviso"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:drawablePadding="@dimen/activity_horizontal_margin"
-                     android:drawableStart="@drawable/music_blue"
-                     android:hint="@string/selecionar_sonido"
-                     android:imeOptions="flagNoExtractUi"
-                     android:labelFor="@+id/editText_seleccion_sonido_aviso"
-                     android:maxLines="1"
-                     android:theme="@style/colorEditText" />
-                 Color iconos #1E88E5
-                  android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape
-             </android.support.design.widget.TextInputLayout>
-         </RelativeLayout>-->
-
-
-        <Switch
-            android:id="@+id/switch_modo_telefono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/color_swatch_margins_small"
-            android:paddingStart="@dimen/color_swatch_margins_small"
-            android:paddingTop="@dimen/color_swatch_margins_large"
-            android:text="@string/activar_modo_telefono"
-            android:textStyle="normal|bold" />
+        android:paddingEnd="@dimen/color_swatch_margins_large"
+        android:paddingStart="@dimen/color_swatch_margins_large">
+        <!--android:background="@android:color/background_light">-->
 
         <LinearLayout
-            android:id="@+id/layout_modos_telefono"
+            android:id="@+id/layout_contenedor_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/color_swatch_margins_small"
-            android:paddingTop="@dimen/color_swatch_margins_large">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView_wifi"
+                android:id="@+id/txt_Titulo_Crear_Turno"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_small"
+                android:text="@string/titulo_crear_turno"
+                android:textColor="@color/colorPrimary"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/textView_prev_turno"
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:background="@color/grey05"
+                android:clickable="false"
+                android:gravity="center"
+                android:paddingTop="@dimen/color_swatch_margins_small"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="normal|bold" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/editText_NombreTurno"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/nombre_turno"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="text"
+                    android:labelFor="@+id/editText_NombreTurno"
+                    android:maxLines="1"
+                    android:theme="@style/colorEditText" />
+                <!-- Color iconos #1E88E5
+                 android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/editText_AbreviaturaTurno"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/abreviatura_turno"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="text"
+                    android:labelFor="@+id/editText_AbreviaturaTurno"
+                    android:maxLength="5"
+                    android:maxLines="1"
+                    android:theme="@style/colorEditText" />
+                <!-- Color iconos #1E88E5
+                 android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+            </android.support.design.widget.TextInputLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/layout_colores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_small">
+
+                <Button
+                    android:id="@+id/btn_SeleccionColorFondo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textColorFondo"
+                    android:background="@color/grey05" />
+
+                <Button
+                    android:id="@+id/btn_SeleccionColorTexto"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textColorTexto"
+                    android:background="@color/grey05"
+                    android:paddingEnd="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/activity_vertical_margin" />
+
+                <TextView
+                    android:id="@+id/textColorTexto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/btn_SeleccionColorFondo"
+                    android:layout_alignBottom="@+id/btn_SeleccionColorFondo"
+                    android:layout_toEndOf="@+id/btn_SeleccionColorFondo"
+                    android:paddingEnd="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/activity_vertical_margin"
+                    android:text="@string/color_texto"
+                    android:textStyle="normal|bold" />
+
+                <TextView
+                    android:id="@+id/textColorFondo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/btn_SeleccionColorFondo"
+                    android:layout_alignBottom="@+id/btn_SeleccionColorFondo"
+                    android:layout_alignParentStart="true"
+                    android:paddingEnd="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/activity_vertical_margin"
+                    android:text="@string/color_fondo"
+                    android:textStyle="normal|bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_turno_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_large"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/textView_hora_inicio_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horario_inicio"
+                    android:textStyle="normal|bold" />
+
+                <EditText
+                    android:id="@+id/editText_valor_hora_inicio_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView_hora_inicio_1"
+                    android:layout_alignBottom="@+id/textView_hora_inicio_1"
+                    android:layout_toEndOf="@+id/textView_hora_inicio_1"
+                    android:focusable="false"
+                    android:hint="@string/hora_00"
+                    android:inputType="time"
+                    android:labelFor="@+id/editText_valor_hora_inicio_1"
+                    android:maxLength="5"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small" />
+
+                <TextView
+                    android:id="@+id/textView_hora_fin_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/editText_valor_hora_inicio_1"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horario_fin"
+                    android:textStyle="normal|bold" />
+
+                <EditText
+                    android:id="@+id/editText_valor_hora_fin_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView_hora_fin_1"
+                    android:layout_alignBottom="@+id/textView_hora_fin_1"
+                    android:layout_toEndOf="@+id/textView_hora_fin_1"
+                    android:focusable="false"
+                    android:hint="@string/hora_00"
+                    android:inputType="time"
+                    android:labelFor="@+id/editText_valor_hora_fin_1"
+                    android:maxLength="5"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small" />
+            </RelativeLayout>
+
+            <Switch
+                android:id="@+id/switch_turno_partido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:paddingEnd="@dimen/color_swatch_margins_small"
                 android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/wifi"
-                android:textSize="18sp"
+                android:text="@string/turno_partido"
                 android:textStyle="normal|bold" />
 
             <RelativeLayout
+                android:id="@+id/layout_turno_partido"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
-                <RelativeLayout
-                    android:id="@+id/layout_wifi_inicio"
+                <TextView
+                    android:id="@+id/textView_hora_inicio_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="@dimen/color_swatch_margins_large"
-                    android:layout_marginStart="@dimen/activity_vertical_margin"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horario_inicio"
+                    android:textStyle="normal|bold" />
 
-                    <TextView
-                        android:id="@+id/textView_wifi_inicio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:paddingBottom="@dimen/color_swatch_margins_large"
-                        android:paddingTop="@dimen/color_swatch_margins_large"
-                        android:text="@string/iniciar_turno"
-                        android:textStyle="normal|bold" />
-
-                    <RadioGroup
-                        android:id="@+id/radioGroup_modo_wifi_inicio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/textView_wifi_inicio"
-                        android:checkedButton="@+id/radioButton_wifi_inicio_no_cambiar"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radioButton_wifi_inicio_activar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_wifi_on" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_wifi_inicio_desactivar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_wifi_off" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_wifi_inicio_no_cambiar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_no_cambiar" />
-                    </RadioGroup>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/layout_wifi_fin"
+                <EditText
+                    android:id="@+id/editText_valor_hora_inicio_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/layout_wifi_inicio"
-                    android:layout_alignBottom="@+id/layout_wifi_inicio"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin"
-                    android:layout_marginStart="@dimen/color_swatch_margins_large"
-                    android:layout_toEndOf="@+id/layout_wifi_inicio"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_alignBaseline="@+id/textView_hora_inicio_2"
+                    android:layout_alignBottom="@+id/textView_hora_inicio_2"
+                    android:layout_toEndOf="@+id/textView_hora_inicio_2"
+                    android:focusable="false"
+                    android:hint="@string/hora_00"
+                    android:inputType="time"
+                    android:labelFor="@+id/editText_valor_hora_inicio_2"
+                    android:maxLength="5"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small" />
 
-                    <TextView
-                        android:id="@+id/textView_wifi_fin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:paddingBottom="@dimen/color_swatch_margins_large"
-                        android:paddingTop="@dimen/color_swatch_margins_large"
-                        android:text="@string/finalizar_turno"
-                        android:textStyle="normal|bold" />
+                <TextView
+                    android:id="@+id/textView_hora_fin_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/editText_valor_hora_inicio_2"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horario_fin"
+                    android:textStyle="normal|bold" />
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup_modo_wifi_fin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/textView_wifi_fin"
-                        android:checkedButton="@+id/radioButton_wifi_fin_no_cambiar"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/editText_valor_hora_fin_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView_hora_fin_2"
+                    android:layout_alignBottom="@+id/textView_hora_fin_2"
+                    android:layout_toEndOf="@+id/textView_hora_fin_2"
+                    android:focusable="false"
+                    android:hint="@string/hora_00"
+                    android:inputType="time"
+                    android:labelFor="@+id/editText_valor_hora_fin_2"
+                    android:maxLength="5"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small" />
 
-                        <RadioButton
-                            android:id="@+id/radioButton_wifi_fin_activar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_wifi_on" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_wifi_fin_desactivar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_wifi_off" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_wifi_fin_no_cambiar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_no_cambiar" />
-                    </RadioGroup>
-                </RelativeLayout>
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/layout_horas_trabajadas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_large"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/textHorasTrabajadas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horas_trabajadas"
+                    android:textStyle="normal|bold" />
+
+                <TextView
+                    android:id="@+id/textView_valor_horas_trabajadas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textHorasTrabajadas"
+                    android:layout_alignBottom="@+id/textHorasTrabajadas"
+                    android:layout_toEndOf="@+id/textHorasTrabajadas"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/hora_00"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textHorasTrabajadasNoche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView_valor_horas_trabajadas"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horas_trabajadas_nocturnas"
+                    android:textStyle="normal|bold" />
+
+                <EditText
+                    android:id="@+id/editText_valor_horas_trabajadas_noche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textHorasTrabajadasNoche"
+                    android:layout_alignBottom="@+id/textHorasTrabajadasNoche"
+                    android:layout_toEndOf="@+id/textHorasTrabajadasNoche"
+                    android:focusable="false"
+                    android:hint="@string/hora_00"
+                    android:inputType="time"
+                    android:labelFor="@+id/editText_valor_horas_trabajadas_noche"
+                    android:maxLength="5"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small" />
+
+            </RelativeLayout>
+
+
             <TextView
-                android:id="@+id/textView_sonido"
+                android:id="@+id/textPrecioHorasTrabajadas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
                 android:paddingEnd="@dimen/color_swatch_margins_small"
                 android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/sonido"
+                android:paddingTop="@dimen/color_swatch_margins_large"
+                android:text="@string/precio_hora"
                 android:textSize="18sp"
                 android:textStyle="normal|bold" />
 
+
             <RelativeLayout
+                android:id="@+id/layout_valor_precio_horas"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/color_swatch_margins_large">
 
-                <RelativeLayout
-                    android:id="@+id/layout_sonido_inicio"
+                <TextView
+                    android:id="@+id/textPrecioHoras"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="@dimen/color_swatch_margins_large"
-                    android:layout_marginStart="@dimen/color_swatch_margins_large"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_alignParentTop="true"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horas_trabajadas_normal"
+                    android:textStyle="normal|bold" />
 
-                    <TextView
-                        android:id="@+id/textView_sonido_inicio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:paddingBottom="@dimen/color_swatch_margins_large"
-                        android:paddingTop="@dimen/color_swatch_margins_large"
-                        android:text="@string/iniciar_turno"
-                        android:textStyle="normal|bold" />
-
-                    <RadioGroup
-                        android:id="@+id/radioGroup_modo_sonido_inicio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/textView_sonido_inicio"
-                        android:checkedButton="@+id/radioButton_sonido_inicio_no_cambiar"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_inicio_activar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_sonido_on" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_inicio_vibrate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_sonido_vibrate" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_inicio_silencio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_sonido_off" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_inicio_no_cambiar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_no_cambiar" />
-                    </RadioGroup>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/layout_sonido_fin"
+                <EditText
+                    android:id="@+id/editTextValorPrecioHoras"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/layout_sonido_inicio"
-                    android:layout_alignBottom="@+id/layout_sonido_inicio"
-                    android:layout_marginEnd="@dimen/color_swatch_margins_large"
-                    android:layout_marginStart="@dimen/color_swatch_margins_large"
-                    android:layout_toEndOf="@+id/layout_sonido_inicio"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_alignBaseline="@+id/textPrecioHoras"
+                    android:layout_alignBottom="@+id/textPrecioHoras"
+                    android:layout_toEndOf="@+id/textPrecioHoras"
+                    android:inputType="numberDecimal"
+                    android:labelFor="@+id/editTextValorPrecioHoras"
+                    android:maxLength="6"
+                    android:text="@string/valor_precio_hora" />
 
-                    <TextView
-                        android:id="@+id/textView_sonido_fin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:paddingBottom="@dimen/color_swatch_margins_large"
-                        android:paddingTop="@dimen/color_swatch_margins_large"
-                        android:text="@string/finalizar_turno"
-                        android:textStyle="normal|bold" />
+                <TextView
+                    android:id="@+id/textPrecioHoras€"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/editTextValorPrecioHoras"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="0dp"
+                    android:text="@string/€"
+                    android:textStyle="normal|bold" />
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup_modo_sonido_fin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/textView_sonido_fin"
-                        android:checkedButton="@+id/radioButton_sonido_fin_no_cambiar"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_fin_activar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_sonido_on" />
+                <TextView
+                    android:id="@+id/textPrecioHorasNoche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textPrecioHoras€"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horas_trabajadas_nocturnas"
+                    android:textStyle="normal|bold" />
 
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_fin_vibrate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_sonido_vibrate" />
+                <EditText
+                    android:id="@+id/editTextValorPrecioNoche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textPrecioHoras"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textPrecioHorasNoche"
+                    android:inputType="numberDecimal"
+                    android:labelFor="@+id/editTextValorPrecioNoche"
+                    android:maxLength="6"
+                    android:text="@string/valor_precio_hora" />
 
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_fin_silencio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_sonido_off" />
+                <TextView
+                    android:id="@+id/textPrecioNoche€"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/editTextValorPrecioNoche"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="0dp"
+                    android:text="@string/€"
+                    android:textStyle="normal|bold" />
 
-                        <RadioButton
-                            android:id="@+id/radioButton_sonido_fin_no_cambiar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_no_cambiar" />
+                <TextView
+                    android:id="@+id/textPrecioHorasExtra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textPrecioNoche€"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/horas_trabajadas_extras"
+                    android:textStyle="normal|bold" />
 
-                    </RadioGroup>
-                </RelativeLayout>
+                <EditText
+                    android:id="@+id/editTextValorPrecioExtra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignBaseline="@+id/textPrecioHoras"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textPrecioHorasExtra"
+                    android:inputType="numberDecimal"
+                    android:labelFor="@+id/editTextValorPrecioExtra"
+                    android:maxLength="6"
+                    android:text="@string/valor_precio_hora" />
+
+                <TextView
+                    android:id="@+id/textPrecioExtra€"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/editTextValorPrecioExtra"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="0dp"
+                    android:text="@string/€"
+                    android:textStyle="normal|bold" />
+
+
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView_bluetooth"
+            <Switch
+                android:id="@+id/switch_avisos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_large"
                 android:paddingEnd="@dimen/color_swatch_margins_small"
                 android:paddingStart="@dimen/color_swatch_margins_small"
-                android:text="@string/bluetooth"
-                android:textSize="18sp"
+                android:text="@string/avisos"
                 android:textStyle="normal|bold" />
 
             <RelativeLayout
+                android:id="@+id/layout_seleccion_hora_aviso"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_large"
+                android:paddingTop="@dimen/color_swatch_margins_large">
 
-                <RelativeLayout
-                    android:id="@+id/layout_bluetooth_inicio"
+                <TextView
+                    android:id="@+id/text_aviso_hora"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="@dimen/color_swatch_margins_large"
-                    android:layout_marginStart="@dimen/activity_vertical_margin"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_alignParentTop="true"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/hora"
+                    android:textStyle="normal|bold" />
 
-                    <TextView
-                        android:id="@+id/textView_bluetooth_inicio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:paddingBottom="@dimen/color_swatch_margins_large"
-                        android:paddingTop="@dimen/color_swatch_margins_large"
-                        android:text="@string/iniciar_turno"
-                        android:textStyle="normal|bold" />
-
-                    <RadioGroup
-                        android:id="@+id/radioGroup_modo_bluetooth_inicio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/textView_bluetooth_inicio"
-                        android:checkedButton="@+id/radioButton_bluetooth_inicio_no_cambiar"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radioButton_bluetooth_inicio_activar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_bluetooth_on" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_bluetooth_inicio_desactivar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_bluetooth_off" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_bluetooth_inicio_no_cambiar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_no_cambiar" />
-                    </RadioGroup>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/layout_bluetooth_fin"
+                <EditText
+                    android:id="@+id/editText_valor_aviso_hora"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/layout_bluetooth_inicio"
-                    android:layout_alignBottom="@+id/layout_bluetooth_inicio"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin"
-                    android:layout_marginStart="@dimen/color_swatch_margins_large"
-                    android:layout_toEndOf="@+id/layout_bluetooth_inicio"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_alignBaseline="@+id/text_aviso_hora"
+                    android:layout_alignBottom="@+id/text_aviso_hora"
+                    android:layout_toEndOf="@+id/text_aviso_hora"
+                    android:focusable="false"
+                    android:hint="@string/hora_00"
+                    android:maxLength="5"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small" />
 
-                    <TextView
-                        android:id="@+id/textView_bluetooth_fin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:paddingBottom="@dimen/color_swatch_margins_large"
-                        android:paddingTop="@dimen/color_swatch_margins_large"
-                        android:text="@string/finalizar_turno"
-                        android:textStyle="normal|bold" />
-
-                    <RadioGroup
-                        android:id="@+id/radioGroup_modo_bluetooth_fin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/textView_bluetooth_fin"
-                        android:checkedButton="@+id/radioButton_bluetooth_fin_no_cambiar"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radioButton_bluetooth_fin_activar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_bluetooth_on" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_bluetooth_fin_desactivar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_bluetooth_off" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton_bluetooth_fin_no_cambiar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:button="@drawable/rb_background_no_cambiar" />
-                    </RadioGroup>
-                </RelativeLayout>
+                <Switch
+                    android:id="@+id/switch_aviso_dia_antes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editText_valor_aviso_hora"
+                    android:layout_alignBottom="@+id/editText_valor_aviso_hora"
+                    android:layout_toEndOf="@+id/editText_valor_aviso_hora"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/avisar_dia_antes"
+                    android:textStyle="normal|bold" />
             </RelativeLayout>
+
+            <!-- <RelativeLayout
+                 android:id="@+id/layout_seleccion_sonido_aviso"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentStart="true"
+                 android:layout_alignParentTop="true"
+                 android:gravity="center_horizontal"
+                 android:orientation="horizontal">
+
+                 <android.support.design.widget.TextInputLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
+
+                     <EditText
+                         android:id="@+id/editText_seleccion_sonido_aviso"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:drawablePadding="@dimen/activity_horizontal_margin"
+                         android:drawableStart="@drawable/music_blue"
+                         android:hint="@string/selecionar_sonido"
+                         android:imeOptions="flagNoExtractUi"
+                         android:labelFor="@+id/editText_seleccion_sonido_aviso"
+                         android:maxLines="1"
+                         android:theme="@style/colorEditText" />
+                     Color iconos #1E88E5
+                      android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape
+                 </android.support.design.widget.TextInputLayout>
+             </RelativeLayout>-->
+
+
+            <Switch
+                android:id="@+id/switch_modo_telefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:paddingEnd="@dimen/color_swatch_margins_small"
+                android:paddingStart="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_large"
+                android:text="@string/activar_modo_telefono"
+                android:textStyle="normal|bold" />
+
+            <LinearLayout
+                android:id="@+id/layout_modos_telefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_large">
+
+                <TextView
+                    android:id="@+id/textView_wifi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/wifi"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_wifi_inicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginEnd="@dimen/color_swatch_margins_large"
+                        android:layout_marginStart="@dimen/activity_vertical_margin"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView_wifi_inicio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/color_swatch_margins_large"
+                            android:paddingTop="@dimen/color_swatch_margins_large"
+                            android:text="@string/iniciar_turno"
+                            android:textStyle="normal|bold" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup_modo_wifi_inicio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/textView_wifi_inicio"
+                            android:checkedButton="@+id/radioButton_wifi_inicio_no_cambiar"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton_wifi_inicio_activar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_wifi_on" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_wifi_inicio_desactivar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_wifi_off" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_wifi_inicio_no_cambiar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_no_cambiar" />
+                        </RadioGroup>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_wifi_fin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/layout_wifi_inicio"
+                        android:layout_alignBottom="@+id/layout_wifi_inicio"
+                        android:layout_marginEnd="@dimen/activity_vertical_margin"
+                        android:layout_marginStart="@dimen/color_swatch_margins_large"
+                        android:layout_toEndOf="@+id/layout_wifi_inicio"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView_wifi_fin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/color_swatch_margins_large"
+                            android:paddingTop="@dimen/color_swatch_margins_large"
+                            android:text="@string/finalizar_turno"
+                            android:textStyle="normal|bold" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup_modo_wifi_fin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/textView_wifi_fin"
+                            android:checkedButton="@+id/radioButton_wifi_fin_no_cambiar"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton_wifi_fin_activar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_wifi_on" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_wifi_fin_desactivar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_wifi_off" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_wifi_fin_no_cambiar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_no_cambiar" />
+                        </RadioGroup>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView_sonido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/sonido"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_sonido_inicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginEnd="@dimen/color_swatch_margins_large"
+                        android:layout_marginStart="@dimen/color_swatch_margins_large"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView_sonido_inicio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/color_swatch_margins_large"
+                            android:paddingTop="@dimen/color_swatch_margins_large"
+                            android:text="@string/iniciar_turno"
+                            android:textStyle="normal|bold" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup_modo_sonido_inicio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/textView_sonido_inicio"
+                            android:checkedButton="@+id/radioButton_sonido_inicio_no_cambiar"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_inicio_activar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_sonido_on" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_inicio_vibrate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_sonido_vibrate" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_inicio_silencio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_sonido_off" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_inicio_no_cambiar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_no_cambiar" />
+                        </RadioGroup>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_sonido_fin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/layout_sonido_inicio"
+                        android:layout_alignBottom="@+id/layout_sonido_inicio"
+                        android:layout_marginEnd="@dimen/color_swatch_margins_large"
+                        android:layout_marginStart="@dimen/color_swatch_margins_large"
+                        android:layout_toEndOf="@+id/layout_sonido_inicio"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView_sonido_fin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/color_swatch_margins_large"
+                            android:paddingTop="@dimen/color_swatch_margins_large"
+                            android:text="@string/finalizar_turno"
+                            android:textStyle="normal|bold" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup_modo_sonido_fin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/textView_sonido_fin"
+                            android:checkedButton="@+id/radioButton_sonido_fin_no_cambiar"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_fin_activar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_sonido_on" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_fin_vibrate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_sonido_vibrate" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_fin_silencio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_sonido_off" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_sonido_fin_no_cambiar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_no_cambiar" />
+
+                        </RadioGroup>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView_bluetooth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/bluetooth"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_bluetooth_inicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginEnd="@dimen/color_swatch_margins_large"
+                        android:layout_marginStart="@dimen/activity_vertical_margin"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView_bluetooth_inicio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/color_swatch_margins_large"
+                            android:paddingTop="@dimen/color_swatch_margins_large"
+                            android:text="@string/iniciar_turno"
+                            android:textStyle="normal|bold" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup_modo_bluetooth_inicio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/textView_bluetooth_inicio"
+                            android:checkedButton="@+id/radioButton_bluetooth_inicio_no_cambiar"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton_bluetooth_inicio_activar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_bluetooth_on" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_bluetooth_inicio_desactivar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_bluetooth_off" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_bluetooth_inicio_no_cambiar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_no_cambiar" />
+                        </RadioGroup>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_bluetooth_fin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/layout_bluetooth_inicio"
+                        android:layout_alignBottom="@+id/layout_bluetooth_inicio"
+                        android:layout_marginEnd="@dimen/activity_vertical_margin"
+                        android:layout_marginStart="@dimen/color_swatch_margins_large"
+                        android:layout_toEndOf="@+id/layout_bluetooth_inicio"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView_bluetooth_fin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/color_swatch_margins_large"
+                            android:paddingTop="@dimen/color_swatch_margins_large"
+                            android:text="@string/finalizar_turno"
+                            android:textStyle="normal|bold" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup_modo_bluetooth_fin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/textView_bluetooth_fin"
+                            android:checkedButton="@+id/radioButton_bluetooth_fin_no_cambiar"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButton_bluetooth_fin_activar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_bluetooth_on" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_bluetooth_fin_desactivar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_bluetooth_off" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton_bluetooth_fin_no_cambiar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:button="@drawable/rb_background_no_cambiar" />
+                        </RadioGroup>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_botones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/color_swatch_margins_large">
-
-            <Button
-                android:id="@+id/button_borrar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:text="@string/borrar" />
-
-            <Button
-                android:id="@+id/button_guardar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/button_borrar"
-                android:paddingEnd="@dimen/activity_vertical_margin"
-                android:paddingStart="@dimen/activity_vertical_margin"
-                android:text="@string/guardar" />
-        </RelativeLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 </LinearLayout>

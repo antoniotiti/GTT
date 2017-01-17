@@ -90,7 +90,7 @@ public class PuestosFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Activity.RESULT_OK == resultCode) {
             switch (requestCode) {
-                /*case AddEditLawyerActivity.REQUEST_ADD_LAWYER:
+                /*case AddEditLawyerActivity.REQUEST_ADD_TURNO:
                     showSuccessfullSavedMessage();
                     cargarPuestos();
                     break;*/
@@ -112,7 +112,7 @@ public class PuestosFragment extends Fragment {
 
    /* private void showAddScreen() {
         Intent intent = new Intent(getActivity(), AddEditLawyerActivity.class);
-        startActivityForResult(intent, AddEditLawyerActivity.REQUEST_ADD_LAWYER);
+        startActivityForResult(intent, AddEditLawyerActivity.REQUEST_ADD_TURNO);
     }
 
     private void showDetailScreen(String lawyerId) {

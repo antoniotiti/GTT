@@ -336,7 +336,7 @@ public final class OperacionesBaseDatos {
 
     }
 
-    public boolean actualizarTurno(Turno turno) {
+    public int editarTurno(Turno turno, String turnoId) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
         ContentValues valores = new ContentValues();
@@ -359,11 +359,11 @@ public final class OperacionesBaseDatos {
         valores.put(Turnos.COLOR_TEXTO, turno.colorTexto);
 
         String whereClause = String.format("%s=?", Turnos.ID);
-        String[] whereArgs = {turno.idTurno};
+        String[] whereArgs = {turnoId};
 
-        int resultado = db.update(Tablas.TURNO, valores, whereClause, whereArgs);
+       /* int resultado =*/  return db.update(Tablas.TURNO, valores, whereClause, whereArgs);
 
-        return resultado > 0;
+        //return resultado > 0;
     }
 
     /*public boolean eliminarTurno(String idTurno) {

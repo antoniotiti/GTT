@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".lawyerdetail.LawyerDetailActivity">
     <item
-        android:id="@+id/action_edit"
+        android:id="@+id/action_save"
         android:orderInCategory="1"
         android:title="@string/action_edit"
-        android:icon="@drawable/pencil"
+        android:icon="@drawable/save"
         app:showAsAction="ifRoom" />
 
     <item
