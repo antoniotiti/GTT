@@ -67,7 +67,7 @@
                 android:value="com.example.antonio.gestiontrabajotemporal.ui.PantallaCalendario" />
         </activity>
         <activity
-            android:name=".turnos1.TurnosActivity1"
+            android:name=".turnos.TurnosActivity"
             android:label="@string/title_activity_turnos"
             android:theme="@style/AppTheme" />
         <activity
@@ -79,10 +79,17 @@
             android:label="@string/title_activity_puestos"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".turnos.TurnosActivity"
-            android:label="@string/title_activity_turnos"
+            android:name=".puestodetalle.PuestoDetalleActivity"
+            android:label="@string/title_activity_puesto_detalle"
             android:theme="@style/AppTheme" />
-
+        <activity
+            android:name=".calendarios.CalendariosActivity"
+            android:label="@string/title_activity_calendarios"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".calendariodetalle.CalendarioDetalleActivity"
+            android:label="@string/title_activity_calendario_detalle"
+            android:theme="@style/AppTheme" />
 
     </application>
 

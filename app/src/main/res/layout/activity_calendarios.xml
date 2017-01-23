@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.antonio.gestiontrabajotemporal.puestos.PuestosActivity">
+    tools:context="com.example.antonio.gestiontrabajotemporal.calendarios.CalendariosActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_puesto"
+            android:id="@+id/toolbar_calendario"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -21,10 +21,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_puestos" />
+    <include layout="@layout/content_calendarios" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_puesto"
+        android:id="@+id/fab_calendario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

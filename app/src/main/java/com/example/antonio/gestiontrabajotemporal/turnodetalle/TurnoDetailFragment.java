@@ -79,14 +79,18 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     //Campos validados
     Boolean nombreTurnoValidado = false, abreviaturaTurnoValidado = false, horaInicio1Validado = false, horaFin1Validado = false, horaInicio2Validado = true, horaFin2Validado = true, precioHoraValidado = false,
             avisoHoraValidado = true;
-    //Formato de hora.
-    SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
+
     //Diálogo selección de color.
     ColorPickerDialog colorPickerDialog;
     private String mTurnoId;
     private CollapsingToolbarLayout mCollapsingView;
 
+    //Formato de hora.
+    SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
 
+    /**
+     * Constructor por defecto.
+     */
     public TurnoDetailFragment() {
         // Required empty public constructor
     }
@@ -106,7 +110,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         if (getArguments() != null) {
             mTurnoId = getArguments().getString(ARG_TURNO_ID);
         }
-
         setHasOptionsMenu(true);
     }
 
@@ -116,7 +119,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
         View root = inflater.inflate(R.layout.fragment_turno_detail, container, false);
 
-        mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout);
+        mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout_turno);
 
         activeTime = Calendar.getInstance();
         activeTime.set(0, 0, 0, 0, 0, 0);
@@ -385,7 +388,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
      * Método encargado de lanzar la tarea en segundo plano para borrar un turno.
      */
     public void borrarTurno() {
-        new DeleteLawyerTask().execute();
+        new DeleteTurnoTask().execute();
         //Toast.makeText(getActivity(), "Turno Borrado", Toast.LENGTH_LONG).show();
     }
 
@@ -455,7 +458,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             case R.id.action_delete:
                 new SimpleDialog().show(getFragmentManager(), "SimpleDialog");
 
-                //new DeleteLawyerTask().execute();
+                //new DeleteTurnoTask().execute();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -556,10 +559,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             Toast.makeText(getActivity(),
                     "Turno eliminado correctamente", Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-
+            //  datos.close();
+            getActivity().finish();
         }
-        //  datos.close();
-        getActivity().finish();
     }
 
     private void showTurnoScreenFromAdd(Boolean requery) {
@@ -570,9 +572,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             Toast.makeText(getActivity(),
                     "Turno creado correctamente", Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
+            // datos.close();
+            getActivity().finish();
         }
-        // datos.close();
-        getActivity().finish();
     }
 
     private void showTurnoScreenFromEdit(Boolean requery) {
@@ -583,9 +585,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             Toast.makeText(getActivity(),
                     "Turno editado correctamente", Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
+            // datos.close();
+            getActivity().finish();
         }
-        // datos.close();
-        getActivity().finish();
     }
 
     //Mostrar Errores
@@ -644,9 +646,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     }
 
     /**
-     * Clae asíncrona encargada de borrar un turno seleccionado
+     * Clase asíncrona encargada de borrar un turno seleccionado
      */
-    private class DeleteLawyerTask extends AsyncTask<Void, Void, Integer> {
+    private class DeleteTurnoTask extends AsyncTask<Void, Void, Integer> {
         /**
          * Eliminamos el turno seleccionado
          *

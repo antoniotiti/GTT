@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_principal_calendarios"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_inicio_calendario"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:id="@+id/layout_foco_calendario"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <requestFocus /><!-- <requestFocus /> Dándole el foco a este layout que esta vacio hacemos que los edittext no tengan el foco al iniciar-->
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/layout_scroll_calendario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/color_swatch_margins_large"
+        android:paddingStart="@dimen/color_swatch_margins_large">
+        <!--android:background="@android:color/background_light">-->
+
+        <LinearLayout
+            android:id="@+id/layout_contenedor_scroll_calendario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_titulo_crear_calendario"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_small"
+                android:text="@string/titulo_crear_calendario"
+                android:textColor="@color/colorPrimary"
+                android:textSize="40sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/editText_nombre_calendario"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/nombre_calendario"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="text"
+                    android:labelFor="@+id/editText_NombreCalendario"
+                    android:maxLines="1"
+                    android:theme="@style/colorEditText" />
+                <!-- Color iconos #1E88E5
+                 android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/editText_descripcion_calendario"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/descripcion_calendario"
+                    android:imeOptions="flagNoExtractUi"
+                    android:labelFor="@+id/editText_descripcion_calendario"
+                    android:theme="@style/colorEditText"
+                    android:inputType="textMultiLine" />
+                <!-- Color iconos #1E88E5
+                 android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

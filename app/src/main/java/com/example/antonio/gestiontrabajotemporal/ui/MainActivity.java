@@ -42,12 +42,7 @@ public class MainActivity extends AppCompatActivity {
     boolean codigoOperarioValidado, passwordValidado;
 
     OperacionesBaseDatos datos;
-    TextView textView;
-    private int mSelectedColor;
 
-    /**
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +60,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             //Abrir BD
             datos = OperacionesBaseDatos.obtenerInstancia(getApplicationContext());
-
         }
 
         // Obtenemos las referencias de las vistas
         txtRegister = (TextView) findViewById(R.id.txt_LinkToRegister);
         editTextCodigoOperario = (EditText) findViewById(R.id.editText_CodigoOperarioToLogin);
-
         editTextCodigoOperario.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -185,30 +178,23 @@ public class MainActivity extends AppCompatActivity {
      *
      */
     private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Inicio);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Inicio_turnos);
         toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }
 
 
-    /**
-     * @param menu
-     * @return
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_inicio, menu);
         return true;
     }
 
-    /**
-     * @return
-     */
+
     public boolean checkDataBase() {
         File fileDB;
         fileDB = getApplicationContext().getDatabasePath("Fichajes.db");
-        boolean checkDB = fileDB.exists();
-        return (checkDB);
+        return (fileDB.exists());
     }
 
     /**
@@ -237,22 +223,22 @@ public class MainActivity extends AppCompatActivity {
                 datos.getDb().beginTransaction();
 
                 // Inserción Puesto
-                String puesto1 = datos.insertarPuesto(new Puesto(null, "Airbag"));
-                String puesto2 = datos.insertarPuesto(new Puesto(null, "CPD"));
+                String idPuesto1 = datos.insertarPuesto(new Puesto(null, "Airbag", "Operario de Airbag y Ecorrun"));
+                String idPuesto2 = datos.insertarPuesto(new Puesto(null, "CPD", "Operario del CPD"));
 
                 // Inserción Calendario
-                String calendario1 = datos.insertarCalendario(new Calendario(null, "Fujitsu"));
+                String idCalendario1 = datos.insertarCalendario(new Calendario(null, "Fujitsu","Calendario de Fujitsu"));
 
                 // Inserción Operario
-                String operario1 = datos.insertarOperario(new Operario("8246", "74880029x", "Antonio", "Carrillo Cuenca", "foto", "Direccion", "16/07/1985", "629916157", "antoniotiti@hotmail.com", "1/10/204", "numeross", "Bart16tyti"));
+                String idOperario1 = datos.insertarOperario(new Operario("8246", "74880029x", "Antonio", "Carrillo Cuenca", "foto", "Direccion", "16/07/1985", "629916157", "antoniotiti@hotmail.com", "1/10/204", "numeross", "Bart16tyti"));
 
                 // Inserción Truno
-                String turno1 = datos.insertarTurno(new Turno(null, "Mañana CPD", "M_CPD", "06:50", "15:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "06:30", "modotelefono", -16776961, -16777216));
-                String turno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "13:50", "22:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "13:30", "modotelefono", -16776961, -16777216));
+                String idTurno1 = datos.insertarTurno(new Turno(null, "Mañana CPD", "M_CPD", "06:50", "15:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "06:30", "modotelefono", -16776961, -16777216));
+                String idTurno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "13:50", "22:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "13:30", "modotelefono", -16776961, -16777216));
 
                 // Inserción Fichaje
-                datos.insertarFichaje(new Fichaje(operario1, "01/01/2016", turno1, puesto1, calendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(operario1, "02/01/2016", turno2, puesto2, calendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "01/01/2016", idTurno1, idPuesto1, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "02/01/2016", idTurno2, idPuesto2, idCalendario1, 1.5));
 
                 datos.getDb().setTransactionSuccessful();
             } finally {

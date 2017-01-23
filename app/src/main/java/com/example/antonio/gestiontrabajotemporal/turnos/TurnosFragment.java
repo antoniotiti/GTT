@@ -19,7 +19,6 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDato
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.turnodetalle.TurnoDetalleActivity;
 
-
 public class TurnosFragment extends Fragment {
 
     public static final int REQUEST_ADD_TURNO = 1;
@@ -27,10 +26,11 @@ public class TurnosFragment extends Fragment {
 
     OperacionesBaseDatos datos;
 
-    private ListView mTurnosList;
     private TurnosCursorAdapter mTurnosAdapter;
-    private FloatingActionButton mAddButton;
 
+    /**
+     * Constructor por defecto.
+     */
     public TurnosFragment() {
         // Required empty public constructor
     }
@@ -45,9 +45,9 @@ public class TurnosFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_turnos, container, false);
 
         // Referencias UI
-        mTurnosList = (ListView) root.findViewById(R.id.turnos_list);
+        ListView mTurnosList = (ListView) root.findViewById(R.id.turnos_list);
         mTurnosAdapter = new TurnosCursorAdapter(getActivity(), null);
-        mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        FloatingActionButton mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_turno);
 
         // Setup
         mTurnosList.setAdapter(mTurnosAdapter);
@@ -95,14 +95,14 @@ public class TurnosFragment extends Fragment {
     }
 
     /**
-     * Método encargado de lanzar la tarea en segundo plano de cargar los turnos.
+     * Método encargado de lanzar la tarea en segundo plano para cargar los turnos.
      */
     private void cargarTurnos() {
         new TurnosLoadTask().execute();
     }
 
     /**
-     * Método encargado de mostrar la ventana de detalle del Turno vacía para crear un Turno nuevo.
+     * Método encargado de mostrar la ventana de descripcionPuesto del Turno vacía para crear un Turno nuevo.
      */
     private void showAddScreen() {
         Intent intent = new Intent(getActivity(), TurnoDetalleActivity.class);
@@ -110,10 +110,10 @@ public class TurnosFragment extends Fragment {
     }
 
     /**
-     * Método encargado de mostrar la ventana de detalle del Turno, mostrando los datos del mismo
+     * Método encargado de mostrar la ventana de descripcionPuesto del Turno, mostrando los datos del mismo
      * obtenidos mediante el id del turno seleccionado de la lista, para editarlo.
      *
-     * @param turnoId Turno seleccionada de la lista.
+     * @param turnoId Turno seleccionado de la lista.
      */
     private void showDetailScreen(String turnoId) {
         Intent intent = new Intent(getActivity(), TurnoDetalleActivity.class);
@@ -122,7 +122,7 @@ public class TurnosFragment extends Fragment {
     }
 
     /**
-     *
+     * Clase asíncrona encargada de cargar los turnos de la base de datos a la lista.
      */
     private class TurnosLoadTask extends AsyncTask<Void, Void, Cursor> {
 
@@ -138,7 +138,7 @@ public class TurnosFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(),
                         "No hay turnos", Toast.LENGTH_SHORT).show();
-               // cargarTurnos();//TODO no se si va, cuando no haya turnos recargar para no mostrar nada?
+                // cargarTurnos();//TODO no se si va, cuando no haya turnos recargar para no mostrar nada?
                 //getActivity().finish();
             }
         }

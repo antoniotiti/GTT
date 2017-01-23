@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
-
 import com.example.antonio.gestiontrabajotemporal.modelo.Calendario;
 import com.example.antonio.gestiontrabajotemporal.modelo.Fichaje;
 import com.example.antonio.gestiontrabajotemporal.modelo.Operario;
@@ -16,10 +15,10 @@ import com.example.antonio.gestiontrabajotemporal.modelo.Puesto;
 import com.example.antonio.gestiontrabajotemporal.modelo.Turno;
 import com.example.antonio.gestiontrabajotemporal.sqlite.BaseDatosFichajes.Tablas;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Calendarios;
+import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Fichajes;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Operarios;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Puestos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Turnos;
-import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Fichajes;
 
 /**
  * Clase auxiliar que implementa a {@link BaseDatosFichajes} para llevar a cabo el CRUD
@@ -27,10 +26,27 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDato
  */
 public final class OperacionesBaseDatos {
 
+    private static final String FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO = "FICHAJE " +
+            "INNER JOIN OPERARIO " +
+            "ON FICHAJE.idTurno= OPERARIO.idTurno " +
+            "INNER JOIN TURNO " +
+            "ON FICHAJE.idTurno = TURNO.idTurno" +
+            "INNER JOIN PUESTO " +
+            "ON FICHAJE.idTurno = PUESTO.idTurno" +
+            "INNER JOIN CALENDARIO " +
+            "ON FICHAJE.idTurno = CALENDARIO.idTurno";
+
     private static BaseDatosFichajes baseDatos;
 
     private static OperacionesBaseDatos instancia = new OperacionesBaseDatos();
 
+    private final String[] proyFichaje = new String[]{
+            Tablas.FICHAJE + "." + Fichajes.ID_OPERARIO,
+            Fichajes.FECHA,
+            Fichajes.ID_TURNO,
+            Fichajes.ID_PUESTO,
+            Fichajes.ID_CALENDARIO,
+            Fichajes.HORA_EXTRA};
 
     private OperacionesBaseDatos() {
     }
@@ -42,7 +58,7 @@ public final class OperacionesBaseDatos {
         return instancia;
     }
 
-    // [OPERACIONES_PUESTO
+    // [OPERACIONES_PUESTO]
     public Cursor obtenerPuestos() {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
@@ -51,7 +67,7 @@ public final class OperacionesBaseDatos {
         return db.rawQuery(sql, null);
     }
 
-    public Cursor obtenerPuestosById(String puestoId) {
+    public Cursor obtenerPuestoById(String puestoId) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
         Cursor c = db.query(
@@ -67,45 +83,53 @@ public final class OperacionesBaseDatos {
 
     public String insertarPuesto(Puesto puesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
+        String idPuestoInsertado = null;
         // Generar Pk
         String idPuesto = Puestos.generarIdPuesto();
 
         ContentValues valores = new ContentValues();
         valores.put(Puestos.ID, idPuesto);
         valores.put(Puestos.NOMBRE, puesto.nombrePuesto);
+        valores.put(Puestos.DESCRIPCION, puesto.descripcionPuesto);
 
-        db.insertOrThrow(Tablas.PUESTO, null, valores);
+        try {
+            db.insertOrThrow(Tablas.PUESTO, null, valores);
+            idPuestoInsertado = idPuesto;
+        } catch (SQLiteConstraintException e) {
 
-        return idPuesto;
-
+        }
+        return idPuestoInsertado;
     }
 
-    public boolean actualizarPuesto(Puesto puesto) {
+    public int editarPuesto(Puesto puesto, String idPuesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
+        int puestosEditados = 0;
 
         ContentValues valores = new ContentValues();
         valores.put(Puestos.NOMBRE, puesto.nombrePuesto);
+        valores.put(Puestos.DESCRIPCION, puesto.descripcionPuesto);
 
         String whereClause = String.format("%s=?", Puestos.ID);
-        String[] whereArgs = {puesto.idPuesto};
+        String[] whereArgs = {idPuesto};
+        try {
+            puestosEditados = db.update(Tablas.PUESTO, valores, whereClause, whereArgs);
 
-        int resultado = db.update(Tablas.PUESTO, valores, whereClause, whereArgs);
+        } catch (SQLiteConstraintException e) {
 
-        return resultado > 0;
+        }
+
+        return puestosEditados;
     }
 
-    public boolean eliminarPuesto(String idPuesto) {
+    public int eliminarPuesto(String idPuesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
         String whereClause = String.format("%s=?", Puestos.ID);
         String[] whereArgs = {idPuesto};
 
-        int resultado = db.delete(Tablas.PUESTO, whereClause, whereArgs);
-
-        return resultado > 0;
+        return db.delete(Tablas.PUESTO, whereClause, whereArgs);
     }
-    // [/OPERACIONES_PUESTO]
+    // [OPERACIONES_PUESTO]
 
     // [OPERACIONES_CALENDARIO]
     public Cursor obtenerCalendarios() {
@@ -132,46 +156,58 @@ public final class OperacionesBaseDatos {
 
     public String insertarCalendario(Calendario calendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
+        String idCalendarioInsertado =null;
 
         // Generar Pk
         String idCalendario = Calendarios.generarIdCalendario();
 
-
         ContentValues valores = new ContentValues();
         valores.put(Calendarios.ID, idCalendario);
         valores.put(Calendarios.NOMBRE, calendario.nombreCalendario);
+        valores.put(Calendarios.DESCRIPCION, calendario.descripcionCalendario);
 
-        db.insertOrThrow(Tablas.CALENDARIO, null, valores);
+        try {
+            db.insertOrThrow(Tablas.CALENDARIO, null, valores);
+            idCalendarioInsertado = idCalendario;
+        } catch (SQLiteConstraintException e) {
 
-        return idCalendario;
+        }
 
+        return idCalendarioInsertado;
     }
 
-    public boolean actualizarCalendario(Calendario calendario) {
+    public int editarCalendario(Calendario calendario, String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
+        int calendariosEditados = 0;
 
         ContentValues valores = new ContentValues();
         valores.put(Calendarios.NOMBRE, calendario.nombreCalendario);
+        valores.put(Calendarios.DESCRIPCION, calendario.descripcionCalendario);
 
         String whereClause = String.format("%s=?", Calendarios.ID);
-        String[] whereArgs = {calendario.idCalendario};
+        String[] whereArgs = {idCalendario};
 
-        int resultado = db.update(Tablas.CALENDARIO, valores, whereClause, whereArgs);
+        try {
+            calendariosEditados = db.update(Tablas.CALENDARIO, valores, whereClause, whereArgs);
 
-        return resultado > 0;
+        } catch (SQLiteConstraintException e) {
+
+        }
+
+        return calendariosEditados;
     }
 
-    public boolean eliminarCalendario(String idCalendario) {
+    public int eliminarCalendario(String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
         String whereClause = String.format("%s=?", Calendarios.ID);
         String[] whereArgs = {idCalendario};
 
-        int resultado = db.delete(Tablas.CALENDARIO, whereClause, whereArgs);
 
-        return resultado > 0;
+
+        return db.delete(Tablas.CALENDARIO, whereClause, whereArgs);
     }
-    // [/OPERACIONES_CALENDARIO]
+    // [OPERACIONES_CALENDARIO]
 
     // [OPERACIONES_OPERARIO]
     public Cursor obtenerOperarios() {
@@ -181,6 +217,7 @@ public final class OperacionesBaseDatos {
 
         return db.rawQuery(sql, null);
     }
+
     public Cursor obtenerOperarioById(String operarioId) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
@@ -197,6 +234,7 @@ public final class OperacionesBaseDatos {
 
     public String insertarOperario(Operario operario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
+        String idOperarioInsertado = null;
 
         ContentValues valores = new ContentValues();
 
@@ -213,13 +251,18 @@ public final class OperacionesBaseDatos {
         valores.put(Operarios.NUMERO_S_S, operario.numeroSS);
         valores.put(Operarios.PASSWORD, operario.password);
 
-        db.insertOrThrow(Tablas.OPERARIO, null, valores);
+        try {
+            db.insertOrThrow(Tablas.OPERARIO, null, valores);
+            idOperarioInsertado = operario.idOperario;
+        } catch (SQLiteConstraintException e) {
 
-        return operario.idOperario;
+        }
+
+        return idOperarioInsertado;
 
     }
 
-    public boolean actualizarOperario(Operario operario) {
+    public boolean editarOperario(Operario operario, String idOperario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
         ContentValues valores = new ContentValues();
@@ -237,7 +280,7 @@ public final class OperacionesBaseDatos {
 
 
         String whereClause = String.format("%s=?", Operarios.ID);
-        String[] whereArgs = {operario.idOperario};
+        String[] whereArgs = {idOperario};
 
         int resultado = db.update(Tablas.OPERARIO, valores, whereClause, whereArgs);
 
@@ -273,7 +316,7 @@ public final class OperacionesBaseDatos {
         cursor.close();
         return password;
     }
-    // [/OPERACIONES_OPERARIO]
+    // [OPERACIONES_OPERARIO]
 
     // [OPERACIONES_TURNO]
     public Cursor obtenerTurnos() {
@@ -298,9 +341,29 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    /*public boolean eliminarTurno(String idTurno) {
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+
+        String whereClause = String.format("%s=?", Turnos.ID);
+        String[] whereArgs = {idTurno};
+
+        int resultado = db.delete(Tablas.TURNO, whereClause, whereArgs);
+
+        return resultado > 0;
+    }
+
+    public int eliminarTurno(String idTurno) {
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+
+        return db.delete(
+                Tablas.TURNO,
+                Turnos.ID + " LIKE ?",
+                new String[]{idTurno});
+    }*/
+
     public String insertarTurno(Turno turno) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-        String  turnoInsertado=null;
+        String idTurnoInsertado = null;
 
         // Generar Pk
         String idTurno = Turnos.generarIdTurno();
@@ -328,16 +391,17 @@ public final class OperacionesBaseDatos {
         valores.put(Turnos.COLOR_TEXTO, turno.colorTexto);
         try {
             db.insertOrThrow(Tablas.TURNO, null, valores);
-            turnoInsertado=idTurno;
+            idTurnoInsertado = idTurno;
         } catch (SQLiteConstraintException e) {
 
         }
-        return turnoInsertado;
+        return idTurnoInsertado;
 
     }
 
     public int editarTurno(Turno turno, String turnoId) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
+        int turnosEditados = 0;
 
         ContentValues valores = new ContentValues();
         valores.put(Turnos.NOMBRE, turno.nombreTurno);
@@ -361,52 +425,14 @@ public final class OperacionesBaseDatos {
         String whereClause = String.format("%s=?", Turnos.ID);
         String[] whereArgs = {turnoId};
 
-       /* int resultado =*/  return db.update(Tablas.TURNO, valores, whereClause, whereArgs);
+        try {
+            turnosEditados = db.update(Tablas.TURNO, valores, whereClause, whereArgs);
 
-        //return resultado > 0;
-    }
+        } catch (SQLiteConstraintException e) {
 
-    /*public boolean eliminarTurno(String idTurno) {
-        SQLiteDatabase db = baseDatos.getWritableDatabase();
+        }
 
-        String whereClause = String.format("%s=?", Turnos.ID);
-        String[] whereArgs = {idTurno};
-
-        int resultado = db.delete(Tablas.TURNO, whereClause, whereArgs);
-
-        return resultado > 0;
-    }
-
-    public int eliminarTurno(String idTurno) {
-        SQLiteDatabase db = baseDatos.getWritableDatabase();
-
-        return db.delete(
-                Tablas.TURNO,
-                Turnos.ID + " LIKE ?",
-                new String[]{idTurno});
-    }*/
-
-    public int eliminarTurno(String idTurno) {
-        SQLiteDatabase db = baseDatos.getWritableDatabase();
-
-        String whereClause = String.format("%s=?", Turnos.ID);
-        String[] whereArgs = {idTurno};
-
-        return db.delete(Tablas.TURNO, whereClause, whereArgs);
-    }
-
-
-    // [/OPERACIONES_TURNO]
-
-    // [OPERACIONES_FICHAJE
-    public Cursor obtenerFichajes() {
-        SQLiteDatabase db = baseDatos.getReadableDatabase();
-
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-
-        builder.setTables(FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO);
-
-        return builder.query(db, proyFichaje, null, null, null, null, null);
+        return turnosEditados;
     }
 
    /* public Cursor obtenerCabeceraPorId(String id) {
@@ -428,6 +454,27 @@ public final class OperacionesBaseDatos {
         return builder.query(db, proyeccion, selection, selectionArgs, null, null, null);
     }*/
 
+    public int eliminarTurno(String idTurno) {
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+
+        String whereClause = String.format("%s=?", Turnos.ID);
+        String[] whereArgs = {idTurno};
+
+        return db.delete(Tablas.TURNO, whereClause, whereArgs);
+    }
+    // [OPERACIONES_TURNO]
+
+    // [OPERACIONES_FICHAJE]
+    public Cursor obtenerFichajes() {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO);
+
+        return builder.query(db, proyFichaje, null, null, null, null, null);
+    }
+
     public String insertarFichaje(Fichaje fichaje) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
@@ -445,7 +492,7 @@ public final class OperacionesBaseDatos {
         return fichaje.idOperario;
     }
 
-    public boolean actualizarFichaje(Fichaje fichaje) {
+    public boolean editarFichaje(Fichaje fichaje) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
         ContentValues valores = new ContentValues();
@@ -472,8 +519,7 @@ public final class OperacionesBaseDatos {
 
         return resultado > 0;
     }
-    // [/OPERACIONES_CABECERA_PEDIDO]
-
+    // [/OPERACIONES_TURNO]
 
     public SQLiteDatabase getDb() {
         return baseDatos.getWritableDatabase();
@@ -482,24 +528,5 @@ public final class OperacionesBaseDatos {
     public void close() {
         baseDatos.close();
     }
-
-    private static final String FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO = "FICHAJE " +
-            "INNER JOIN OPERARIO " +
-            "ON FICHAJE.idTurno= OPERARIO.idTurno " +
-            "INNER JOIN TURNO " +
-            "ON FICHAJE.idTurno = TURNO.idTurno" +
-            "INNER JOIN PUESTO " +
-            "ON FICHAJE.idTurno = PUESTO.idTurno" +
-            "INNER JOIN CALENDARIO " +
-            "ON FICHAJE.idTurno = CALENDARIO.idTurno";
-
-
-    private final String[] proyFichaje = new String[]{
-            Tablas.FICHAJE + "." + Fichajes.ID_OPERARIO,
-            Fichajes.FECHA,
-            Fichajes.ID_TURNO,
-            Fichajes.ID_PUESTO,
-            Fichajes.ID_CALENDARIO,
-            Fichajes.HORA_EXTRA};
 
 }

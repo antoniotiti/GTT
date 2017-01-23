@@ -15,24 +15,25 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
+import com.example.antonio.gestiontrabajotemporal.puestodetalle.PuestoDetalleActivity;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 
-
 public class PuestosFragment extends Fragment {
 
+    public static final int REQUEST_ADD_PUESTO = 1;
     public static final int REQUEST_UPDATE_DELETE_PUESTO = 2;
 
     OperacionesBaseDatos datos;
 
-    private ListView mPuestosList;
     private PuestosCursorAdapter mPuestosAdapter;
-    private FloatingActionButton mAddButton;
 
+    /**
+     * Constructor por defecto.
+     */
     public PuestosFragment() {
         // Required empty public constructor
     }
-
 
     public static PuestosFragment newInstance() {
         return new PuestosFragment();
@@ -44,40 +45,30 @@ public class PuestosFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_puestos, container, false);
 
         // Referencias UI
-        mPuestosList = (ListView) root.findViewById(R.id.puestos_list);
+        ListView mPuestosList = (ListView) root.findViewById(R.id.puestos_list);
         mPuestosAdapter = new PuestosCursorAdapter(getActivity(), null);
-        mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        FloatingActionButton mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_puesto);
 
         // Setup
         mPuestosList.setAdapter(mPuestosAdapter);
-
 
         // Eventos
         mPuestosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
                 Cursor currentItem = (Cursor) mPuestosAdapter.getItem(i);
-                String currentPuestoNombre = currentItem.getString(
-                        currentItem.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE));
-
-                Toast.makeText(getActivity(), "Detalle "+ currentPuestoNombre, Toast.LENGTH_LONG).show();
-
-
-                String currentPuestoId = currentItem.getString(
-                        currentItem.getColumnIndex(NombresColumnasBaseDatos.Puestos.ID));
-
-              //  showDetailScreen(currentLawyerId);
+                String currentPuestoId = currentItem.getString(currentItem.getColumnIndex(NombresColumnasBaseDatos.Puestos.ID));
+                showDetailScreen(currentPuestoId);
             }
         });
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // showAddScreen();
+                showAddScreen();
             }
         });
+
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
 
@@ -89,38 +80,50 @@ public class PuestosFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Activity.RESULT_OK == resultCode) {
-            switch (requestCode) {
-                /*case AddEditLawyerActivity.REQUEST_ADD_TURNO:
-                    showSuccessfullSavedMessage();
-                    cargarPuestos();
-                    break;*/
-                case REQUEST_UPDATE_DELETE_PUESTO:
+            cargarPuestos();
+            /*switch (requestCode) {
+                case AddEditLawyerActivity.REQUEST_ADD_PUESTO:
+                    Toast.makeText(getActivity(),"Puesto guardado correctamente", Toast.LENGTH_SHORT).show();
                     cargarPuestos();
                     break;
-            }
+                case REQUEST_UPDATE_DELETE_PUESTO:
+                    Toast.makeText(getActivity(),"Puesto eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    cargarPuestos();
+                    break;
+            }*/
         }
     }
 
+    /**
+     * Método encargado de lanzar la tarea en segundo plano para cargar los puestos.
+     */
     private void cargarPuestos() {
         new PuestosLoadTask().execute();
     }
 
-    private void showSuccessfullSavedMessage() {
-        Toast.makeText(getActivity(),
-                "Puesto guardado correctamente", Toast.LENGTH_SHORT).show();
+    /**
+     * Método encargado de mostrar la ventana de descripcionPuesto del Puesto vacía para crear un Puesto nuevo.
+     */
+    private void showAddScreen() {
+        Intent intent = new Intent(getActivity(), PuestoDetalleActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_PUESTO);
     }
 
-   /* private void showAddScreen() {
-        Intent intent = new Intent(getActivity(), AddEditLawyerActivity.class);
-        startActivityForResult(intent, AddEditLawyerActivity.REQUEST_ADD_TURNO);
+    /**
+     * Método encargado de mostrar la ventana de descripcionPuesto del Puesto, mostrando los datos del mismo
+     * obtenidos mediante el id del puesto seleccionado de la lista, para editarlo.
+     *
+     * @param puestoId Puesto seleccionado de la lista.
+     */
+    private void showDetailScreen(String puestoId) {
+        Intent intent = new Intent(getActivity(), PuestoDetalleActivity.class);
+        intent.putExtra(PuestosActivity.EXTRA_PUESTO_ID, puestoId);
+        startActivityForResult(intent, REQUEST_UPDATE_DELETE_PUESTO);
     }
 
-    private void showDetailScreen(String lawyerId) {
-        Intent intent = new Intent(getActivity(), LawyerDetailActivity.class);
-        intent.putExtra(LawyersActivity.EXTRA_LAWYER_ID, lawyerId);
-        startActivityForResult(intent, REQUEST_UPDATE_DELETE_LAWYER);
-    }*/
-
+    /**
+     * Clase asíncrona encargada de cargar los puestos de la base de datos a la lista.
+     */
     private class PuestosLoadTask extends AsyncTask<Void, Void, Cursor> {
 
         @Override
@@ -133,9 +136,9 @@ public class PuestosFragment extends Fragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mPuestosAdapter.swapCursor(cursor);
             } else {
-                // Mostrar empty state
+                Toast.makeText(getActivity(),
+                        "No hay puestos", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 }

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
+import com.example.antonio.gestiontrabajotemporal.calendarios.CalendariosActivity;
 import com.example.antonio.gestiontrabajotemporal.puestos.PuestosActivity;
 import com.example.antonio.gestiontrabajotemporal.turnos.TurnosActivity;
 import com.roomorama.caldroid.CaldroidFragment;
@@ -67,7 +68,7 @@ public class PantallaCalendario extends AppCompatActivity {
         setToolbar();// Añadir la Toolbar
         //Recibimos el código de usuario y password de la página de logeo.
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_turno);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -308,7 +309,7 @@ public class PantallaCalendario extends AppCompatActivity {
      *
      */
     private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno);
         toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }
@@ -357,6 +358,9 @@ public class PantallaCalendario extends AppCompatActivity {
                 return true;
             case R.id.crear_puesto:
                 startActivity(new Intent(this, PuestosActivity.class));
+                return true;
+            case R.id.crear_calendario:
+                startActivity(new Intent(this, CalendariosActivity.class));
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));

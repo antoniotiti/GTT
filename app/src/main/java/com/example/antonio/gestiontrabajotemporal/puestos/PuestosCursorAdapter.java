@@ -29,15 +29,14 @@ public class PuestosCursorAdapter extends CursorAdapter {
 
         // Referencias UI.
         TextView nombrePuesto = (TextView) view.findViewById(R.id.textView_nombre_puesto);
-
+        TextView descripcionPuesto = (TextView) view.findViewById(R.id.textView_descripcion_puesto);
 
         // Get valores.
         String name = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE));
+        String descripcion = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Puestos.DESCRIPCION));
 
         // Setup.
         nombrePuesto.setText(name);
-
-
+        descripcionPuesto.setText(descripcion);
     }
-
 }

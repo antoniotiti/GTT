@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.antonio.gestiontrabajotemporal.turnodetalle.TurnoDetalleActivity">
+    tools:context="com.example.antonio.gestiontrabajotemporal.calendariodetalle.CalendarioDetalleActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_turno"
+        android:id="@+id/app_bar_calendario"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout_turno"
+            android:id="@+id/toolbar_layout_calendario"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -23,7 +23,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_turno"
+                android:id="@+id/toolbar_calendario"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
@@ -32,6 +32,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_turno_detalle" />
+    <include layout="@layout/content_calendario_detalle" />
 
 </android.support.design.widget.CoordinatorLayout>

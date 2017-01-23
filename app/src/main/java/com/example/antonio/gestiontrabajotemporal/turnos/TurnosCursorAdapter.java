@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
@@ -32,7 +31,6 @@ public class TurnosCursorAdapter extends CursorAdapter {
         TextView nameText = (TextView) view.findViewById(R.id.textView_nombre_turno);
         TextView turnoPrev = (TextView) view.findViewById(R.id.textView_prev_turno);
 
-
         // Get valores.
         String nombreTurno = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.NOMBRE));
         String abreviaturaNombreTurno = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
@@ -44,8 +42,5 @@ public class TurnosCursorAdapter extends CursorAdapter {
         turnoPrev.setBackgroundColor(colorFondo);
         turnoPrev.setTextColor(colorTexto);
         turnoPrev.setText(abreviaturaNombreTurno);
-
-
     }
-
 }

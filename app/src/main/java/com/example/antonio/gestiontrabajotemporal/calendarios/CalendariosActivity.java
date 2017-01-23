@@ -1,4 +1,4 @@
-package com.example.antonio.gestiontrabajotemporal.turnos;
+package com.example.antonio.gestiontrabajotemporal.calendarios;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,28 +9,28 @@ import android.view.View;
 
 import com.example.antonio.gestiontrabajotemporal.R;
 
-public class TurnosActivity extends AppCompatActivity {
-    public static final String EXTRA_TURNO_ID = "extra_turno_id";
+public class CalendariosActivity extends AppCompatActivity {
+    public static final String EXTRA_CALENDARIO_ID = "extra_calendario_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_turnos);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno);
+        setContentView(R.layout.activity_calendarios);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_calendario);
         setSupportActionBar(toolbar);
 
-        TurnosFragment fragment = (TurnosFragment)
-                getSupportFragmentManager().findFragmentById(R.id.turnos_container);
+        CalendariosFragment fragment = (CalendariosFragment)
+                getSupportFragmentManager().findFragmentById(R.id.calendarios_container);
 
         if (fragment == null) {
-            fragment = TurnosFragment.newInstance();
+            fragment = CalendariosFragment.newInstance();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.turnos_container, fragment)
+                    .add(R.id.calendarios_container, fragment)
                     .commit();
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_turno);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_calendario);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

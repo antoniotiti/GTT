@@ -21,6 +21,11 @@
     <string name="nss">Número Seguridad Social</string>
     <string name="titulo_iniciar_sesion">Iniciar sesión</string>
     <string name="titulo_crear_turno">Crear Turno</string>
+    <string name="titulo_editar_turno">Editar Turno</string>
+    <string name="titulo_crear_puesto">Crear Puesto</string>
+    <string name="titulo_editar_puesto">Editar Puesto</string>
+    <string name="titulo_crear_calendario">Crear Calendario</string>
+    <string name="titulo_editar_calendario">Editar Calendario</string>
     <string name="titulo_registro">Regístrate</string>
     <string name="passwordOlvidada">¿Has olvidado tu contraseña?</string>
     <string name="customize">Customize</string>
@@ -35,6 +40,10 @@
     <string name="cancelar">Cancelar</string>
     <string name="borrar">Borrar</string>
     <string name="nombre_turno">Nombre del turno</string>
+    <string name="nombre_puesto">Nombre del puesto</string>
+    <string name="nombre_calendario">Nombre del calendario</string>
+    <string name="descripcion_puesto">Descripción del puesto</string>
+    <string name="descripcion_calendario">Descripción del calendario</string>
     <string name="abreviatura_turno">Abreviatura</string>
     <string name="color_fondo">Color del fondo</string>
     <string name="color_texto">Color del texto</string>
@@ -70,12 +79,16 @@
     <string name="€">€</string>
     <string name="title_activity_turnos">Turnos</string>
     <string name="title_activity_turno_detalle">Turno Detalle</string>
+    <string name="title_activity_puestos">Puestos</string>
+    <string name="title_activity_puesto_detalle">Puesto Detalle</string>
+    <string name="title_activity_calendarios">Calendarios</string>
+    <string name="title_activity_calendario_detalle">Calendario Detalle</string>
     <string name="action_edit">Editar</string>
     <string name="action_delete">Eliminar</string>
     <string name="turnos">Turnos</string>
     <string name="puestos">Puestos</string>
     <string name="calendarios">Calendarios</string>
-    <string name="title_activity_puestos">Puestos</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

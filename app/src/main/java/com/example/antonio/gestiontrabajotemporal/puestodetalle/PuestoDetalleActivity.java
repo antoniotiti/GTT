@@ -1,4 +1,4 @@
-package com.example.antonio.gestiontrabajotemporal.turnodetalle;
+package com.example.antonio.gestiontrabajotemporal.puestodetalle;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,30 +7,31 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
-import com.example.antonio.gestiontrabajotemporal.turnos.TurnosActivity;
+import com.example.antonio.gestiontrabajotemporal.puestos.PuestosActivity;
 import com.example.antonio.gestiontrabajotemporal.util.SimpleDialog;
 
-public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDialog.OnSimpleDialogListener {
+public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDialog.OnSimpleDialogListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_turno_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno);
+        setContentView(R.layout.activity_puesto_detalle);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_puesto);
 
-        String turnoId = getIntent().getStringExtra(TurnosActivity.EXTRA_TURNO_ID);
-        toolbar.setTitle(turnoId == null ? "Añadir Turno" : "Editar Turno");//TODO Cambia el titulo?
+        String puestoId = getIntent().getStringExtra(PuestosActivity.EXTRA_PUESTO_ID);
+
+        toolbar.setTitle(puestoId == null ? "Añadir Puesto" : "Editar Puesto");//TODO Cambia el titulo?
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
 
-        TurnoDetailFragment fragment = (TurnoDetailFragment)
-                getSupportFragmentManager().findFragmentById(R.id.turno_detail_container);
+        PuestoDetailFragment fragment = (PuestoDetailFragment)
+                getSupportFragmentManager().findFragmentById(R.id.puesto_detail_container);
         if (fragment == null) {
-            fragment = TurnoDetailFragment.newInstance(turnoId);
+            fragment = PuestoDetailFragment.newInstance(puestoId);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.turno_detail_container, fragment)
+                    .add(R.id.puesto_detail_container, fragment)
                     .commit();
         }
     }
@@ -58,19 +59,19 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     }
 
     /**
-     * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un turno de la lista.
-     * Borra el turno seleccionado
+     * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un puesto de la lista.
+     * Borra el puesto seleccionado
      */
     @Override
     public void onPossitiveButtonClick() {
-        TurnoDetailFragment fragment = (TurnoDetailFragment) getSupportFragmentManager().findFragmentById(R.id.turno_detail_container);
-        if (fragment instanceof TurnoDetailFragment) {
-            fragment.borrarTurno();
+        PuestoDetailFragment fragment = (PuestoDetailFragment) getSupportFragmentManager().findFragmentById(R.id.puesto_detail_container);
+        if (fragment instanceof PuestoDetailFragment) {
+            fragment.borrarPuesto();
         }
     }
 
     /**
-     * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un turno de la lista.
+     * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un puesto de la lista.
      * Muestra un mensaje.
      */
     @Override

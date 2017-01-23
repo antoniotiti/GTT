@@ -12,22 +12,22 @@
     android:paddingTop="8dp">
 
     <TextView
-        android:id="@+id/textView_nombre_puesto"
+        android:id="@+id/textView_nombre_calendario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="New Text"
         android:textAppearance="?textAppearanceListItem"
-        tools:text="Puesto"
+        tools:text="Calendario"
         android:textStyle="normal|bold" />
 
     <TextView
-        android:id="@+id/textView_descripcion_puesto"
+        android:id="@+id/textView_descripcion_calendario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="21dp"
-        android:layout_toEndOf="@+id/textView_nombre_puesto"
+        android:layout_toEndOf="@+id/textView_nombre_calendario"
         android:text="New Text"
         android:textAlignment="center"
         android:textAppearance="?textAppearanceListItem"

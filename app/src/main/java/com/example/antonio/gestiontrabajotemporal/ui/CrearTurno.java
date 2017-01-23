@@ -1,7 +1,6 @@
 package com.example.antonio.gestiontrabajotemporal.ui;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -316,7 +315,7 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
      *
      */
     private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Inicio);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Inicio_turnos);
         toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }

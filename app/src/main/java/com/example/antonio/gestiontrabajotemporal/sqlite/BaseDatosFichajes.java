@@ -75,13 +75,13 @@ public class BaseDatosFichajes extends SQLiteOpenHelper {
 
         // Crear tabla Calendarios.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL UNIQUE)",
-                Tablas.CALENDARIO, BaseColumns._ID, Calendarios.ID, Calendarios.NOMBRE));
+                        "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL UNIQUE, %s TEXT)",
+                Tablas.CALENDARIO, BaseColumns._ID, Calendarios.ID, Calendarios.NOMBRE, Calendarios.DESCRIPCION));
 
         // Crear tabla Puestos.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL UNIQUE)",
-                Tablas.PUESTO, BaseColumns._ID, Puestos.ID, Puestos.NOMBRE));
+                        "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL UNIQUE, %s TEXT)",
+                Tablas.PUESTO, BaseColumns._ID, Puestos.ID, Puestos.NOMBRE, Puestos.DESCRIPCION));
 
         //Crear tabla Operarios.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +

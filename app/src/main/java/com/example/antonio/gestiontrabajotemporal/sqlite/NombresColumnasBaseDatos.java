@@ -7,6 +7,9 @@ import java.util.UUID;
  */
 public class NombresColumnasBaseDatos {
 
+    private NombresColumnasBaseDatos() {
+    }
+
     interface ColumnasOperario {
         String ID = "idOperario";
         String DNI = "dni";
@@ -25,13 +28,13 @@ public class NombresColumnasBaseDatos {
     interface ColumnasPuesto {
         String ID = "idPuesto";
         String NOMBRE = "nombrePuesto";
+        String DESCRIPCION = "descripcionPuesto";
     }
 
     interface ColumnasTurno {
-
         String ID = "idTurno";
         String NOMBRE = "nombreTurno";
-        String ABREVIATURA_NOMBRE_TURNO  = "abreviaturaNombreTurno";
+        String ABREVIATURA_NOMBRE_TURNO = "abreviaturaNombreTurno";
         String HORA_INICIO_1 = "horaInicio1";
         String HORA_FIN_1 = "horaFin1";
         String TURNO_PARTIDO = "turnoPartido";
@@ -51,21 +54,19 @@ public class NombresColumnasBaseDatos {
     }
 
     interface ColumnasFichaje {
-
-        String ID_OPERARIO= "id_operario";
-        String FECHA= "fecha";
-        String ID_TURNO= "id_turno";
-        String ID_PUESTO ="id_puesto";
-        String ID_CALENDARIO= "id_calendario";
-        String HORA_EXTRA= "horaExtra";
+        String ID_OPERARIO = "id_operario";
+        String FECHA = "fecha";
+        String ID_TURNO = "id_turno";
+        String ID_PUESTO = "id_puesto";
+        String ID_CALENDARIO = "id_calendario";
+        String HORA_EXTRA = "horaExtra";
     }
-
 
     interface ColumnasCalendario {
         String ID = "idCalendario";
         String NOMBRE = "nombreCalendario";
+        String DESCRIPCION = "descripcionPuesto";
     }
-
 
     public static class Operarios implements ColumnasOperario {
         /*public static String generarIdOperario() {
@@ -91,13 +92,9 @@ public class NombresColumnasBaseDatos {
         }
     }
 
-    public static class Calendarios implements ColumnasCalendario{
+    public static class Calendarios implements ColumnasCalendario {
         public static String generarIdCalendario() {
             return "CA-" + UUID.randomUUID().toString();
         }
     }
-
-    private NombresColumnasBaseDatos() {
-    }
-
 }
