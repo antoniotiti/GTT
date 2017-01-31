@@ -1,5 +1,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ListPreference
+        android:entries="@array/pref_dia_comienzo_semana_titles"
+        android:entryValues="@array/pref_dia_comienzo_semana_values"
+        android:key="pref_dia_comienzo_semana"
+        android:summary="@string/pref_dia_comienzo_semana_resumen"
+        android:title="@string/pref_dia_comienzo_semana" />
+
     <SwitchPreference
         android:defaultValue="false"
         android:key="pref_switch_modo_compacto"
@@ -29,5 +36,6 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_add_friends_to_messages" />
+
 
 </PreferenceScreen>

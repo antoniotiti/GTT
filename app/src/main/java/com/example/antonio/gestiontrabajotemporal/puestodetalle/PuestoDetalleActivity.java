@@ -16,7 +16,7 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puesto_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_puesto);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_puesto_detalle);
 
         String puestoId = getIntent().getStringExtra(PuestosActivity.EXTRA_PUESTO_ID);
 

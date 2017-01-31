@@ -17,7 +17,7 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_calendario);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_calendario_detalle);
 
         String calendarioId = getIntent().getStringExtra(CalendariosActivity.EXTRA_CALENDARIO_ID);
 

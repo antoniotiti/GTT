@@ -1,89 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.antonio.gestiontrabajotemporal.ui.PantallaCalendario">
+    android:orientation="vertical"
+    tools:context="com.example.antonio.gestiontrabajotemporal.pantallacalendario.PantallaCalendarioActivity">
 
-    <LinearLayout
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_pantalla_calendario"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-        <!-- Toolbar -->
-        <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar_turno"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+        <!--android:background="@android:color/background_light">-->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
-            <!--android:background="@android:color/background_light">-->
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_calendario_seleccionado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/seleccione_calendario"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"
+                android:layout_marginTop="@dimen/color_swatch_margins_small"
+                android:layout_marginBottom="@dimen/color_swatch_margins_small"
+                android:textColor="@color/colorAccent" />
 
-                <LinearLayout
-                    android:id="@+id/calendar1"
-                    android:layout_width="match_parent"
+
+            <LinearLayout
+                android:id="@+id/calendar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/button_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/customize_button"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
+                    android:layout_weight="1"
+                    android:text="@string/customize" />
 
-                <LinearLayout
-                    android:id="@+id/button_layout"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/show_dialog_button"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:text="@string/show_dialog" />
 
-                    <Button
-                        android:id="@+id/customize_button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/customize" />
-
-                    <Button
-                        android:id="@+id/show_dialog_button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/show_dialog" />
-
-                    <!-- FAB -->
+                <!-- FAB -->
 
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fab_turno"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="@dimen/fab_margin"
-                        android:tint="@android:color/white"
-                        app:fabSize="normal"
-                        app:srcCompat="@drawable/plus_white" />
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_turno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:tint="@android:color/white"
+                    app:fabSize="normal"
+                    app:srcCompat="@drawable/plus_white" />
 
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
             </LinearLayout>
-        </ScrollView>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 
-</RelativeLayout>
+
+</LinearLayout>
 

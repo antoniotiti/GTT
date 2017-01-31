@@ -2,7 +2,7 @@
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="accent_material_light_1">#3f51b5</color>
 
     <color name="white">#ffffff</color>

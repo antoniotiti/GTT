@@ -8,7 +8,7 @@
     tools:context="com.example.antonio.gestiontrabajotemporal.calendariodetalle.CalendarioDetalleActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_calendario"
+        android:id="@+id/app_bar_calendario_detalle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
@@ -23,7 +23,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_calendario"
+                android:id="@+id/toolbar_calendario_detalle"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"

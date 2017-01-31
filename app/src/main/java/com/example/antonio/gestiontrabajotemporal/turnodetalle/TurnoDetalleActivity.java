@@ -16,7 +16,7 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_turno_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno_detalle);
 
         String turnoId = getIntent().getStringExtra(TurnosActivity.EXTRA_TURNO_ID);
         toolbar.setTitle(turnoId == null ? "Añadir Turno" : "Editar Turno");//TODO Cambia el titulo?

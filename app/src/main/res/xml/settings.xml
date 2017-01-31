@@ -4,10 +4,10 @@
     <!-- Cantidad máxima de entradas -->
     <ListPreference
         android:key="primerDiaSemana"
-        android:title="@string/pref_primer_dia_semana"
+        android:title="@string/pref_dia_comienzo_semana"
         android:defaultValue="7"
-        android:entries="@array/pref_primer_dia_semana_entradas"
-        android:entryValues="@array/pref_primer_dia_semana_valores"
-        android:summary="@string/pref_primer_dia_semana_resumen" />
+        android:entries="@array/pref_dia_comienzo_semana_entradas"
+        android:entryValues="@array/pref_dia_comienzo_semana_valores"
+        android:summary="@string/pref_dia_comienzo_semana_resumen" />
 
 </PreferenceScreen>

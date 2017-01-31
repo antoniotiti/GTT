@@ -153,6 +153,19 @@ public final class OperacionesBaseDatos {
                 null);
         return c;
     }
+    public Cursor obtenerIdCalendarioByNombre(String nombreCalendario) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        Cursor c = db.query(
+                Tablas.CALENDARIO,
+                new String[]{Calendarios.ID},
+                Calendarios.NOMBRE + " LIKE ?",
+                new String[]{nombreCalendario},
+                null,
+                null,
+                null);
+        return c;
+    }
 
     public String insertarCalendario(Calendario calendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
@@ -435,25 +448,6 @@ public final class OperacionesBaseDatos {
         return turnosEditados;
     }
 
-   /* public Cursor obtenerCabeceraPorId(String id) {
-        SQLiteDatabase db = baseDatos.getWritableDatabase();
-
-        String selection = String.format("%s=?", CabecerasPedido.ID);
-        String[] selectionArgs = {id};
-
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-        builder.setTables(FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO);
-
-        String[] proyeccion = {
-                Tablas.CABECERA_PEDIDO + "." + CabecerasPedido.ID,
-                CabecerasPedido.FECHA,
-                Clientes.NOMBRES,
-                Clientes.APELLIDOS,
-                FormasPago.NOMBRE};
-
-        return builder.query(db, proyeccion, selection, selectionArgs, null, null, null);
-    }*/
-
     public int eliminarTurno(String idTurno) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
@@ -465,18 +459,10 @@ public final class OperacionesBaseDatos {
     // [OPERACIONES_TURNO]
 
     // [OPERACIONES_FICHAJE]
-    public Cursor obtenerFichajes() {
-        SQLiteDatabase db = baseDatos.getReadableDatabase();
 
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-
-        builder.setTables(FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO);
-
-        return builder.query(db, proyFichaje, null, null, null, null, null);
-    }
-
-    public String insertarFichaje(Fichaje fichaje) {
+    public long insertarFichaje(Fichaje fichaje) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
+        long fichajeInsertado=0;
 
         ContentValues valores = new ContentValues();
         valores.put(Fichajes.ID_OPERARIO, fichaje.idOperario);
@@ -486,10 +472,13 @@ public final class OperacionesBaseDatos {
         valores.put(Fichajes.ID_CALENDARIO, fichaje.idCalendario);
         valores.put(Fichajes.HORA_EXTRA, fichaje.horaExtra);
 
-        // Insertar fichaje
-        db.insertOrThrow(Tablas.FICHAJE, null, valores);
+        try {
+            // Insertar fichaje
+            fichajeInsertado=db.insertOrThrow(Tablas.FICHAJE, null, valores);
+        } catch (SQLiteConstraintException e) {
 
-        return fichaje.idOperario;
+        }
+        return fichajeInsertado;
     }
 
     public boolean editarFichaje(Fichaje fichaje) {
@@ -519,7 +508,32 @@ public final class OperacionesBaseDatos {
 
         return resultado > 0;
     }
-    // [/OPERACIONES_TURNO]
+
+    public Cursor obtenerFichajes() {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO);
+
+        return builder.query(db, proyFichaje, null, null, null, null, null);
+    }
+
+    public Cursor obtenerFichajes(String idOperario, String calendario) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        Cursor c = db.query(
+                Tablas.FICHAJE,
+                null,
+                Fichajes.ID_OPERARIO + " LIKE ? AND " + Fichajes.ID_CALENDARIO + " LIKE ?",
+                new String[]{idOperario, calendario},
+                null,
+                null,
+                null);
+        return c;
+    }
+
+    // [OPERACIONES_FICHAJE]
 
     public SQLiteDatabase getDb() {
         return baseDatos.getWritableDatabase();

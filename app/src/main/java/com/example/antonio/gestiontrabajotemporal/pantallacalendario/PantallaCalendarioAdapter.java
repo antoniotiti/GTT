@@ -1,4 +1,4 @@
-package com.example.antonio.gestiontrabajotemporal.ui;
+package com.example.antonio.gestiontrabajotemporal.pantallacalendario;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -40,8 +40,8 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
 		int bottomPadding = cellView.getPaddingBottom();
 		int rightPadding = cellView.getPaddingRight();
 
-		TextView tv1 = (TextView) cellView.findViewById(R.id.tv1);
-		TextView tv2 = (TextView) cellView.findViewById(R.id.tv2);
+		TextView tv1 = (TextView) cellView.findViewById(R.id.txt_dia);
+		TextView tv2 = (TextView) cellView.findViewById(R.id.txt_turno);
 
 		tv1.setTextColor(Color.BLACK);
 

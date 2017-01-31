@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -13,17 +14,25 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
+import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
+import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -36,7 +45,11 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class SettingsActivity extends PreferenceActivity {
+
+   static OperacionesBaseDatos datos;
+
+
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -123,17 +136,31 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+        // Obtenemos la instancia del adaptador de Base de Datos.
+        datos = OperacionesBaseDatos.obtenerInstancia(this);
+
     }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+
+        LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
+        Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.settings_toolbar, root, false);
+        root.addView(bar, 0); // insert at top
+        bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        /*ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        }*/
     }
 
     @Override
@@ -153,6 +180,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @Override
     public boolean onIsMultiPane() {
+        // Determinar que siempre sera multipanel
         return isXLargeTablet(this);
     }
 
@@ -170,11 +198,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * Make sure to deny any unknown fragments here.
      */
     protected boolean isValidFragment(String fragmentName) {
+        // Comprobar que el fragmento esté relacionado con la actividad
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
+
+
+    ///////Fragmentos/////////////////////////////////
 
     /**
      * This fragment shows general preferences only. It is used when the
@@ -194,7 +226,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValue(findPreference("pref_dia_comienzo_semana"));
         }
+
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -224,6 +258,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+
         }
 
         @Override
@@ -243,6 +278,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DataSyncPreferenceFragment extends PreferenceFragment {
+
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -254,6 +291,48 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+
+
+            ListPreference projectsList= obtenerCalendarios();
+
+            bindPreferenceSummaryToValue(projectsList);
+        }
+
+
+        private ListPreference obtenerCalendarios() {
+            ListPreference projectsList = (ListPreference)findPreference("pref_calendario_predeterminado");
+
+            try {
+                Cursor calendarios = datos.obtenerCalendarios();
+
+
+                List<String> entryValues = new ArrayList<>();
+
+                if(calendarios != null && calendarios.getCount() > 0){
+                    calendarios.moveToFirst();
+
+                    do {
+                        entryValues.add(calendarios.getString(calendarios.getColumnIndex(NombresColumnasBaseDatos.Calendarios.NOMBRE)));
+                    } while (calendarios.moveToNext());
+
+                }
+                calendarios.close();
+                datos.close();
+
+                final CharSequence[] entryValsChar = entryValues.toArray(new CharSequence[entryValues.size()]);
+
+                projectsList.setEntries(entryValsChar);
+                projectsList.setEntryValues(entryValsChar);
+                projectsList.setKey("pref_calendario_predeterminado");
+                projectsList.setSummary(R.string.pref_calendario_predeterminado_summary);
+                projectsList.setTitle(R.string.pref_calendario_predeterminado_title);
+
+
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Error encountered.",
+                        Toast.LENGTH_LONG);
+            }
+            return projectsList;
         }
 
         @Override
@@ -266,4 +345,5 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
 }

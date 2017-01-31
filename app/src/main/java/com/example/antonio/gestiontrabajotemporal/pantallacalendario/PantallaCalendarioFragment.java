@@ -1,4 +1,4 @@
-package com.example.antonio.gestiontrabajotemporal.ui;
+package com.example.antonio.gestiontrabajotemporal.pantallacalendario;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidGridAdapter;

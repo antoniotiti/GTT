@@ -23,6 +23,7 @@ import com.example.antonio.gestiontrabajotemporal.modelo.Fichaje;
 import com.example.antonio.gestiontrabajotemporal.modelo.Operario;
 import com.example.antonio.gestiontrabajotemporal.modelo.Puesto;
 import com.example.antonio.gestiontrabajotemporal.modelo.Turno;
+import com.example.antonio.gestiontrabajotemporal.pantallacalendario.PantallaCalendarioActivity;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 
 import java.io.File;
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (password.equals(passwordAlmacenada)) {
                                     Toast.makeText(MainActivity.this, "Login Correcto", Toast.LENGTH_LONG).show();
                                     //Pasamos a la pantalla
-                                    Intent i = new Intent(getApplicationContext(), PantallaCalendario.class);
+                                    Intent i = new Intent(getApplicationContext(), PantallaCalendarioActivity.class);
                                     i.putExtra("codigoOperario", codigoOperario);
                                     i.putExtra("password", password);
                                     startActivity(i);
@@ -228,6 +229,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Inserción Calendario
                 String idCalendario1 = datos.insertarCalendario(new Calendario(null, "Fujitsu","Calendario de Fujitsu"));
+                String idCalendario2 = datos.insertarCalendario(new Calendario(null, "Fujitsu2","Calendario de Fujitsu2"));
+                String idCalendario3 = datos.insertarCalendario(new Calendario(null, "Fujitsu3","Calendario de Fujitsu3"));
+                String idCalendario4 = datos.insertarCalendario(new Calendario(null, "Fujitsu1","Calendario de Fujitsu4"));
 
                 // Inserción Operario
                 String idOperario1 = datos.insertarOperario(new Operario("8246", "74880029x", "Antonio", "Carrillo Cuenca", "foto", "Direccion", "16/07/1985", "629916157", "antoniotiti@hotmail.com", "1/10/204", "numeross", "Bart16tyti"));
@@ -237,8 +241,26 @@ public class MainActivity extends AppCompatActivity {
                 String idTurno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "13:50", "22:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "13:30", "modotelefono", -16776961, -16777216));
 
                 // Inserción Fichaje
-                datos.insertarFichaje(new Fichaje(idOperario1, "01/01/2016", idTurno1, idPuesto1, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "02/01/2016", idTurno2, idPuesto2, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "01/01/2017", idTurno1, idPuesto1, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "02/01/2017", idTurno2, idPuesto2, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "03/01/2017", idTurno1, idPuesto2, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "04/01/2017", idTurno2, idPuesto2, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "05/01/2017", idTurno1, idPuesto2, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "06/01/2017", idTurno2, idPuesto2, idCalendario1, null));
+                datos.insertarFichaje(new Fichaje(idOperario1, "07/01/2017", idTurno2, idPuesto1, idCalendario1, null));
+                datos.insertarFichaje(new Fichaje(idOperario1, "09/01/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
+                datos.insertarFichaje(new Fichaje(idOperario1, "10/01/2017", idTurno1, idPuesto2, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "11/01/2017", idTurno2, idPuesto1, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "15/01/2017", idTurno2, idPuesto2, idCalendario1, 3.0));
+                datos.insertarFichaje(new Fichaje(idOperario1, "17/01/2017", idTurno2, idPuesto2, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "20/01/2017", idTurno1, idPuesto1, idCalendario1, 1.5));
+                datos.insertarFichaje(new Fichaje(idOperario1, "30/01/2017", idTurno1, idPuesto1, idCalendario1, null));
+                datos.insertarFichaje(new Fichaje(idOperario1, "31/01/2017", idTurno2, idPuesto2, idCalendario1, null));
+                datos.insertarFichaje(new Fichaje(idOperario1, "01/02/2017", idTurno2, idPuesto2, idCalendario1, null));
+                datos.insertarFichaje(new Fichaje(idOperario1, "02/02/2017", idTurno1, idPuesto1, idCalendario1, null));
+                datos.insertarFichaje(new Fichaje(idOperario1, "05/02/2017", idTurno2, idPuesto1, idCalendario1, null));
+
+
 
                 datos.getDb().setTransactionSuccessful();
             } finally {

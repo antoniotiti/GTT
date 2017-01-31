@@ -17,7 +17,15 @@ public class CalendariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendarios);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_calendario);
+
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         CalendariosFragment fragment = (CalendariosFragment)
                 getSupportFragmentManager().findFragmentById(R.id.calendarios_container);
