@@ -305,16 +305,13 @@ public class SettingsActivity extends PreferenceActivity {
             try {
                 Cursor calendarios = datos.obtenerCalendarios();
 
-
                 List<String> entryValues = new ArrayList<>();
 
                 if(calendarios != null && calendarios.getCount() > 0){
                     calendarios.moveToFirst();
-
                     do {
                         entryValues.add(calendarios.getString(calendarios.getColumnIndex(NombresColumnasBaseDatos.Calendarios.NOMBRE)));
                     } while (calendarios.moveToNext());
-
                 }
                 calendarios.close();
                 datos.close();
@@ -326,7 +323,6 @@ public class SettingsActivity extends PreferenceActivity {
                 projectsList.setKey("pref_calendario_predeterminado");
                 projectsList.setSummary(R.string.pref_calendario_predeterminado_summary);
                 projectsList.setTitle(R.string.pref_calendario_predeterminado_title);
-
 
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "Error encountered.",

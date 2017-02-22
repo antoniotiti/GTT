@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
-import com.example.antonio.gestiontrabajotemporal.calendariodetalle.CalendarioDetailFragment;
 import com.example.antonio.gestiontrabajotemporal.calendarios.CalendariosActivity;
 import com.example.antonio.gestiontrabajotemporal.util.SimpleDialog;
 
@@ -62,9 +61,11 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
     /**
      * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un calendario de la lista.
      * Borra el calendario seleccionado
+     * @param tag
+     * @param fecha
      */
     @Override
-    public void onPossitiveButtonClick() {
+    public void onPossitiveButtonClick(String tag, String fecha) {
         CalendarioDetailFragment fragment = (CalendarioDetailFragment) getSupportFragmentManager().findFragmentById(R.id.calendario_detail_container);
         if (fragment instanceof CalendarioDetailFragment) {
             fragment.borrarCalendario();
@@ -74,9 +75,11 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
     /**
      * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un calendario de la lista.
      * Muestra un mensaje.
+     * @param tag
+     * @param fecha
      */
     @Override
-    public void onNegativeButtonClick() {
+    public void onNegativeButtonClick(String tag, String fecha) {
         Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
     }
 

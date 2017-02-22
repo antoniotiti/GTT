@@ -60,9 +60,11 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     /**
      * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un turno de la lista.
      * Borra el turno seleccionado
+     * @param tag
+     * @param fecha
      */
     @Override
-    public void onPossitiveButtonClick() {
+    public void onPossitiveButtonClick(String tag, String fecha) {
         TurnoDetailFragment fragment = (TurnoDetailFragment) getSupportFragmentManager().findFragmentById(R.id.turno_detail_container);
         if (fragment instanceof TurnoDetailFragment) {
             fragment.borrarTurno();
@@ -72,10 +74,12 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     /**
      * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un turno de la lista.
      * Muestra un mensaje.
+     * @param tag
+     * @param fecha
      */
     @Override
-    public void onNegativeButtonClick() {
-        Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
+    public void onNegativeButtonClick(String tag, String fecha) {
+        Toast.makeText(this, getString(R.string.cancelar), Toast.LENGTH_LONG).show();
     }
 
 }

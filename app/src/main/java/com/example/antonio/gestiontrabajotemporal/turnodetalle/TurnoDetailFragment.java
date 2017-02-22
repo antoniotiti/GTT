@@ -456,7 +456,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                 //new AddEditTurnoTask().execute();
                 break;
             case R.id.action_delete:
-                new SimpleDialog().show(getFragmentManager(), "SimpleDialog");
+                new SimpleDialog().show(getFragmentManager(), "EliminarTurno");
 
                 //new DeleteTurnoTask().execute();
                 break;

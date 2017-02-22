@@ -2,54 +2,12 @@
 <resources>
     <!-- Strings related to Settings -->
 
-    <string name="pref_dia_comienzo_semana">Primer día de la semana</string>
-    <string name="pref_dia_comienzo_semana_resumen">Selecciona el día con el que empieza la semana</string>
-
-    <string-array name="pref_dia_comienzo_semana_entradas">
-        <item>Lunes</item>
-        <item>Martes</item>
-        <item>Miércoles</item>
-        <item>Jueves</item>
-        <item>Viernes</item>
-        <item>Sábado</item>
-        <item>Domingo</item>
-    </string-array>
-    <string-array name="pref_dia_comienzo_semana_valores">
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>1</item>
-    </string-array>
-
-
-
-
-
-
-
     <!-- Example General settings -->
+
     <string name="pref_header_general">General</string>
 
-    <string name="pref_titulo_modo_compacto">Habilitar modo compacto</string>
-    <string name="pref_descripcion_modo_compacto">Modo compacto para el calendario.</string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
+    <string name="pref_dia_comienzo_semana">Primer día de la semana</string>
+    <string name="pref_dia_comienzo_semana_resumen">Selecciona el día con el que empieza la semana</string>
 
     <string-array name="pref_dia_comienzo_semana_titles">
         <item>LUNES</item>
@@ -70,27 +28,26 @@
         <item>SUNDAY</item>
     </string-array>
 
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_titulo_modo_tema_oscuro">Habilitar Tema oscuro</string>
+    <string name="pref_descripcion_modo_tema_oscuro">Tema oscuro para el calendario.</string>
 
-    <string name="pref_title_calendario_predeterminado">Calendario Predeterminado</string>
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
 
-    <string-array name="pref_calendario_predeterminado_titles">
-        <item>CPD</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
         <item>Never</item>
     </string-array>
-    <string-array name="pref_calendario_predeterminado_values">
-        <item>CPD</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
         <item>-1</item>
     </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">

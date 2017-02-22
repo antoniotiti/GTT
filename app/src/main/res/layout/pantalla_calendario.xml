@@ -42,7 +42,6 @@
                 android:layout_marginBottom="@dimen/color_swatch_margins_small"
                 android:textColor="@color/colorAccent" />
 
-
             <LinearLayout
                 android:id="@+id/calendar1"
                 android:layout_width="match_parent"
@@ -56,18 +55,16 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/customize_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/customize" />
-
-                <Button
                     android:id="@+id/show_dialog_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/show_dialog" />
+                <Button
+                    android:id="@+id/btn_turno_seleccionado"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp"
+                    />
 
                 <!-- FAB -->
 
@@ -83,11 +80,6 @@
                     app:srcCompat="@drawable/plus_white" />
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 

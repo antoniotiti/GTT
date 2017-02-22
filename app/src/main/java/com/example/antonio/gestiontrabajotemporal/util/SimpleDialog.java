@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.example.antonio.gestiontrabajotemporal.R;
+
 /**
  * Fragmento con diálogo básico
  */
@@ -15,49 +17,67 @@ public class SimpleDialog extends DialogFragment {
 
     public SimpleDialog() {
     }
-    public interface OnSimpleDialogListener {
-        void onPossitiveButtonClick();// Eventos Botón Positivo
 
-        void onNegativeButtonClick();// Eventos Botón Negativo
+    public interface OnSimpleDialogListener {
+        void onPossitiveButtonClick(String tag, String fecha);// Eventos Botón Positivo
+
+        void onNegativeButtonClick(String tag, String fecha);// Eventos Botón Negativo
     }
+
     // Interfaz de comunicación
     OnSimpleDialogListener listener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return createSimpleDialog();
+        String fecha = getArguments() != null ? getArguments().getString("fecha") : "";
+        return createSimpleDialog(fecha);
     }
 
     /**
-     * Crea un diálogo de alerta sencillo
+     * Crea un diálogo de alerta sencillo dependiendo del tag que se reciba
      *
+     * @param fecha
      * @return Nuevo diálogo
      */
-    public AlertDialog createSimpleDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    public AlertDialog createSimpleDialog(final String fecha) {
 
-        builder.setTitle("Atención")
-                .setMessage("¿Está seguro que desea borrar el turno seleccionado? Se borraran todos los fichajes realizados en este turno")
-                .setPositiveButton("OK",
+        final String tag = getTag();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        String titulo = getString(R.string.atencion);
+        String mensaje = "";
+
+        switch (tag) {
+            case "EliminarTurno":
+                mensaje = getString(R.string.mensaje_eliminar_turno);
+                break;
+            case "ModificarFichaje":
+                mensaje = getString(R.string.mensaje_modificar_fichaje);
+                break;
+            case "EliminarFichaje":
+                mensaje = getString(R.string.mensaje_eliminar_fichaje);
+                break;
+        }
+
+        builder.setTitle(titulo)
+                .setMessage(mensaje)
+                .setPositiveButton(getString(R.string.ok),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                listener.onPossitiveButtonClick();
+                                listener.onPossitiveButtonClick(tag, fecha);
                             }
                         })
-                .setNegativeButton("CANCELAR",
+                .setNegativeButton(getString(R.string.cancelar),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                listener.onNegativeButtonClick();
+                                listener.onNegativeButtonClick(tag, fecha);
                             }
                         });
-
         return builder.create();
     }
-
 
 
     @Override
@@ -69,8 +89,7 @@ public class SimpleDialog extends DialogFragment {
 
         } catch (ClassCastException e) {
             throw new ClassCastException(
-                    activity.toString() +
-                            " no implementó OnSimpleDialogListener");
+                    activity.toString() + getString(R.string.error_OnSimpleDialogListener));
 
         }
     }

@@ -61,9 +61,11 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
     /**
      * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un puesto de la lista.
      * Borra el puesto seleccionado
+     * @param tag
+     * @param fecha
      */
     @Override
-    public void onPossitiveButtonClick() {
+    public void onPossitiveButtonClick(String tag, String fecha) {
         PuestoDetailFragment fragment = (PuestoDetailFragment) getSupportFragmentManager().findFragmentById(R.id.puesto_detail_container);
         if (fragment instanceof PuestoDetailFragment) {
             fragment.borrarPuesto();
@@ -73,9 +75,11 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
     /**
      * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un puesto de la lista.
      * Muestra un mensaje.
+     * @param tag
+     * @param fecha
      */
     @Override
-    public void onNegativeButtonClick() {
+    public void onNegativeButtonClick(String tag, String fecha) {
         Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
     }
 

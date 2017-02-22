@@ -397,13 +397,13 @@ public class CrearTurno extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void onPossitiveButtonClick() {
+    public void onPossitiveButtonClick(String tag, String fecha) {
         limpiarFormularioCreacionTurno();
 
     }
 
     @Override
-    public void onNegativeButtonClick() {
+    public void onNegativeButtonClick(String tag, String fecha) {
         Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
 
     }

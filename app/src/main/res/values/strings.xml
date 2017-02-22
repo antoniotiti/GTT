@@ -95,6 +95,11 @@
     <string name="pref_calendario_predeterminado_title">Calendario predeterminado</string>
     <string name="pref_calendario_predeterminado_summary">Elige el calendario predeterminado</string>
     <string name="seleccione_calendario">Seleccione Calendario...</string>
-
+    <string name="mensaje_eliminar_turno">¿Está seguro que desea borrar el turno seleccionado? Se borraran todos los fichajes realizados en este turno</string>
+    <string name="mensaje_modificar_fichaje">¿Está seguro que desea modificar el fichaje seleccionado?</string>
+    <string name="mensaje_eliminar_fichaje">¿Está seguro que desea eliminar el fichaje seleccionado?</string>
+    <string name="ok">OK</string>
+    <string name="error_OnSimpleDialogListener">no implementó OnSimpleDialogListener</string>
+    <string name="atencion">Atención</string>
 
 </resources>
