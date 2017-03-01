@@ -52,19 +52,20 @@
                 android:id="@+id/button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/color_swatch_margins_large">
 
-                <Button
-                    android:id="@+id/show_dialog_button"
+                <TextView
+                    android:id="@+id/textView_seleccion_puesto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/show_dialog" />
-                <Button
-                    android:id="@+id/btn_turno_seleccionado"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    />
+                    android:gravity="center"
+                    android:paddingTop="@dimen/color_swatch_margins_small"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textIsSelectable="false"
+                    android:textSize="12sp" />
 
                 <!-- FAB -->
 

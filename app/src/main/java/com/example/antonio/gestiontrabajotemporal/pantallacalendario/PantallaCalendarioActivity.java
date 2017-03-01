@@ -18,32 +18,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
 import com.example.antonio.gestiontrabajotemporal.calendarios.CalendariosActivity;
+import com.example.antonio.gestiontrabajotemporal.modelo.Fichaje;
 import com.example.antonio.gestiontrabajotemporal.puestos.PuestosActivity;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.turnos.TurnosActivity;
 import com.example.antonio.gestiontrabajotemporal.ui.SettingsActivity;
+import com.example.antonio.gestiontrabajotemporal.util.DialogoSeleccionTurno;
 import com.example.antonio.gestiontrabajotemporal.util.SimpleDialog;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 
 @SuppressLint("SimpleDateFormat")
-public class PantallaCalendarioActivity extends AppCompatActivity implements AsyncResponse, SimpleDialog.OnSimpleDialogListener {
+public class PantallaCalendarioActivity extends AppCompatActivity implements AsyncResponse, SimpleDialog.OnSimpleDialogListener, DialogoSeleccionTurno.OnItemClickListener {
 
     final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -53,10 +52,12 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
     TextView calendarioSeleccionado;
     String codigoOperario;
     String password;
+    String idCalendario = "";
+    String fechaSeleccionada = "";
+    TextView txtSeleccionPuesto;
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
-    String idCalendario="";
 
     //ObtenerFichajes obtenerFichajesAsyncTask =new ObtenerFichajes();
 
@@ -73,6 +74,8 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
         //TODO al hacer clik mandar a seleecion calendario de preferencias
 
         //calendarioSpinner = (Spinner) findViewById(R.id.spinner_calendarios);
+
+        txtSeleccionPuesto = (TextView) findViewById(R.id.textView_seleccion_puesto);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_turno);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -450,26 +453,29 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
             @Override
             public void onSelectDate(Date date, View view) {
 
-                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario,formatter.format(date));
+                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario, formatter.format(date));
 
                 if (cursorFichajeFecha.moveToFirst()) {
                     //Recorremos el cursor hasta que no haya más registros
                     do {
                         Bundle args = new Bundle();
                         args.putString("fecha", formatter.format(date));
-                        SimpleDialog dialogo =new SimpleDialog();
+                        SimpleDialog dialogo = new SimpleDialog();
 
                         dialogo.setArguments(args);
                         dialogo.show(getSupportFragmentManager(), "ModificarFichaje");
 
                     } while (cursorFichajeFecha.moveToNext());
-                }else{
-                    Toast.makeText(getApplicationContext(), formatter.format(date),
-                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Mostramos un diálogo de selección de turnos
+                    DialogoSeleccionTurno dialogo = new DialogoSeleccionTurno();
+                    dialogo.show(getSupportFragmentManager(), "SeleccionarTurno");
+                    fechaSeleccionada = formatter.format(date);
+                    /*Toast.makeText(getApplicationContext(), formatter.format(date),
+                            Toast.LENGTH_SHORT).show();*/
+
 
                 }
-
-
             }
 
             @Override
@@ -481,19 +487,19 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
             @Override
             public void onLongClickDate(Date date, View view) {
 
-                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario,formatter.format(date));
+                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario, formatter.format(date));
 
                 if (cursorFichajeFecha.moveToFirst()) {
                     //Recorremos el cursor hasta que no haya más registros
                     do {
                         Bundle args = new Bundle();
                         args.putString("fecha", formatter.format(date));
-                        SimpleDialog dialogo =new SimpleDialog();
+                        SimpleDialog dialogo = new SimpleDialog();
 
                         dialogo.setArguments(args);
                         dialogo.show(getSupportFragmentManager(), "EliminarFichaje");
                     } while (cursorFichajeFecha.moveToNext());
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "No hay fichajes para: " + formatter.format(date),
                             Toast.LENGTH_SHORT).show();
 
@@ -511,13 +517,12 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
         // Setup Caldroid
         caldroidFragment.setCaldroidListener(listener);
 
-        final Button customizeButton = (Button) findViewById(R.id.btn_turno_seleccionado);
-
         // Customize the calendar
-        customizeButton.setOnClickListener(new OnClickListener() {
+        txtSeleccionPuesto.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
+               //TODO seleccion de puestos
 
             }
         });
@@ -559,7 +564,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
     }
 
     private void obtenerFichajes() {
-        ObtenerFichajes obtenerFichajesAsyncTask =new ObtenerFichajes();
+        ObtenerFichajes obtenerFichajesAsyncTask = new ObtenerFichajes();
 
         obtenerFichajesAsyncTask.delegate = this;
         obtenerFichajesAsyncTask.execute(idCalendario);
@@ -696,8 +701,6 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
             caldroidFragment.setTextColorForDate(R.color.white, today);
         }
     }*/
-
-
     @Override
     public void processFinish(Cursor cursorFichajesRecibidos) {
 
@@ -776,26 +779,31 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
     public void onPossitiveButtonClick(String tag, String fecha) {
         switch (tag) {
             case "ModificarFichaje":
-        Toast.makeText(getApplicationContext(), "ModificarFichaje" + fecha,
-                Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "ModificarFichaje" + fecha,
+                        Toast.LENGTH_SHORT).show();
                 break;
             case "EliminarFichaje":
                 ColorDrawable colorFondo = new ColorDrawable(Color.WHITE);
                 Date date = null;
                 try {
-                     date= formatter.parse(fecha);
+                    date = formatter.parse(fecha);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if(datos.eliminarFichaje(codigoOperario,fecha)){
-                    Toast.makeText(getApplicationContext(), "Fichaje eliminado: "+fecha, Toast.LENGTH_SHORT).show();
+                if (datos.eliminarFichaje(codigoOperario, fecha)) {
+                    Toast.makeText(getApplicationContext(), "Fichaje eliminado: " + fecha, Toast.LENGTH_SHORT).show();
+
                     caldroidFragment.clearBackgroundDrawableForDate(date);
                     caldroidFragment.clearTextColorForDate(date);
 
+                    //TODO no lo borra directamente
+                    caldroidFragment.setBackgroundDrawableForDate(colorFondo,date);
+
                     caldroidFragment.refreshView();
 
-                }else{
-                    Toast.makeText(getApplicationContext(), "No Fichaje eliminado: "+fecha, Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Fichaje eliminado: " + fecha, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -806,15 +814,33 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
 
         switch (tag) {
             case "ModificarFichaje":
-                Toast.makeText(getApplicationContext(), "No ModificarFichaje"+fecha,
+                Toast.makeText(getApplicationContext(), "No ModificarFichaje" + fecha,
                         Toast.LENGTH_SHORT).show();
                 break;
             case "EliminarFichaje":
-                Toast.makeText(getApplicationContext(), "No EliminarFichaje"+fecha,
+                Toast.makeText(getApplicationContext(), "No EliminarFichaje" + fecha,
                         Toast.LENGTH_SHORT).show();
                 break;
         }
 
+    }
+
+    @Override
+    public void onItemClick(String currentTurnoId) {
+
+        /*String currentTurnoId = cursorTurnoSeleccionado.getString(cursorTurnoSeleccionado.getColumnIndex(NombresColumnasBaseDatos.Turnos.ID));
+        String currentTurnoAbreviatura = cursorTurnoSeleccionado.getString(cursorTurnoSeleccionado.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
+        String currentTurnoColorFondo = cursorTurnoSeleccionado.getString(cursorTurnoSeleccionado.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_FONDO));
+        String currentTurnoColorTexto = cursorTurnoSeleccionado.getString(cursorTurnoSeleccionado.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_TEXTO));*/
+
+        /*txtSeleccionPuesto.setText(currentTurnoAbreviatura);
+        txtSeleccionPuesto.setBackgroundColor(Integer.parseInt(currentTurnoColorFondo));
+        txtSeleccionPuesto.setTextColor(Integer.parseInt(currentTurnoColorTexto));*/
+//TODO cambiar puesto cada vez q borremos datos
+        long insertado = datos.insertarFichaje(new Fichaje(codigoOperario, fechaSeleccionada, currentTurnoId, "PU-1eec3e59-01a2-4b99-a44e-13a89a3ff565", idCalendario, 2.6));
+        caldroidFragment.refreshView();
+
+        //Toast.makeText(getApplicationContext(), currentTurnoId, Toast.LENGTH_SHORT).show();
     }
 
 

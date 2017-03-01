@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.antonio.gestiontrabajotemporal">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_gtt"
@@ -13,12 +16,14 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden">
+
             <!--
             android:configChanges="keyboardHidden|screenSize|orientation- no reinica la actividad al girar la pantalla ni al ocultar y mostrar teclado"
             android:windowSoftInputMode="stateHidden"-Ocultar teclado
             -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -68,5 +73,10 @@
             android:name=".calendariodetalle.CalendarioDetalleActivity"
             android:label="@string/title_activity_calendario_detalle"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.RecuperarPassword"
+            android:label="@string/title_activity_recuperar_password"
+            android:theme="@style/AppTheme" />
     </application>
+
 </manifest>

@@ -20,6 +20,7 @@
     <string name="direccion">Dirección</string>
     <string name="nss">Número Seguridad Social</string>
     <string name="titulo_iniciar_sesion">Iniciar sesión</string>
+    <string name="titulo_recuperar_password">Recuperar Contraseña</string>
     <string name="titulo_crear_turno">Crear Turno</string>
     <string name="titulo_editar_turno">Editar Turno</string>
     <string name="titulo_crear_puesto">Crear Puesto</string>
@@ -88,6 +89,7 @@
     <string name="turnos">Turnos</string>
     <string name="puestos">Puestos</string>
     <string name="calendarios">Calendarios</string>
+    <string name="cerrar_dialogo">Cerrar Diálogo</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -95,11 +97,14 @@
     <string name="pref_calendario_predeterminado_title">Calendario predeterminado</string>
     <string name="pref_calendario_predeterminado_summary">Elige el calendario predeterminado</string>
     <string name="seleccione_calendario">Seleccione Calendario...</string>
+    <string name="seleccione_turno">Seleccione Turno</string>
     <string name="mensaje_eliminar_turno">¿Está seguro que desea borrar el turno seleccionado? Se borraran todos los fichajes realizados en este turno</string>
     <string name="mensaje_modificar_fichaje">¿Está seguro que desea modificar el fichaje seleccionado?</string>
     <string name="mensaje_eliminar_fichaje">¿Está seguro que desea eliminar el fichaje seleccionado?</string>
     <string name="ok">OK</string>
     <string name="error_OnSimpleDialogListener">no implementó OnSimpleDialogListener</string>
+    <string name="error_OnItemClickListener">no implementó OnItemClickListener</string>
     <string name="atencion">Atención</string>
+    <string name="title_activity_recuperar_password">RecuperarPassword</string>
 
 </resources>

@@ -329,6 +329,27 @@ public final class OperacionesBaseDatos {
         cursor.close();
         return password;
     }
+
+    public String obtenerPasswordOperarioId(String idOperario,String email) throws CursorIndexOutOfBoundsException {
+
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+
+        String whereClause = String.format("%s=? AND %s=?", Operarios.ID, Operarios.EMAIL);
+        String[] whereArgs = {idOperario, email};
+
+        Cursor cursor = db.query(Tablas.OPERARIO,
+                new String[]{Operarios.PASSWORD},
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null);
+
+        cursor.moveToFirst();
+        String password = cursor.getString(cursor.getColumnIndex(Operarios.PASSWORD));
+        cursor.close();
+        return password;
+    }
     // [OPERACIONES_OPERARIO]
 
     // [OPERACIONES_TURNO]
@@ -476,6 +497,7 @@ public final class OperacionesBaseDatos {
             // Insertar fichaje
             fichajeInsertado = db.insertOrThrow(Tablas.FICHAJE, null, valores);
         } catch (SQLiteConstraintException e) {
+            e.printStackTrace();
 
         }
         return fichajeInsertado;

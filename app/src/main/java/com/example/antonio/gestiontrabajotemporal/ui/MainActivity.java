@@ -38,7 +38,7 @@ import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarPas
 public class MainActivity extends AppCompatActivity {
 
     Button btnLogin;
-    TextView txtRegister;
+    TextView txtRegister, txtRecuperarPassword;
     EditText editTextCodigoOperario, editTextPassword;
     boolean codigoOperarioValidado, passwordValidado;
 
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Obtenemos las referencias de las vistas
         txtRegister = (TextView) findViewById(R.id.txt_LinkToRegister);
+        txtRecuperarPassword = (TextView) findViewById(R.id.txt_LinkToRecuperarPassword);
         editTextCodigoOperario = (EditText) findViewById(R.id.editText_CodigoOperarioToLogin);
         editTextCodigoOperario.addTextChangedListener(new TextWatcher() {
 
@@ -170,6 +171,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), Registro.class);
+                startActivity(i);
+            }
+        });
+
+        txtRecuperarPassword.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), RecuperarPassword.class);
                 startActivity(i);
             }
         });
