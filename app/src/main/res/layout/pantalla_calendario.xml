@@ -52,7 +52,8 @@
                 android:id="@+id/button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/color_swatch_margins_large">
 
                 <Button
                     android:id="@+id/show_dialog_button"
@@ -60,11 +61,19 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/show_dialog" />
-                <Button
-                    android:id="@+id/btn_turno_seleccionado"
+
+                <TextView
+                    android:id="@+id/textView_seleccion_turno"
                     android:layout_width="45dp"
                     android:layout_height="55dp"
-                    />
+                    android:background="@color/grey05"
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/color_swatch_margins_small"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textIsSelectable="false"
+                    android:textSize="12sp" />
 
                 <!-- FAB -->
 
@@ -74,7 +83,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
-                    android:layout_margin="@dimen/fab_margin"
                     android:tint="@android:color/white"
                     app:fabSize="normal"
                     app:srcCompat="@drawable/plus_white" />

@@ -476,6 +476,7 @@ public final class OperacionesBaseDatos {
             // Insertar fichaje
             fichajeInsertado = db.insertOrThrow(Tablas.FICHAJE, null, valores);
         } catch (SQLiteConstraintException e) {
+            e.printStackTrace();
 
         }
         return fichajeInsertado;
