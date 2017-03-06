@@ -49,12 +49,12 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Asy
     OperacionesBaseDatos datos;
     // Spinner calendarioSpinner;
     // SimpleCursorAdapter calendarioSpinnerAdapter;
-    TextView calendarioSeleccionado;
+    TextView calendarioSeleccionado, txtSeleccionPuesto;
     String codigoOperario;
     String password;
     String idCalendario = "";
     String fechaSeleccionada = "";
-    TextView txtSeleccionPuesto;
+
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
