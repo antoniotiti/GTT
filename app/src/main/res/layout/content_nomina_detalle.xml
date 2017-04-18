@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.antonio.gestiontrabajotemporal.nominadetalle.NominaDetalle"
+    tools:showIn="@layout/activity_nomina_detalle">
+
+    <RelativeLayout
+        android:id="@+id/layout_colores"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1">
+
+        <TextView
+            android:id="@+id/textView_titulo_nomina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/color_swatch_margins_small"
+            android:paddingTop="@dimen/color_swatch_margins_small"
+            android:text="@string/titulo_nomina"
+            android:textColor="@color/colorPrimary"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/textView_nombre_apellido_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_titulo_nomina"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/nombre"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_fecha_nacimiento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_nombre_apellido_operario"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/fecha_nacimiento"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_fecha_nacimiento_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_nombre_apellido_operario"
+            android:layout_toEndOf="@+id/textView_fecha_nacimiento"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/fecha_nacimiento"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_dni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_nombre_apellido_operario"
+            android:layout_toEndOf="@+id/textView_fecha_nacimiento_operario"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/dni"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_dni_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_nombre_apellido_operario"
+            android:layout_toEndOf="@+id/textView_dni"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/dni"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_nss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_dni"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/nss"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_nss_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_dni"
+            android:layout_toEndOf="@+id/textView_nss"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/nss"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_direccion_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_nss"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/direccion"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_telefono_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_direccion_operario"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/telefono"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_email_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_direccion_operario"
+            android:layout_toEndOf="@+id/textView_telefono_operario"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/email"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_fecha_antiguedad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_telefono_operario"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/fecha_antiguedad"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_fecha_antiguedad_operario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_telefono_operario"
+            android:layout_toEndOf="@+id/textView_fecha_antiguedad"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/fecha_antiguedad"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listview_nomina"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/textView_fecha_antiguedad"
+            android:divider="#1E88E5" />
+
+        <TextView
+            android:id="@+id/textView_total_neto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/listview_nomina"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:paddingTop="@dimen/color_swatch_margins_small"
+            android:text="@string/total_neto"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_total_neto_valor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView_total_neto"
+            android:layout_below="@+id/listview_nomina"
+            android:layout_toEndOf="@+id/textView_total_neto"
+            android:paddingEnd="@dimen/color_swatch_margins_small"
+            android:paddingStart="@dimen/color_swatch_margins_small"
+            android:text="@string/cero"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

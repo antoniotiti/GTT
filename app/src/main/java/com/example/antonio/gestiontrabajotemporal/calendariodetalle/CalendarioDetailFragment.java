@@ -94,7 +94,6 @@ public class CalendarioDetailFragment extends Fragment {
      */
     public void borrarCalendario() {
         new DeleteCalendarioTask().execute();
-        //Toast.makeText(getActivity(), "Calendario Borrado", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -102,13 +101,9 @@ public class CalendarioDetailFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_save:
                 addEditCalendario();
-
-                //new AddEditCalendarioTask().execute();
                 break;
             case R.id.action_delete:
-                new SimpleDialog().show(getFragmentManager(), "SimpleDialog");
-
-                //new DeleteCalendarioTask().execute();
+                new SimpleDialog().show(getFragmentManager(), "EliminarCalendario");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -118,7 +113,6 @@ public class CalendarioDetailFragment extends Fragment {
 
         nombreCalendarioValidado = validarEditTextVacio(editTextNombreCalendario);
         descripcionCalendarioValidado = validarEditTextVacio(editTextDescripcionCalendario);
-
 
         if (nombreCalendarioValidado && descripcionCalendarioValidado) {
 

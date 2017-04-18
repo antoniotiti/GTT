@@ -81,6 +81,20 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    public Cursor obtenerIdPuestoByNombre(String nombrePuesto) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        Cursor c = db.query(
+                Tablas.PUESTO,
+                new String[]{Puestos.ID},
+                Puestos.NOMBRE + " LIKE ?",
+                new String[]{nombrePuesto},
+                null,
+                null,
+                null);
+        return c;
+    }
+
     public String insertarPuesto(Puesto puesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         String idPuestoInsertado = null;
@@ -492,6 +506,7 @@ public final class OperacionesBaseDatos {
         valores.put(Fichajes.ID_PUESTO, fichaje.idPuesto);
         valores.put(Fichajes.ID_CALENDARIO, fichaje.idCalendario);
         valores.put(Fichajes.HORA_EXTRA, fichaje.horaExtra);
+        valores.put(Fichajes.COMENTARIO, fichaje.comentario);
 
         try {
             // Insertar fichaje
@@ -511,38 +526,39 @@ public final class OperacionesBaseDatos {
         valores.put(Fichajes.ID_PUESTO, fichaje.idPuesto);
         valores.put(Fichajes.ID_CALENDARIO, fichaje.idCalendario);
         valores.put(Fichajes.HORA_EXTRA, fichaje.horaExtra);
+        valores.put(Fichajes.COMENTARIO, fichaje.comentario);
 
-        String whereClause = String.format("%s=?, %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA);
-        String[] whereArgs = {fichaje.idOperario, fichaje.fecha};
+        String whereClause = String.format("%s=? AND %s=? AND %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA, Fichajes.ID_CALENDARIO);
+        String[] whereArgs = {fichaje.idOperario, fichaje.fecha, fichaje.idCalendario};
 
         int resultado = db.update(Tablas.FICHAJE, valores, whereClause, whereArgs);
 
         return resultado > 0;
     }
 
-    public boolean eliminarFichaje(String idOperario, String fecha) {
+    public boolean eliminarFichaje(String idOperario, String fecha, String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
-        String whereClause = String.format("%s=? AND %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA);
-        String[] whereArgs = {idOperario, fecha};
+        String whereClause = String.format("%s=? AND %s=? AND %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA, Fichajes.ID_CALENDARIO);
+        String[] whereArgs = {idOperario, fecha, idCalendario};
 
         int resultado = db.delete(Tablas.FICHAJE, whereClause, whereArgs);
 
         return resultado > 0;
     }
 
-    public Cursor obtenerFichajeFecha(String idOperario, String fecha) {
+    public Cursor obtenerFichajeFecha(String idOperario, String fecha, String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
 
-        String whereClause = String.format("%s=? AND %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA);
-        String[] whereArgs = {idOperario, fecha};
+        String whereClause = String.format("%s=? AND %s=? AND %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA, Fichajes.ID_CALENDARIO);
+        String[] whereArgs = {idOperario, fecha, idCalendario};
 
         Cursor resultado = db.query(Tablas.FICHAJE, null, whereClause, whereArgs, null, null, null);
 
         return resultado;
     }
 
-    public Cursor obtenerFichajes() {
+    public Cursor obtenerFichajesParaCalendario() {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
@@ -552,7 +568,7 @@ public final class OperacionesBaseDatos {
         return builder.query(db, proyFichaje, null, null, null, null, null);
     }
 
-    public Cursor obtenerFichajes(String idOperario, String calendario) {
+    public Cursor obtenerFichajesParaCalendario(String idOperario, String calendario) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
         String sql = "SELECT " + Operarios.ID + ", " + Fichajes.ID_TURNO + ", " + Fichajes.ID_PUESTO
@@ -578,7 +594,7 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
-    public Cursor obtenerFichajes(String idOperario, String calendario,String fecha) {
+    public Cursor obtenerFichajesParaCalendario(String idOperario, String calendario, String fecha) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
         String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Turnos.ABREVIATURA_NOMBRE_TURNO + ", "
@@ -590,16 +606,72 @@ public final class OperacionesBaseDatos {
                 " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " LIKE '" + fecha + "'";
 
         Cursor c = db.rawQuery(sql, null);
-
-       /* Cursor c = db.query(
-                Tablas.FICHAJE,
-                null,
-                Fichajes.ID_OPERARIO + " LIKE ? AND " + Fichajes.ID_CALENDARIO + " LIKE ?",
-                new String[]{idOperario, calendario},
-                null,
-                null,
-                null);*/
         return c;
+    }
+
+    public Cursor obtenerFichajesParaDetalle(String idOperario, String calendario, String fecha) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Fichajes.COMENTARIO + ", "
+                + Turnos.ABREVIATURA_NOMBRE_TURNO + ", " + Turnos.NOMBRE + ", " + Turnos.ID + ", "
+                + Turnos.COLOR_FONDO + ", " + Turnos.COLOR_TEXTO + ", " + Operarios.NOMBRE + ", "
+                + Operarios.APELLIDOS + ", " + Puestos.NOMBRE + ", " + Puestos.ID +
+                " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
+                + " = " + Turnos.ID + ") INNER JOIN " + Tablas.OPERARIO + " ON (" + Fichajes.ID_OPERARIO
+                + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
+                + " = " + Calendarios.ID + ") INNER JOIN " + Tablas.PUESTO + " ON (" + Fichajes.ID_PUESTO
+                + " = " + Puestos.ID + ")" +
+                " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO
+                + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " LIKE '" + fecha + "'";
+
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+    public Cursor obtenerDatosNomina(String calendario, String idOperario, String primerDiaMes, String ultimoDiaMes) {
+
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Turnos.HORAS_TRABAJADAS + ", "
+                + Turnos.HORAS_TRABAJADAS_NOCTURNAS + ", " + Turnos.PRECIO_HORA + ", "
+                + Turnos.PRECIO_HORA_EXTRA + ", " + Turnos.PRECIO_HORA_NOCTURNAS +
+                " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
+                + " = " + Turnos.ID + ") INNER JOIN " + Tablas.OPERARIO + " ON (" + Fichajes.ID_OPERARIO
+                + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
+                + " = " + Calendarios.ID + ") INNER JOIN " + Tablas.PUESTO + " ON (" + Fichajes.ID_PUESTO
+                + " = " + Puestos.ID + ")" +
+                " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO
+                + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " >= Date ('" + primerDiaMes + "') AND "
+                + Fichajes.FECHA + " <= Date ('" + ultimoDiaMes + "')";
+        // (Date(column_date) >= Date (2000-01-01) AND Date(column_date) <= Date (2050-01-01))
+
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+
+    }
+
+    public Cursor obtenerDatosNominaDetalle(String calendario, String idOperario, String primerDiaMes, String ultimoDiaMes) {
+
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Turnos.HORAS_TRABAJADAS + ", "
+                + Turnos.HORAS_TRABAJADAS_NOCTURNAS + ", " + Turnos.PRECIO_HORA + ", "
+                + Turnos.PRECIO_HORA_EXTRA + ", " + Turnos.PRECIO_HORA_NOCTURNAS + ", " + Turnos.NOMBRE +
+                ", " + Puestos.NOMBRE + ", " + Operarios.FECHA_INICIO +  ", " + Operarios.NUMERO_S_S +
+                ", " + Operarios.NOMBRE +  ", " + Operarios.APELLIDOS +  ", " + Operarios.DIRECCION +
+                ", " + Operarios.DNI +  ", " + Operarios.EMAIL +  ", " + Operarios.TELEFONO +
+                ", " + Operarios.FOTO +", " + Operarios.FECHA_NACIMIENTO +
+                " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
+                + " = " + Turnos.ID + ") INNER JOIN " + Tablas.OPERARIO + " ON (" + Fichajes.ID_OPERARIO
+                + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
+                + " = " + Calendarios.ID + ") INNER JOIN " + Tablas.PUESTO + " ON (" + Fichajes.ID_PUESTO
+                + " = " + Puestos.ID + ")" +
+                " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO
+                + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " >= Date ('" + primerDiaMes + "') AND "
+                + Fichajes.FECHA + " <= Date ('" + ultimoDiaMes + "')";
+
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+
     }
 
 
@@ -617,5 +689,6 @@ WHERE O.idOperario LIKE '8246' AND C.idCalendario like 'CA-a9854abd-eb2c-4f10-b1
     public void close() {
         baseDatos.close();
     }
+
 
 }

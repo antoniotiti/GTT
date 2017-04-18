@@ -51,11 +51,17 @@ public class SimpleDialog extends DialogFragment {
             case "EliminarTurno":
                 mensaje = getString(R.string.mensaje_eliminar_turno);
                 break;
-            case "ModificarFichaje":
-                mensaje = getString(R.string.mensaje_modificar_fichaje);
+            case "EliminarPuesto":
+                mensaje = getString(R.string.mensaje_eliminar_puesto);
+                break;
+            case "EliminarCalendario":
+                mensaje = getString(R.string.mensaje_eliminar_calendario);
                 break;
             case "EliminarFichaje":
                 mensaje = getString(R.string.mensaje_eliminar_fichaje);
+                break;
+            case "ModificarFichaje":
+                mensaje = getString(R.string.mensaje_modificar_fichaje);
                 break;
         }
 

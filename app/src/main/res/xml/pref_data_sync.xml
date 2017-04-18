@@ -6,6 +6,9 @@
     <ListPreference
         android:key="pref_calendario_predeterminado"
     />
+    <ListPreference
+        android:key="pref_puesto_predeterminado"
+        />
 
     <ListPreference
         android:defaultValue="180"

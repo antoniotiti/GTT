@@ -43,7 +43,7 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
         // Obtenemos la fecha de la celda
         DateTime dateTime = this.datetimeList.get(position);
         // Formatemamos la fecha
-        String fechaFormateada = dateTime.format("DD/MM/YYYY");
+        String fechaFormateada = dateTime.format("YYYY-MM-DD");
 
         // For reuse
         if (convertView == null) {
@@ -81,7 +81,7 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
                 bottomPadding);
 
         // Obtenemos el fichaje a partir del operario y calendario elegido y el día del fichaje.
-        Cursor cursorFichajes = datos.obtenerFichajes(codigoOperario, idCalendario, fechaFormateada);
+        Cursor cursorFichajes = datos.obtenerFichajesParaCalendario(codigoOperario, idCalendario, fechaFormateada);
 
         if (cursorFichajes.moveToFirst()) {
             // Recorremos el cursor hasta que no haya más registros

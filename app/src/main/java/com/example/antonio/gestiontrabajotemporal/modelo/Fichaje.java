@@ -15,13 +15,16 @@ public class Fichaje {
 
     public Double horaExtra;
 
-    public Fichaje(String idOperario, String fecha, String idTurno, String idPuesto, String idCalendario, Double horaExtra ) {
+    public String comentario;
+
+    public Fichaje(String idOperario, String fecha, String idTurno, String idPuesto, String idCalendario, Double horaExtra, String comentario ) {
         this.idOperario = idOperario;
         this.fecha = fecha;
         this.idTurno = idTurno;
         this.idPuesto = idPuesto;
         this.idCalendario = idCalendario;
         this.horaExtra = horaExtra;
+        this.comentario = comentario;
     }
 
     public String getIdOperario() {
@@ -72,6 +75,14 @@ public class Fichaje {
         this.horaExtra = horaExtra;
     }
 
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
     @Override
     public String toString() {
         return "Fichaje{" +
@@ -81,6 +92,7 @@ public class Fichaje {
                 ", idTurno=" + idPuesto +
                 ", idTurno=" + idCalendario +
                 ", horaExtra=" + horaExtra +
+                ", coemntario=" + comentario +
                 '}';
     }
 }

@@ -39,6 +39,7 @@
     <color name="tomato">#d50000</color>
     <color name="violet">#7F00FF</color>
     <color name="yellow">#FFFF00</color>
+    <color name="black">#000000</color>
 
 
     <array name="colores_dialogo">
@@ -54,6 +55,7 @@
         <item>@color/flamingo</item>
         <item>@color/graphite</item>
         <item>@color/white</item>
+        <item>@color/black</item>¡
     </array>
 
     <string-array name="colores_dialogo_name">
@@ -69,6 +71,7 @@
         <item>@string/flamingo</item>
         <item>@string/graphite</item>
         <item>@string/white</item>
+        <item>@string/black</item>
     </string-array>
 
     <declare-styleable name="ColorPreference">
@@ -98,7 +101,8 @@
     <string name="sage">Sage</string>
     <string name="tangerine">Tangerine</string>
     <string name="tomato">Tomato</string>
-    <string name="white">white</string>
+    <string name="white">White</string>
+    <string name="black">Black</string>
 
     <color name="color_radio_button_on">#2980b9</color>
     <color name="color_radio_button_off">#3498db</color>

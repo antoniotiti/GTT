@@ -47,7 +47,7 @@ public class TurnosFragment extends Fragment {
         // Referencias UI
         ListView mTurnosList = (ListView) root.findViewById(R.id.turnos_list);
         mTurnosAdapter = new TurnosCursorAdapter(getActivity(), null);
-        FloatingActionButton mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_turno);
+        FloatingActionButton mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_turnos);
 
         // Setup
         mTurnosList.setAdapter(mTurnosAdapter);

@@ -18,6 +18,8 @@ public class PuestosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_puestos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_puesto);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+
 
         PuestosFragment fragment = (PuestosFragment)
                 getSupportFragmentManager().findFragmentById(R.id.puestos_container);
@@ -38,6 +40,17 @@ public class PuestosActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    /**
+     * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
+     *
+     * @return
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?listPreferredItemHeight"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/color_swatch_margins_small"
+    android:paddingEnd="@dimen/color_swatch_margins_large"
+    android:paddingStart="@dimen/color_swatch_margins_large"
+    android:paddingTop="@dimen/color_swatch_margins_small"
+    android:stretchColumns="1,3">
+
+    <TableRow
+        android:id="@+id/tablerow_titulo_nomina"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/color_swatch_margins_large">
+
+        <TextView
+            android:id="@+id/textView_nombre_turno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/turnos"
+            android:textAppearance="?textAppearanceListItem"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tablerow_cabecera_nomina"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textView_head_tipo_horas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tipo_hora"
+            android:textAppearance="?textAppearanceListItem"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_head_numero_horas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/numero_horas"
+            android:textAppearance="?textAppearanceListItem"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_head_precio_hora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/precio_hora"
+            android:textAppearance="?textAppearanceListItem"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_head_total_hora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/total"
+            android:textAppearance="?textAppearanceListItem"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/separador_cabecera"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/linea_cabecera"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_span="6"
+            android:background="#1E88E5"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textView_horas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/horas_trabajadas_normal"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_valor_horas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:paddingEnd="@dimen/color_swatch_margins_large"
+            android:paddingStart="0dp"
+            android:text="@string/hora_00"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_precio_hora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/color_swatch_margins_large"
+            android:paddingStart="0dp"
+            android:gravity="end"
+            android:text="@string/horas"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_total_hora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:maxLength="8"
+            android:text="@string/€"
+            android:textAppearance="?textAppearanceListItem" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textView_horas_nocturnas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/horas_trabajadas_nocturnas"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_valor_horas_nocturnas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:paddingEnd="@dimen/color_swatch_margins_large"
+            android:paddingStart="0dp"
+            android:text="@string/hora_00"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_precio_hora_nocturnas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/color_swatch_margins_large"
+            android:paddingStart="0dp"
+            android:gravity="end"
+            android:text="@string/horas"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_total_hora_nocturnas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:maxLength="8"
+            android:text="@string/€"
+            android:textAppearance="?textAppearanceListItem" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textView_horas_extras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/horas_trabajadas_extras"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_valor_horas_extras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/color_swatch_margins_large"
+            android:paddingStart="0dp"
+            android:gravity="end"
+            android:text="@string/hora_00"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_precio_hora_extras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/color_swatch_margins_large"
+            android:paddingStart="0dp"
+            android:gravity="end"
+            android:text="@string/horas"
+            android:textAppearance="?textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textView_total_hora_extras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:maxLength="8"
+            android:text="@string/€"
+            android:textAppearance="?textAppearanceListItem" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/textView_total_bruto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/total_neto"
+            android:textAppearance="?textAppearanceListItem"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_total_bruto_turno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:paddingEnd="@dimen/activity_vertical_margin"
+            android:paddingStart="0dp"
+            android:text="@string/€"
+            android:textAppearance="?textAppearanceListItem"
+            android:textStyle="bold" />
+    </TableRow>
+</TableLayout>

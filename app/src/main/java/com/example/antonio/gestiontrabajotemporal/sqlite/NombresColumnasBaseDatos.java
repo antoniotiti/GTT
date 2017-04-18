@@ -60,6 +60,7 @@ public class NombresColumnasBaseDatos {
         String ID_PUESTO = "id_puesto";
         String ID_CALENDARIO = "id_calendario";
         String HORA_EXTRA = "horaExtra";
+        String COMENTARIO = "comentario";
     }
 
     interface ColumnasCalendario {

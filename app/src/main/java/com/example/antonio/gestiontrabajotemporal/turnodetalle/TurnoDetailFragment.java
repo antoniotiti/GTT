@@ -43,8 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraDecimal;
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHorasTrabajadas;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.*;
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEditTextVacio;
 
 /**
@@ -85,8 +84,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     private String mTurnoId;
     private CollapsingToolbarLayout mCollapsingView;
 
-    //Formato de hora.
-    SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
+
 
     /**
      * Constructor por defecto.
@@ -509,7 +507,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             }
         }
     }
-
+//TODO Borrar en todos los detalles
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Acciones

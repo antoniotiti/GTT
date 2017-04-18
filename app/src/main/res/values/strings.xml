@@ -10,24 +10,32 @@
     <string name="logo">Logo</string>
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
-    <string name="fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="fecha_nacimiento"><u>Fecha nacimiento:</u></string>
     <string name="email">Email</string>
     <string name="telefono">Teléfono</string>
-    <string name="dni">Dni</string>
+    <string name="dni"><u>Dni:</u></string>
     <string name="registrar">Registrar</string>
     <string name="codigo_operario">Código de operario</string>
+    <string name="codigo_operario2Puntos">Código Operario:</string>
+    <string name="nombre_operario2Puntos">Nombre Operario:</string>
+    <string name="puesto2Puntos">Puesto:</string>
+    <string name="turno2Puntos">Turno:</string>
+    <string name="comentario2Puntos">Comentario:</string>
+    <string name="horasExtras2Puntos">Horas Extras:</string>
     <string name="confirmar_Password">Confirmar Contraseña</string>
     <string name="direccion">Dirección</string>
-    <string name="nss">Número Seguridad Social</string>
+    <string name="nss"><u>Número S.S:</u></string>
     <string name="titulo_iniciar_sesion">Iniciar sesión</string>
     <string name="titulo_recuperar_password">Recuperar Contraseña</string>
     <string name="titulo_crear_turno">Crear Turno</string>
     <string name="titulo_editar_turno">Editar Turno</string>
+    <string name="titulo_editar_fichaje">Editar Fichaje</string>
     <string name="titulo_crear_puesto">Crear Puesto</string>
     <string name="titulo_editar_puesto">Editar Puesto</string>
     <string name="titulo_crear_calendario">Crear Calendario</string>
     <string name="titulo_editar_calendario">Editar Calendario</string>
     <string name="titulo_registro">Regístrate</string>
+    <string name="titulo_nomina">Nómina</string>
     <string name="passwordOlvidada">¿Has olvidado tu contraseña?</string>
     <string name="customize">Customize</string>
     <string name="show_dialog">Show Dialog</string>
@@ -53,7 +61,8 @@
     <string name="horario_fin">Hora fin:</string>
     <string name="hora_00">00:00</string>
     <string name="turno_partido">Turno partido</string>
-    <string name="horas_trabajadas">Horas trabajadas:</string>
+    <string name="dias_trabajados">Días trabajados: </string>
+    <string name="horas_trabajadas">Horas trabajadas: </string>
     <string name="horas_trabajadas_nocturnas">Nocturnas:</string>
     <string name="horas_trabajadas_extras">Extras:</string>
     <string name="horas_trabajadas_normal">Normal:</string>
@@ -84,6 +93,7 @@
     <string name="title_activity_puesto_detalle">Puesto Detalle</string>
     <string name="title_activity_calendarios">Calendarios</string>
     <string name="title_activity_calendario_detalle">Calendario Detalle</string>
+    <string name="title_activity_fichaje_detalle">Fichaje Detalle</string>
     <string name="action_edit">Editar</string>
     <string name="action_delete">Eliminar</string>
     <string name="turnos">Turnos</string>
@@ -94,17 +104,50 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="seleccione_calendario">Seleccione Calendario</string>
     <string name="pref_calendario_predeterminado_title">Calendario predeterminado</string>
     <string name="pref_calendario_predeterminado_summary">Elige el calendario predeterminado</string>
-    <string name="seleccione_calendario">Seleccione Calendario...</string>
+
     <string name="seleccione_turno">Seleccione Turno</string>
+
+    <string name="seleccione_puesto">Seleccione Puesto</string>
+    <string name="pref_puesto_predeterminado_title">Puesto predeterminado</string>
+    <string name="pref_puesto_predeterminado_summary">Elige el puesto predeterminado</string>
+
     <string name="mensaje_eliminar_turno">¿Está seguro que desea borrar el turno seleccionado? Se borraran todos los fichajes realizados en este turno</string>
+    <string name="mensaje_modificar_turno">¿Está seguro que desea modificar el turno seleccionado? Se cambiaran todos los fichajes realizados con este turno</string>
+
+    <string name="mensaje_eliminar_puesto">¿Está seguro que desea borrar el puesto seleccionado? Se borraran todos los fichajes realizados en este puesto</string>
+    <string name="mensaje_modificar_puesto">¿Está seguro que desea modificar el puesto seleccionado? Se cambiaran todos los fichajes realizados con este puesto</string>
+
     <string name="mensaje_modificar_fichaje">¿Está seguro que desea modificar el fichaje seleccionado?</string>
     <string name="mensaje_eliminar_fichaje">¿Está seguro que desea eliminar el fichaje seleccionado?</string>
+
+    <string name="mensaje_eliminar_calendario">¿Está seguro que desea borrar el calendario seleccionado? Se borraran todos los fichajes realizados en este calendario</string>
+
     <string name="ok">OK</string>
-    <string name="error_OnSimpleDialogListener">no implementó OnSimpleDialogListener</string>
-    <string name="error_OnItemClickListener">no implementó OnItemClickListener</string>
+    <string name="error_OnSimpleDialogListener">no implementó OnSimpleDialogListener en la actividad, no en el Fragment</string>
+    <string name="error_OnItemClickListener">no se implementó OnItemClickListener en la actividad, no en el Fragment</string>
     <string name="atencion">Atención</string>
     <string name="title_activity_recuperar_password">RecuperarPassword</string>
+    <string name="nomina">Nómina:</string>
+    <string name="title_activity_nomina_detalle">NominaDetalle</string>
+    <string name="fecha_antiguedad"><u>Fecha de antigüedad:</u></string>
+    <string name="h_trabajadas">H.Trabaj:</string>
+    <string name="horas">Horas</string>
+    <string name="tipo_hora">Tipo Hora</string>
+    <string name="total">Total</string>
+    <string name="numero_horas">Nº horas</string>
+    <string name="total_bruto_turno">Total Bruto Turno</string>
+    <string name="tiempo_descanso">Tiempo de descanso (min)</string>
+    <string name="cero">0</string>
+    <string name="total_neto">Total Neto:</string>
+    <string name="nomina_neta">Nómina Neto:</string>
+    <string name="pref_irpf">IRPF (02-45%):</string>
+    <string name="pref_default_irpf">2</string>
+    <string name="pref_default_retencion_extra">4.7</string>
+    <string name="pref_retencion_extras">Retencion Horas Extras:</string>
+
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.antonio.gestiontrabajotemporal.util;
 
 import android.widget.EditText;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,7 +12,14 @@ import java.util.Locale;
 public class Utilidades {
 
     //Formato de hora.
-    private static SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
+    public static SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
+    public static SimpleDateFormat formatter_minutos = new SimpleDateFormat("mm", new Locale("es", "ES"));
+    //Formato decimal
+    public static DecimalFormat form = new DecimalFormat("0.00");
+
+    public static double redondear2Decimales(Double numero){
+        return Math.rint(numero * 100) / 100;
+    }
 
     /**
      * Metodo que se encargar de pasar una hora pasada por parámetros en String en formato kk:mm, a decimal.
@@ -26,7 +34,7 @@ public class Utilidades {
             String[] parts = hora.split(":");
             int horas = Integer.parseInt(parts[0]);
             int minutos = Integer.parseInt(parts[1]);
-            horaDecimal = (horas * 60 + minutos) / 60;//Multiplicas las horas por 60 y le sumas los minutos, para obtener los minutos totales. Lo dividimos por 60 para calcular las horas con decimales.
+            horaDecimal = (float) (horas * 60 + minutos) / 60;//Multiplicas las horas por 60 y le sumas los minutos, para obtener los minutos totales. Lo dividimos por 60 para calcular las horas con decimales.
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -332,8 +340,6 @@ public class Utilidades {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
         return horasNocturnas;
     }
 }

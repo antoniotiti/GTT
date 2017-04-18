@@ -25,6 +25,8 @@ import com.example.antonio.gestiontrabajotemporal.modelo.Puesto;
 import com.example.antonio.gestiontrabajotemporal.modelo.Turno;
 import com.example.antonio.gestiontrabajotemporal.pantallacalendario.PantallaCalendarioActivity;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
+import com.example.antonio.gestiontrabajotemporal.util.ServicioGTT;
+
 
 import java.io.File;
 import java.util.Calendar;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     OperacionesBaseDatos datos;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -183,7 +185,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        ServicioGTT.setUpdateListener(this);
+
+        iniciarServicio();
+        //Intent service = new Intent(this, ServicioGTT.class);
+        //startService(service);
     }
+
+    /**
+     * Inicia el servicio
+     */
+    private void iniciarServicio() {
+        Intent service = new Intent(this, ServicioGTT.class);
+        startService(service);
+    }
+
 
     /**
      *
@@ -247,48 +264,76 @@ public class MainActivity extends AppCompatActivity {
                 String idOperario1 = datos.insertarOperario(new Operario("8246", "74880029x", "Antonio", "Carrillo Cuenca", "foto", "Direccion", "16/07/1985", "629916157", "antoniotiti@hotmail.com", "1/10/2014", "numeross", "Bart16tyti"));
 
                 // Inserción Truno
-                String idTurno1 = datos.insertarTurno(new Turno(null, "Mañana CPD", "M_CPD", "06:50", "15:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "06:30", "modotelefono", -16776961, -16777216));
-                String idTurno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "13:50", "22:00", 0, "inicio2", "fin2", 8, 0, 8.82, 12.64, 11.60, 1, 1, "13:30", "modotelefono", -16776961, -16777216));
+                String idTurno1 = datos.insertarTurno(new Turno(null, "Mañana CPD", "M_CPD", "07:10", "15:00", 0, "inicio2", "fin2", 0, 0, 8.90, 12.64, 11.60, 1, 1, "06:30", "modotelefono", -16776961, -16777216));
+                String idTurno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "14:10", "22:00", 0, "inicio2", "fin2", 0, 0, 8.90, 12.64, 11.60, 1, 1, "13:30", "modotelefono", -16776961, -16777216));
 
                 // Inserción Fichaje
-                datos.insertarFichaje(new Fichaje(idOperario1, "01/02/2017", idTurno1, idPuesto1, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "02/02/2017", idTurno2, idPuesto2, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "03/02/2017", idTurno1, idPuesto2, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "04/02/2017", idTurno2, idPuesto2, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "05/02/2017", idTurno1, idPuesto2, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "06/02/2017", idTurno2, idPuesto2, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "07/02/2017", idTurno2, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "08/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "09/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "10/02/2017", idTurno1, idPuesto2, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "11/02/2017", idTurno2, idPuesto1, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "12/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "13/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "14/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "15/02/2017", idTurno1, idPuesto2, idCalendario1, 3.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "16/02/2017", idTurno1, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "17/02/2017", idTurno2, idPuesto2, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "18/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "19/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "20/02/2017", idTurno1, idPuesto1, idCalendario1, 1.5));
-                datos.insertarFichaje(new Fichaje(idOperario1, "21/02/2017", idTurno1, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "22/02/2017", idTurno1, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "23/02/2017", idTurno1, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "24/02/2017", idTurno1, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "25/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "26/02/2017", idTurno2, idPuesto2, idCalendario1, 2.0));
-                datos.insertarFichaje(new Fichaje(idOperario1, "27/02/2017", idTurno2, idPuesto2, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "28/02/2017", idTurno2, idPuesto2, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "02/03/2017", idTurno1, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "05/03/2017", idTurno1, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "06/03/2017", idTurno1, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "07/03/2017", idTurno1, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "08/03/2017", idTurno2, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "09/03/2017", idTurno2, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "10/03/2017", idTurno2, idPuesto1, idCalendario1, null));
-                datos.insertarFichaje(new Fichaje(idOperario1, "11/03/2017", idTurno2, idPuesto1, idCalendario1, null));
-
-
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-01", idTurno1, idPuesto1, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-02", idTurno2, idPuesto2, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-03", idTurno1, idPuesto2, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-04", idTurno2, idPuesto2, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-05", idTurno1, idPuesto2, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-06", idTurno2, idPuesto2, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-07", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-08", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-09", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-10", idTurno1, idPuesto2, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-11", idTurno2, idPuesto1, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-12", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-13", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-14", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-15", idTurno1, idPuesto2, idCalendario1, 3.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-16", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-17", idTurno2, idPuesto2, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-18", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-19", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-20", idTurno1, idPuesto1, idCalendario1, 1.5,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-21", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-01", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-02", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-03", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-04", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-05", idTurno2, idPuesto2, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-06", idTurno2, idPuesto2, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-07", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-08", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-09", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-10", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-11", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-12", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-13", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-14", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-03-15", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-01", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-02", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-03", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-04", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-05", idTurno2, idPuesto2, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-06", idTurno2, idPuesto2, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-07", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-08", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-09", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-10", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-11", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-12", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-13", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-14", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-15", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-16", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-17", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-18", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-19", idTurno2, idPuesto2, idCalendario1, 2.0,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-20", idTurno2, idPuesto2, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-21", idTurno2, idPuesto2, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-22", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-23", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-24", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-25", idTurno1, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-26", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-27", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-28", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-29", idTurno2, idPuesto1, idCalendario1, null,"comentario"));
+                datos.insertarFichaje(new Fichaje(idOperario1, "2017-04-30", idTurno1, idPuesto2, idCalendario1, 2.0,"comentario"));
 
                 datos.getDb().setTransactionSuccessful();
             } finally {
@@ -305,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Turno", "Turno");
             DatabaseUtils.dumpCursor(datos.obtenerTurnos());
             //  Log.d("Fichaje", "Fichaje");
-            // DatabaseUtils.dumpCursor(datos.obtenerFichajes());
+            // DatabaseUtils.dumpCursor(datos.obtenerFichajesParaCalendario());
             return null;
         }
     }

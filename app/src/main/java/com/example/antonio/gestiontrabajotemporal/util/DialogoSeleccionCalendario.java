@@ -13,11 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
+import com.example.antonio.gestiontrabajotemporal.calendarios.CalendariosCursorAdapter;
 import com.example.antonio.gestiontrabajotemporal.pantallacalendario.PantallaCalendarioActivity;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
@@ -27,16 +28,16 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 /**
  * Fragmento con diálogo básico
  */
-public class DialogoSeleccionTurno extends DialogFragment {
+public class DialogoSeleccionCalendario extends DialogFragment {
 
     Dialog dialog;
-    String TAG = "turno";
+    String TAG = "calendario";
     OperacionesBaseDatos datos;
     // Interfaz de comunicación
     OnItemClickListener listener;
-    private DialogoSeleccionTurnoAdapter mDialogoAdapter;
+    private CalendariosCursorAdapter mDialogoAdapter;
 
-    public DialogoSeleccionTurno() {
+    public DialogoSeleccionCalendario() {
     }
 
     @NonNull
@@ -46,25 +47,25 @@ public class DialogoSeleccionTurno extends DialogFragment {
         AlertDialog.Builder builder;
         Context mContext = getContext();
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.fragment_dialogo_seleccion_turnos, (ViewGroup) getActivity().findViewById(R.id.layout_rootTurnos));
+        View layout = inflater.inflate(R.layout.fragment_dialogo_seleccion_calendarios, (ViewGroup) getActivity().findViewById(R.id.layout_rootCalendario));
 
-        mDialogoAdapter = new DialogoSeleccionTurnoAdapter(getActivity(), null);
+        mDialogoAdapter = new CalendariosCursorAdapter(getActivity(), null);
 
-        GridView gridview = (GridView) layout.findViewById(R.id.gridviewTurnos);
-        gridview.setAdapter(mDialogoAdapter);
+        ListView listView = (ListView) layout.findViewById(R.id.listviewCalendario);
+        listView.setAdapter(mDialogoAdapter);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
 
                 Cursor currentItem = (Cursor) mDialogoAdapter.getItem(position);
-                String currentTurnoId = currentItem.getString(currentItem.getColumnIndex(NombresColumnasBaseDatos.Turnos.ID));
+                String currentCalendarioId = currentItem.getString(currentItem.getColumnIndex(NombresColumnasBaseDatos.Calendarios.ID));
 
-                listener.onItemClick(currentTurnoId, TAG);
+                listener.onItemClick(currentCalendarioId, TAG);
                 dialog.dismiss();
             }
         });
 
-        ImageView close = (ImageView) layout.findViewById(R.id.closeTurnos);
+        ImageView close = (ImageView) layout.findViewById(R.id.closeCalendario);
         close.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
@@ -79,16 +80,16 @@ public class DialogoSeleccionTurno extends DialogFragment {
         datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
 
         // Carga de datos
-        cargarTurnos();
+        cargarCalendarios();
 
         return dialog;
     }
 
     /**
-     * Método encargado de lanzar la tarea en segundo plano para cargar los turnos.
+     * Método encargado de lanzar la tarea en segundo plano para cargar los calendarios.
      */
-    private void cargarTurnos() {
-        new TurnosLoadTask().execute();
+    private void cargarCalendarios() {
+        new CalendariosLoadTask().execute();
     }
 
     @Override
@@ -109,17 +110,17 @@ public class DialogoSeleccionTurno extends DialogFragment {
      * {@link PantallaCalendarioActivity#onItemClick(String, String)}
      */
     public interface OnItemClickListener {
-        void onItemClick(String currentTurnoId, String tag);// Eventos Botón Positivo
+        void onItemClick(String currentCalendarioId, String tag);// Eventos Botón Positivo
     }
 
     /**
-     * Clase asíncrona encargada de cargar los turnos de la base de datos a la lista.
+     * Clase asíncrona encargada de cargar los calendarios de la base de datos a la lista.
      */
-    private class TurnosLoadTask extends AsyncTask<Void, Void, Cursor> {
+    private class CalendariosLoadTask extends AsyncTask<Void, Void, Cursor> {
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return datos.obtenerTurnos();
+            return datos.obtenerCalendarios();
         }
 
         @Override
@@ -128,7 +129,7 @@ public class DialogoSeleccionTurno extends DialogFragment {
                 mDialogoAdapter.swapCursor(cursor);
             } else {
                 Toast.makeText(getActivity(),
-                        "No hay turnos", Toast.LENGTH_SHORT).show();
+                        "No hay Calendarios", Toast.LENGTH_SHORT).show();
             }
         }
     }

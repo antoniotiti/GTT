@@ -19,13 +19,9 @@ public class CalendariosActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_calendario);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
         CalendariosFragment fragment = (CalendariosFragment)
                 getSupportFragmentManager().findFragmentById(R.id.calendarios_container);
@@ -46,6 +42,17 @@ public class CalendariosActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    /**
+     * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
+     *
+     * @return
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

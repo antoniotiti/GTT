@@ -106,7 +106,7 @@ public class PuestoDetailFragment extends Fragment {
                 //new AddEditPuestoTask().execute();
                 break;
             case R.id.action_delete:
-                new SimpleDialog().show(getFragmentManager(), "SimpleDialog");
+                new SimpleDialog().show(getFragmentManager(), "EliminarPuesto");
 
                 //new DeletePuestoTask().execute();
                 break;

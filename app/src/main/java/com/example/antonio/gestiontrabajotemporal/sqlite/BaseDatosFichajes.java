@@ -96,7 +96,7 @@ public class BaseDatosFichajes extends SQLiteOpenHelper {
         //Crear tabla Turnos.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT UNIQUE NOT NULL, %s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, " +
-                        "%s TEXT NOT NULL, %s INTEGER NOT NULL, %s TEXT, %s TEXT, %s REAL NOT NULL," +
+                        "%s TEXT NOT NULL, %s INTEGER NOT NULL, %s TEXT, %s TEXT, %s REAL," +
                         "%s REAL, %s REAL NOT NULL, %s REAL, %s REAL," +
                         "%s INTEGER NOT NULL, %s INTEGER NOT NULL, %s TEXT, %s TEXT, " +
                         "%s INTEGER, %s INTEGER)",
@@ -109,11 +109,12 @@ public class BaseDatosFichajes extends SQLiteOpenHelper {
 
         // Crear tabla Fichajes.
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL %s," +
-                        "%s TEXT NOT NULL, %s TEXT NOT NULL %s , %s TEXT NOT NULL %s," +
-                        "%s TEXT NOT NULL %s , %s REAL)",
+                        "%s TEXT NOT NULL, %s TEXT NOT NULL %s, %s TEXT NOT NULL %s," +
+                        "%s TEXT NOT NULL %s , %s REAL, %s TEXT)",
                 Tablas.FICHAJE, BaseColumns._ID, Fichajes.ID_OPERARIO, Referencias.ID_OPERARIO, Fichajes.FECHA,
                 Fichajes.ID_TURNO, Referencias.ID_TURNO, Fichajes.ID_PUESTO, Referencias.ID_PUESTO,
-                Fichajes.ID_CALENDARIO, Referencias.ID_CALENDARIO, Fichajes.HORA_EXTRA));
+                Fichajes.ID_CALENDARIO, Referencias.ID_CALENDARIO, Fichajes.HORA_EXTRA, Fichajes.COMENTARIO));
+        //TODO añadir comentario al fichaje
 
     }
 

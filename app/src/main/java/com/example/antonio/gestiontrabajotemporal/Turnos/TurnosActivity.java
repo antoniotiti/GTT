@@ -18,6 +18,8 @@ public class TurnosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_turnos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+
 
         TurnosFragment fragment = (TurnosFragment)
                 getSupportFragmentManager().findFragmentById(R.id.turnos_container);
@@ -30,7 +32,7 @@ public class TurnosActivity extends AppCompatActivity {
                     .commit();
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_turno);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_turnos);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,6 +40,16 @@ public class TurnosActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+    /**
+     * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
+     *
+     * @return
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

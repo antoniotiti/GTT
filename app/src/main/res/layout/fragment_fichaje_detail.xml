@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_principal_fichajes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_inicio_fichaje"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" /><!--quitar toolbar?¿?¿-->
+
+    <LinearLayout
+        android:id="@+id/layout_foco_fichaje"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <requestFocus /><!-- <requestFocus /> Dándole el foco a este layout que esta vacio hacemos que los edittext no tengan el foco al iniciar-->
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/layout_scroll_fichaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/color_swatch_margins_large"
+        android:paddingStart="@dimen/color_swatch_margins_large">
+        <!--android:background="@android:color/background_light">-->
+
+        <LinearLayout
+            android:id="@+id/layout_contenedor_scroll_fichaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_titulo_editar_fichaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_small"
+                android:text="@string/titulo_editar_fichaje"
+                android:textColor="@color/colorPrimary"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/color_swatch_margins_large"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editText_NombreOperarioFichajeDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center"
+                        android:hint="@string/nombre_operario2Puntos"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="none"
+                        android:labelFor="@+id/editText_NombreOperarioFichajeDetalle"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:theme="@style/colorEditText" />
+                    <!-- Color iconos #1E88E5
+                     android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editText_CodigoOperarioFichajeDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center"
+                        android:hint="@string/codigo_operario2Puntos"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="none"
+                        android:labelFor="@+id/editText_CodigoOperarioFichajeDetalle"
+                        android:maxLength="4"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:theme="@style/colorEditText" />
+                    <!-- Color iconos #1E88E5
+                     android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editText_TurnoFichajeDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center"
+                        android:hint="@string/turno2Puntos"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="none"
+                        android:labelFor="@+id/editText_TurnoFichajeDetalle"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:theme="@style/colorEditText" />
+                    <!-- Color iconos #1E88E5
+                     android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textView_prev_turnoFichajeDetalle"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="@dimen/color_swatch_margins_large"
+                    android:background="@color/grey05"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/color_swatch_margins_small"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+
+                    android:textIsSelectable="false"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editText_PuestoFichajeDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center"
+                        android:hint="@string/puesto2Puntos"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="none"
+                        android:labelFor="@+id/editText_PuestoFichajeDetalle"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:theme="@style/colorEditText" />
+                    <!-- Color iconos #1E88E5
+                     android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editText_HorasExtraFichajeDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="@string/horasExtras2Puntos"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="numberDecimal"
+                        android:labelFor="@+id/editText_HorasExtraFichajeDetalle"
+                        android:textStyle="bold"
+                        android:theme="@style/colorEditText" />
+                    <!-- Color iconos #1E88E5
+                     android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editText_ComentarioFichajeDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="@string/comentario2Puntos"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="text"
+                        android:labelFor="@+id/editText_ComentarioFichajeDetalle"
+                        android:textStyle="bold"
+                        android:theme="@style/colorEditText" />
+                    <!-- Color iconos #1E88E5
+                     android:imeOptions="flagNoExtractUi" No muestra teclado completo en landScape-->
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

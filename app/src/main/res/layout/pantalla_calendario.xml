@@ -30,17 +30,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView_calendario_seleccionado"
+            <RelativeLayout
+                android:id="@+id/layout_puesto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/seleccione_calendario"
-                android:gravity="center_horizontal"
-                android:textSize="18sp"
-                android:textStyle="normal|bold"
-                android:layout_marginTop="@dimen/color_swatch_margins_small"
-                android:layout_marginBottom="@dimen/color_swatch_margins_small"
-                android:textColor="@color/colorAccent" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_small">
+
+                <TextView
+                    android:id="@+id/textView_calendario_seleccionado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/color_swatch_margins_small"
+                    android:layout_marginEnd="@dimen/color_swatch_margins_large"
+                    android:layout_marginStart="@dimen/color_swatch_margins_small"
+                    android:layout_marginTop="@dimen/color_swatch_margins_small"
+                    android:gravity="start"
+                    android:text="@string/seleccione_calendario"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
+
+                <TextView
+                    android:id="@+id/textView_seleccion_puesto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView_calendario_seleccionado"
+                    android:layout_toEndOf="@+id/textView_calendario_seleccionado"
+                    android:background="@drawable/rb_background_cntr"
+                    android:gravity="end"
+                    android:paddingEnd="@dimen/color_swatch_margins_small"
+                    android:paddingStart="@dimen/color_swatch_margins_large"
+                    android:text="@string/seleccione_puesto"
+                    android:textAllCaps="false"
+                    android:textColor="@color/caldroid_white"
+                    android:textIsSelectable="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/calendar1"
@@ -48,42 +77,93 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-            <LinearLayout
-                android:id="@+id/button_layout"
+            <RelativeLayout
+                android:id="@+id/layout_nomina"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/color_swatch_margins_large">
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/color_swatch_margins_large"
+                android:background="@drawable/rb_background_cntr"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/color_swatch_margins_small"
+                android:paddingTop="@dimen/color_swatch_margins_small">
 
                 <TextView
-                    android:id="@+id/textView_seleccion_puesto"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/color_swatch_margins_small"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textIsSelectable="false"
-                    android:textSize="12sp" />
-
-                <!-- FAB -->
-
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_turno"
+                    android:id="@+id/textView_dias_trabajados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:tint="@android:color/white"
-                    app:fabSize="normal"
-                    app:srcCompat="@drawable/plus_white" />
+                    android:layout_alignParentTop="true"
+                    android:text="@string/dias_trabajados"
+                    android:textColor="@color/caldroid_white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/textView_dias_trabajados_valor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView_dias_trabajados"
+                    android:layout_toEndOf="@+id/textView_dias_trabajados"
+                    android:labelFor="@+id/textView_dias_trabajados_valor"
+                    android:paddingEnd="@dimen/color_swatch_margins_large"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/valor_precio_hora"
+                    android:textColor="@color/caldroid_white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_horas_trabajadas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView_dias_trabajados_valor"
+                    android:text="@string/horas_trabajadas"
+                    android:textColor="@color/caldroid_white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_horas_trabajadas_valor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/textView_horas_trabajadas_valor"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/valor_precio_hora"
+                    android:textColor="@color/caldroid_white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView_horas_trabajadas" />
+
+                <TextView
+                    android:id="@+id/textView_nomina"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView_dias_trabajados_valor"
+                    android:gravity="clip_horizontal"
+                    android:paddingTop="@dimen/color_swatch_margins_small"
+                    android:text="@string/nomina_neta"
+                    android:textColor="@color/caldroid_white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_nomina_valor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView_nomina"
+                    android:layout_toEndOf="@+id/textView_nomina"
+                    android:labelFor="@+id/textView_nomina_valor"
+                    android:maxLength="7"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="@dimen/color_swatch_margins_small"
+                    android:text="@string/valor_precio_hora"
+                    android:textColor="@color/caldroid_white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>
 

@@ -16,6 +16,9 @@ public class Validar {
     private static final int MAX_LENGHT_CODIGO_OPERARIO = 4;
     private static final String INICIO_CODIGO_OPERARIO = "8";
 
+    public static final String FORMATO_FECHA= "yyyy-MM-dd";
+    public static final String FORMATO_FECHA_DATETIME = "YYYY-MM-DD";
+
 
     /**
      * Método que se encarga de comprobar que el código de operario introducido sea correcto.
@@ -89,7 +92,7 @@ public class Validar {
 
     /**
      * Método que se encarga de comprobar que la fecha introducida por el
-     * usuario sea correcta y en el siguiente formato: dd-MM-yyyy.
+     * usuario sea correcta y en el siguiente formato: yyyy-MM-dd.
      *
      * @param eTTfecha Fecha introducida por el usuario.
      * @return Si la fecha es correcta o no lo es.
@@ -99,7 +102,7 @@ public class Validar {
         String fecha = eTTfecha.getText().toString();
 
         boolean validado = false;
-        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formateador = new SimpleDateFormat(FORMATO_FECHA);
         formateador.setLenient(false);
         try {
             //TODO que coja el año bien
@@ -107,7 +110,7 @@ public class Validar {
             validado = true;
             eTTfecha.setError(null);
         } catch (ParseException e) {
-            eTTfecha.setError("Formato fecha correcto dd/MM/yyyy");
+            eTTfecha.setError("Formato fecha correcto yyyy-MM-dd");
         }
         return validado;
     }

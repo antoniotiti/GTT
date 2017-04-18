@@ -28,8 +28,7 @@
         <item>SUNDAY</item>
     </string-array>
 
-    <string name="pref_titulo_modo_tema_oscuro">Habilitar Tema oscuro</string>
-    <string name="pref_descripcion_modo_tema_oscuro">Tema oscuro para el calendario.</string>
+    <string name="pref_titulo_modo_tema_oscuro">Tema oscuro</string>
 
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>

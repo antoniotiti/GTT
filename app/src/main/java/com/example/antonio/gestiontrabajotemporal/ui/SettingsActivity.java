@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -224,9 +225,13 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
+
+            bindPreferenceSummaryToValue(findPreference("pref_dia_comienzo_semana"));
+            bindPreferenceSummaryToValue(findPreference("pref_retencion_irpf"));
+            bindPreferenceSummaryToValue(findPreference("pref_retencion_extras"));
+
             bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
-            bindPreferenceSummaryToValue(findPreference("pref_dia_comienzo_semana"));
         }
 
 
@@ -292,15 +297,49 @@ public class SettingsActivity extends PreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("sync_frequency"));
 
+            ListPreference calendariosList= obtenerCalendarios();
+            bindPreferenceSummaryToValue(calendariosList);
 
-            ListPreference projectsList= obtenerCalendarios();
+            ListPreference puestosList= obtenerPuestos();
+            bindPreferenceSummaryToValue(puestosList);
 
-            bindPreferenceSummaryToValue(projectsList);
+        }
+
+        private ListPreference obtenerPuestos() {
+            ListPreference puestosList = (ListPreference)findPreference("pref_puesto_predeterminado");
+
+            try {
+                Cursor puestos = datos.obtenerPuestos();
+
+                List<String> entryValues = new ArrayList<>();
+
+                if(puestos != null && puestos.getCount() > 0){
+                    puestos.moveToFirst();
+                    do {
+                        entryValues.add(puestos.getString(puestos.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE)));
+                    } while (puestos.moveToNext());
+                }
+                puestos.close();
+                datos.close();
+
+                final CharSequence[] entryValsChar = entryValues.toArray(new CharSequence[entryValues.size()]);
+
+                puestosList.setEntries(entryValsChar);
+                puestosList.setEntryValues(entryValsChar);
+                puestosList.setKey("pref_puesto_predeterminado");
+                puestosList.setSummary(R.string.pref_puesto_predeterminado_summary);
+                puestosList.setTitle(R.string.pref_puesto_predeterminado_title);
+
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Error encountered.",
+                        Toast.LENGTH_LONG);
+            }
+            return puestosList;
         }
 
 
         private ListPreference obtenerCalendarios() {
-            ListPreference projectsList = (ListPreference)findPreference("pref_calendario_predeterminado");
+            ListPreference calendariosList = (ListPreference)findPreference("pref_calendario_predeterminado");
 
             try {
                 Cursor calendarios = datos.obtenerCalendarios();
@@ -318,17 +357,17 @@ public class SettingsActivity extends PreferenceActivity {
 
                 final CharSequence[] entryValsChar = entryValues.toArray(new CharSequence[entryValues.size()]);
 
-                projectsList.setEntries(entryValsChar);
-                projectsList.setEntryValues(entryValsChar);
-                projectsList.setKey("pref_calendario_predeterminado");
-                projectsList.setSummary(R.string.pref_calendario_predeterminado_summary);
-                projectsList.setTitle(R.string.pref_calendario_predeterminado_title);
+                calendariosList.setEntries(entryValsChar);
+                calendariosList.setEntryValues(entryValsChar);
+                calendariosList.setKey("pref_calendario_predeterminado");
+                calendariosList.setSummary(R.string.pref_calendario_predeterminado_summary);
+                calendariosList.setTitle(R.string.pref_calendario_predeterminado_title);
 
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "Error encountered.",
                         Toast.LENGTH_LONG);
             }
-            return projectsList;
+            return calendariosList;
         }
 
         @Override

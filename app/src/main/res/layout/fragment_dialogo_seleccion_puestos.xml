@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_rootTurnos"
+    android:id="@+id/layout_rootPuesto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -12,10 +12,10 @@
         android:paddingTop="3dip">
 
         <TextView
-            android:id="@+id/tituloTurnos"
+            android:id="@+id/tituloPuesto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/seleccione_turno"
+            android:text="@string/seleccione_puesto"
             android:textColor="#000"
             android:textSize="20sp"
             android:layout_alignParentTop="true"
@@ -23,7 +23,7 @@
             android:layout_marginStart="31dp" />
 
         <ImageView
-            android:id="@+id/closeTurnos"
+            android:id="@+id/closePuesto"
             android:layout_width="30dip"
             android:layout_height="30dip"
             android:src="@drawable/close_circle_black"
@@ -34,13 +34,9 @@
             android:layout_toEndOf="@+id/tituloTurnos"/>
     </RelativeLayout>
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridviewTurnos"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:columnWidth="70dp"
-        android:gravity="center"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        />
+    <ListView
+        android:id="@+id/listviewPuesto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>
