@@ -9,11 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.example.antonio.gestiontrabajotemporal.util.Validar.FORMATO_FECHA;
+
 public class Utilidades {
 
     //Formato de hora.
-    public static SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
+    public static SimpleDateFormat formatter_hora_minutos = new SimpleDateFormat("kk:mm", new Locale("es", "ES"));
     public static SimpleDateFormat formatter_minutos = new SimpleDateFormat("mm", new Locale("es", "ES"));
+    public static SimpleDateFormat formatter_fecha = new SimpleDateFormat(FORMATO_FECHA);
     //Formato decimal
     public static DecimalFormat form = new DecimalFormat("0.00");
 
@@ -86,8 +89,8 @@ public class Utilidades {
 
         if (!stringHoraInicio1.equals("") && !stringHoraFin1.equals("")) {
             try {
-                calHoraInicio1.setTime(formatter.parse(stringHoraInicio1));
-                calHoraFin1.setTime(formatter.parse(stringHoraFin1));
+                calHoraInicio1.setTime(formatter_hora_minutos.parse(stringHoraInicio1));
+                calHoraFin1.setTime(formatter_hora_minutos.parse(stringHoraFin1));
 
                 if (calHoraFin1.after(calHoraInicio1)) {
 
@@ -109,8 +112,8 @@ public class Utilidades {
 
                     if (stringHoraInicio2 != "" && stringHoraFin2 != "") {
 
-                        calHoraInicio2.setTime(formatter.parse(stringHoraInicio2));
-                        calHoraFin2.setTime(formatter.parse(stringHoraFin2));
+                        calHoraInicio2.setTime(formatter_hora_minutos.parse(stringHoraInicio2));
+                        calHoraFin2.setTime(formatter_hora_minutos.parse(stringHoraFin2));
                         if (calHoraFin2.before(calHoraInicio2)) {
 
                             tiempoTrabajado2 = calcularDiferenciaMilisegundos(calHoraInicio2, calHoraFin2);
@@ -154,8 +157,8 @@ public class Utilidades {
 
         if (!horaInicio.equals("") && !horaFin.equals("")) {
             try {
-                calHoraInicio.setTime(formatter.parse(horaInicio));
-                calHoraFin.setTime(formatter.parse(horaFin));
+                calHoraInicio.setTime(formatter_hora_minutos.parse(horaInicio));
+                calHoraFin.setTime(formatter_hora_minutos.parse(horaFin));
 
                 if (calHoraFin.after(calHoraInicio)) {
 
@@ -221,12 +224,12 @@ public class Utilidades {
 
         if (!stringHoraInicio1.equals("") && !stringHoraFin1.equals("")) {
             try {
-                calHoraInicio1.setTime(formatter.parse(stringHoraInicio1));
-                calHoraFin1.setTime(formatter.parse(stringHoraFin1));
+                calHoraInicio1.setTime(formatter_hora_minutos.parse(stringHoraInicio1));
+                calHoraFin1.setTime(formatter_hora_minutos.parse(stringHoraFin1));
                 calHoraFin1.add(Calendar.HOUR, 24);
 
-                calHoraInicioNocturna.setTime(formatter.parse("21:59"));
-                calHoraFinNocturna.setTime(formatter.parse("06:01"));
+                calHoraInicioNocturna.setTime(formatter_hora_minutos.parse("21:59"));
+                calHoraFinNocturna.setTime(formatter_hora_minutos.parse("06:01"));
                 calHoraFinNocturna.add(Calendar.HOUR, 24);
 
                 calHoraInicioPrueba = calHoraInicio1;
@@ -272,14 +275,14 @@ public class Utilidades {
         Calendar calHoraInicio = Calendar.getInstance();
         Calendar calHoraFin = Calendar.getInstance();
         try {
-            calHoraInicioNocturna.setTime(formatter.parse(horaInicioNocturna));
-            calHoraFinNocturna.setTime(formatter.parse(horaFinNocturna));
+            calHoraInicioNocturna.setTime(formatter_hora_minutos.parse(horaInicioNocturna));
+            calHoraFinNocturna.setTime(formatter_hora_minutos.parse(horaFinNocturna));
             // calHoraFinNocturna.add(Calendar.HOUR, 24);
 
             if (!stringHoraInicio1.equals("") && !stringHoraFin1.equals("")) {
                 try {
-                    calHoraInicio.setTime(formatter.parse(stringHoraInicio1));
-                    calHoraFin.setTime(formatter.parse(stringHoraFin1));
+                    calHoraInicio.setTime(formatter_hora_minutos.parse(stringHoraInicio1));
+                    calHoraFin.setTime(formatter_hora_minutos.parse(stringHoraFin1));
                     long milisegundosTrabajados;
                     if (calHoraFin.after(calHoraInicio)) {
 

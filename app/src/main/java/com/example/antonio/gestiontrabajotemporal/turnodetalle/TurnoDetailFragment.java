@@ -39,9 +39,7 @@ import com.example.antonio.gestiontrabajotemporal.util.TimeDialog;
 import org.xdty.preference.colorpicker.ColorPickerDialog;
 import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.*;
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEditTextVacio;
@@ -83,7 +81,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     ColorPickerDialog colorPickerDialog;
     private String mTurnoId;
     private CollapsingToolbarLayout mCollapsingView;
-
 
 
     /**
@@ -324,6 +321,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
     /**
      * Método encargado de mostrar un TimeDialog
+     *
      * @param timeDisplay EditText sobre el que se lanza el TimeDialog
      */
     private void showTimeDialog(EditText timeDisplay) {
@@ -344,7 +342,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
 
     private void updateDisplay(EditText dateDisplay, Calendar time) {
-        String hora = formatter.format(time.getTime());
+        String hora = formatter_hora_minutos.format(time.getTime());
         dateDisplay.setText(hora);
 
     }
@@ -473,9 +471,11 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             horaFin2Validado = validarEditTextVacio(editTextHoraFin2);
         }
         precioHoraValidado = validarEditTextVacio(editTextPrecioHora);
+
         if (switchAviso.isChecked()) {
             avisoHoraValidado = validarEditTextVacio(editTextAvisoHora);
         }
+
 
         if (nombreTurnoValidado && abreviaturaTurnoValidado && horaInicio1Validado && horaFin1Validado && precioHoraValidado && horaInicio2Validado && horaFin2Validado && avisoHoraValidado) {
             try {
@@ -496,9 +496,14 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                 int aviso = switchAviso.isChecked() ? 1 : 0; //0(falso) o 1(verdadero)
                 String horaAviso = editTextAvisoHora.getText().toString();
                 int avisoDiaAntes = switchAvisoDiaAntes.isChecked() ? 1 : 0; //0(falso) o 1(verdadero)
-                String modotelefono = "prueba";//TODO
+                String modosTelefono;
+                if (switchModosTelefono.isChecked()) {
+                    modosTelefono = obtenerModosTelefono();
+                } else {
+                    modosTelefono = "";
+                }
 
-                Turno turnoInsertar = new Turno(nombreTurno, abreviaturaTurno, horaInicio1, horaFin1, turnoPartido, horaInicio2, horaFin2, horasTrabajadas, horasTrabajadasNoche, precioHora, precioHoraNocturna, precioHoraExtra, aviso, avisoDiaAntes, horaAviso, modotelefono, colorFondo, colorTexto);
+                Turno turnoInsertar = new Turno(nombreTurno, abreviaturaTurno, horaInicio1, horaFin1, turnoPartido, horaInicio2, horaFin2, horasTrabajadas, horasTrabajadasNoche, precioHora, precioHoraNocturna, precioHoraExtra, aviso, avisoDiaAntes, horaAviso, modosTelefono, colorFondo, colorTexto);
 
                 new AddEditTurnoTask().execute(turnoInsertar);
 
@@ -507,7 +512,104 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             }
         }
     }
-//TODO Borrar en todos los detalles
+
+    /**
+     * Método encargado de obtener los modos del teléfono.
+     *
+     * @return String con los modos del teléfono
+     */
+    private String obtenerModosTelefono() {
+        String modoTelefono= "";
+
+        int radioButtonIdWifiInicio = radioGroupWifiInicio.getCheckedRadioButtonId();
+        switch (radioButtonIdWifiInicio) {
+            case R.id.radioButton_wifi_inicio_activar:
+                modoTelefono += getString(R.string.modo_activar);
+                break;
+            case R.id.radioButton_wifi_inicio_desactivar:
+                modoTelefono += getString(R.string.modo_desactivar);
+                break;
+            case R.id.radioButton_wifi_inicio_no_cambiar:
+                modoTelefono += getString(R.string.modo_no_cambiar);
+                break;
+        }
+
+        int radioButtonIdWifiFin = radioGroupWifiFin.getCheckedRadioButtonId();
+        switch (radioButtonIdWifiFin) {
+            case R.id.radioButton_wifi_fin_activar:
+                modoTelefono += getString(R.string.modo_activar);
+                break;
+            case R.id.radioButton_wifi_fin_desactivar:
+                modoTelefono += getString(R.string.modo_desactivar);
+                break;
+            case R.id.radioButton_wifi_fin_no_cambiar:
+                modoTelefono += getString(R.string.modo_no_cambiar);
+                break;
+        }
+
+        int radioButtonIdSonidoInicio = radioGroupSonidoInicio.getCheckedRadioButtonId();
+        switch (radioButtonIdSonidoInicio) {
+            case R.id.radioButton_sonido_inicio_activar:
+                modoTelefono += getString(R.string.modo_activar);
+                break;
+            case R.id.radioButton_sonido_inicio_no_cambiar:
+                modoTelefono += getString(R.string.modo_no_cambiar);
+                break;
+            case R.id.radioButton_sonido_inicio_silencio:
+                modoTelefono += getString(R.string.silencio_modo);
+                break;
+            case R.id.radioButton_sonido_inicio_vibrate:
+                modoTelefono += getString(R.string.vibrate_modo);
+                break;
+        }
+
+        int radioButtonIdSonidoFin = radioGroupSonidoFin.getCheckedRadioButtonId();
+        switch (radioButtonIdSonidoFin) {
+            case R.id.radioButton_sonido_fin_activar:
+                modoTelefono += getString(R.string.modo_activar);
+                break;
+            case R.id.radioButton_sonido_fin_no_cambiar:
+                modoTelefono += getString(R.string.modo_no_cambiar);
+                break;
+            case R.id.radioButton_sonido_fin_silencio:
+                modoTelefono += getString(R.string.silencio_modo);
+                break;
+            case R.id.radioButton_sonido_fin_vibrate:
+                modoTelefono += getString(R.string.vibrate_modo);
+                break;
+        }
+
+        int radioButtonIdBluetoothInicio = radioGroupBluetoothInicio.getCheckedRadioButtonId();
+        switch (radioButtonIdBluetoothInicio) {
+            case R.id.radioButton_bluetooth_inicio_activar:
+                modoTelefono += getString(R.string.modo_activar);
+                break;
+            case R.id.radioButton_bluetooth_inicio_desactivar:
+                modoTelefono += getString(R.string.modo_desactivar);
+                break;
+            case R.id.radioButton_bluetooth_inicio_no_cambiar:
+                modoTelefono += getString(R.string.modo_no_cambiar);
+                break;
+        }
+
+        int radioButtonIdBluetoothFin = radioGroupBluetoothFin.getCheckedRadioButtonId();
+        switch (radioButtonIdBluetoothFin) {
+            case R.id.radioButton_bluetooth_fin_activar:
+                modoTelefono += getString(R.string.modo_activar);
+                break;
+            case R.id.radioButton_bluetooth_fin_desactivar:
+                modoTelefono += getString(R.string.modo_desactivar);
+                break;
+            case R.id.radioButton_bluetooth_fin_no_cambiar:
+                modoTelefono += getString(R.string.modo_no_cambiar);
+                break;
+        }
+
+
+        return modoTelefono;
+    }
+
+    //TODO Borrar en todos los detalles
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Acciones
@@ -515,6 +617,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
     /**
      * Método encargado de mostrar en pantalla los datos del Turno seleccionado.
+     *
      * @param turno Turno del cual queremos mostrar los datos en pantalla.
      */
     private void showTurno(Turno turno) {
@@ -546,7 +649,80 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             switchAvisoDiaAntes.setChecked(turno.getAvisoDiaAntes() == 1);
         }
         //TODO modo telefono
-        // if(turno.getModoTelefono()==1){}
+        if (turno.getModoTelefono().equals("")) {
+            switchModosTelefono.setChecked(false);
+        }else {
+            switchModosTelefono.setChecked(true);
+            activarModosTelefono(turno);
+        }
+
+    }
+
+    private void activarModosTelefono(Turno turno) {
+
+        String modoWifiInicio = turno.getModoTelefono().substring(0, 1);
+
+        if (modoWifiInicio.equals(getString(R.string.modo_activar))) {
+            radioButtonWifiInicioActivar.setChecked(true);
+        } else if (modoWifiInicio.equals(getString(R.string.modo_desactivar))) {
+            radioButtonWifiInicioDesactivar.setChecked(true);
+        } else if (modoWifiInicio.equals(getString(R.string.modo_no_cambiar))) {
+            radioButtonWifiInicioNoCambiar.setChecked(true);
+        }
+
+        String modoWifiFin = turno.getModoTelefono().substring(1, 2);
+
+        if (modoWifiFin.equals(getString(R.string.modo_activar))) {
+            radioButtonWifiFinActivar.setChecked(true);
+        } else if (modoWifiFin.equals(getString(R.string.modo_desactivar))) {
+            radioButtonWifiFinDesactivar.setChecked(true);
+        } else if (modoWifiFin.equals(getString(R.string.modo_no_cambiar))) {
+            radioButtonWifiFinNoCambiar.setChecked(true);
+        }
+
+        String modoSonidoInicio = turno.getModoTelefono().substring(2, 3);
+
+        if (modoSonidoInicio.equals(getString(R.string.modo_activar))) {
+            radioButtonSonidoInicio.setChecked(true);
+        } else if (modoSonidoInicio.equals(getString(R.string.silencio_modo))) {
+            radioButtonSilencioInicio.setChecked(true);
+        } else if (modoSonidoInicio.equals(getString(R.string.modo_no_cambiar))) {
+            radioButtonSonidoInicioNoCambiar.setChecked(true);
+        } else if (modoSonidoInicio.equals(getString(R.string.vibrate_modo))) {
+            radioButtonVibracionInicio.setChecked(true);
+        }
+
+        String modoSonidoFin = turno.getModoTelefono().substring(3, 4);
+
+        if (modoSonidoFin.equals(getString(R.string.modo_activar))) {
+            radioButtonSonidoFin.setChecked(true);
+        } else if (modoSonidoFin.equals(getString(R.string.silencio_modo))) {
+            radioButtonSilencioFin.setChecked(true);
+        } else if (modoSonidoFin.equals(getString(R.string.modo_no_cambiar))) {
+            radioButtonSonidoFinNoCambiar.setChecked(true);
+        } else if (modoSonidoFin.equals(getString(R.string.vibrate_modo))) {
+            radioButtonVibracionFin.setChecked(true);
+        }
+
+        String modoBluetoothInicio = turno.getModoTelefono().substring(4, 5);
+
+        if (modoBluetoothInicio.equals(getString(R.string.modo_activar))) {
+            radioButtonBluetoothInicioActivar.setChecked(true);
+        } else if (modoBluetoothInicio.equals(getString(R.string.modo_desactivar))) {
+            radioButtonBluetoothInicioDesactivar.setChecked(true);
+        } else if (modoBluetoothInicio.equals(getString(R.string.modo_no_cambiar))) {
+            radioButtonBluetoothInicioNoCambiar.setChecked(true);
+        }
+
+        String modoBluetoothFin = turno.getModoTelefono().substring(5);
+
+        if (modoBluetoothFin.equals(getString(R.string.modo_activar))) {
+            radioButtonBluetoothFiniActivar.setChecked(true);
+        } else if (modoBluetoothFin.equals(getString(R.string.modo_desactivar))) {
+            radioButtonBluetoothFinDesactivar.setChecked(true);
+        } else if (modoBluetoothFin.equals(getString(R.string.modo_no_cambiar))) {
+            radioButtonBluetoothFinNoCambiar.setChecked(true);
+        }
     }
 
     private void showTurnoScreenFromDelete(boolean requery) {

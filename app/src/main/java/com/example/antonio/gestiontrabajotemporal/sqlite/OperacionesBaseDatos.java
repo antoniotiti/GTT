@@ -627,6 +627,38 @@ public final class OperacionesBaseDatos {
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
+
+    public Cursor obtenerAlarmaFichaje(String idOperario, String calendario, String fecha) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        String sql = "SELECT " + Turnos.AVISO + ", " + Turnos.HORA_AVISO + ", " + Turnos.NOMBRE + ", "
+                + Turnos.HORA_INICIO_1 + ", " + Fichajes.COMENTARIO + ", " + Puestos.NOMBRE +
+                " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
+                + " = " + Turnos.ID + ") INNER JOIN " + Tablas.OPERARIO + " ON (" + Fichajes.ID_OPERARIO
+                + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
+                + " = " + Calendarios.ID + ") INNER JOIN " + Tablas.PUESTO + " ON (" + Fichajes.ID_PUESTO
+                + " = " + Puestos.ID + ")" +
+                " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO
+                + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " LIKE '" + fecha + "'";
+
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+
+    public Cursor obtenerModoTelefonoFichaje(String idOperario, String calendario, String fecha) {
+        SQLiteDatabase db = baseDatos.getReadableDatabase();
+
+        String sql = "SELECT " + Turnos.MODO_TELEFONO +
+                " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
+                + " = " + Turnos.ID + ") INNER JOIN " + Tablas.OPERARIO + " ON (" + Fichajes.ID_OPERARIO
+                + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
+                + " = " + Calendarios.ID + ")" +
+                " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO
+                + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " LIKE '" + fecha + "'";
+
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
     public Cursor obtenerDatosNomina(String calendario, String idOperario, String primerDiaMes, String ultimoDiaMes) {
 
         SQLiteDatabase db = baseDatos.getReadableDatabase();

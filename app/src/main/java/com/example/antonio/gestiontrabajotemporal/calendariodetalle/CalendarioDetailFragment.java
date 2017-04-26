@@ -1,5 +1,4 @@
 package com.example.antonio.gestiontrabajotemporal.calendariodetalle;
-//TODO los layout para los calendarios,añadir descripccion ouesto base datos y modificar todo lo  que conlleve
 
 import android.app.Activity;
 import android.content.Intent;
@@ -38,7 +37,7 @@ public class CalendarioDetailFragment extends Fragment {
     EditText editTextNombreCalendario, editTextDescripcionCalendario;
     private String mCalendarioId;
     private CollapsingToolbarLayout mCollapsingView;
-    private boolean nombreCalendarioValidado=false, descripcionCalendarioValidado = false;
+    private boolean nombreCalendarioValidado = false, descripcionCalendarioValidado = false;
 
     /**
      * Constructor por defecto.
@@ -116,12 +115,12 @@ public class CalendarioDetailFragment extends Fragment {
 
         if (nombreCalendarioValidado && descripcionCalendarioValidado) {
 
-                String nombreCalendario = editTextNombreCalendario.getText().toString();
-                String descripcionCalendario = editTextDescripcionCalendario.getText().toString();
+            String nombreCalendario = editTextNombreCalendario.getText().toString();
+            String descripcionCalendario = editTextDescripcionCalendario.getText().toString();
 
-                Calendario calendarioInsertar = new Calendario(nombreCalendario, descripcionCalendario);
+            Calendario calendarioInsertar = new Calendario(nombreCalendario, descripcionCalendario);
 
-                new AddEditCalendarioTask().execute(calendarioInsertar);
+            new AddEditCalendarioTask().execute(calendarioInsertar);
         }
     }
 
@@ -132,7 +131,8 @@ public class CalendarioDetailFragment extends Fragment {
 
     /**
      * Método encargado de mostrar en pantalla los datos del Calendario seleccionado.
-Calendario     */
+     * Calendario
+     */
     private void showCalendario(Calendario calendario) {
 
         mCollapsingView.setTitle(calendario.getNombreCalendario());
@@ -149,7 +149,6 @@ Calendario     */
             Toast.makeText(getActivity(),
                     "Calendario eliminado correctamente", Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-//  datos.close();
             getActivity().finish();
         }
     }
@@ -174,7 +173,6 @@ Calendario     */
             Toast.makeText(getActivity(),
                     "Calendario editado correctamente", Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-            // datos.close();
             getActivity().finish();
         }
     }
@@ -231,7 +229,6 @@ Calendario     */
                 showLoadError();
             }
         }
-
     }
 
     /**
@@ -253,7 +250,6 @@ Calendario     */
         protected void onPostExecute(Integer integer) {
             showCalendarioScreenFromDelete(integer > 0);
         }
-
     }
 
     /**

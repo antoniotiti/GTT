@@ -39,7 +39,6 @@ import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -47,8 +46,7 @@ import java.util.Map;
 import hirondelle.date4j.DateTime;
 
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.form;
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.redondear2Decimales;
-import static com.example.antonio.gestiontrabajotemporal.util.Validar.FORMATO_FECHA;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_fecha;
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.FORMATO_FECHA_DATETIME;
 
 
@@ -60,7 +58,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
     public static final String EXTRA_FECHA = "extra_fecha";
     public static final String EXTRA_OPERARIO_ID = "extra_operario_id";
 
-    final SimpleDateFormat formatter = new SimpleDateFormat(FORMATO_FECHA);
+
 
     double totalHorasTrabajadas, totalHorasTrabajadasExtras, totalHorasTrabajadasNocturnas, totalEurosHorasTrabajadas,
             totalEurosHorasTrabajadasNocturnas, totalEurosHorasTrabajadasExtras, totalNeto, pref_RetencionIrpf, pref_RetencionHorasExtras,
@@ -80,8 +78,6 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
-
-    //ObtenerFichajes obtenerFichajesAsyncTask =new ObtenerFichajes();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,259 +103,10 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
         codigoOperario = getIntent().getExtras().getString("codigoOperario");
         password = getIntent().getExtras().getString("password");
 
-
         //TODO Configuración de valores predeterminados
         PreferenceManager.setDefaultValues(this, R.xml.pref_data_sync, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
-
-       /* SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean modoCompacto = sharedPref.getBoolean("pref_switch_modo_compacto", false);
-        String calendarioPredeterminado=sharedPref.getString("calendario_predeterminado","");*/
-
-        // Carga de datos
-        //cargarCalendarios();
-
-
-        //Cursor calendarios = datos.obtenerCalendarios();
-
-       /* //creating adapter for spinner
-        String[] nameList=new String[calendarios.getCount()];
-
-        for(int i=0;i<calendarios.getCount();i++){
-            nameList[i]=calendarios.getString(calendarios.getInt(i)); //create array of name
-        }
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, nameList);
-        //drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //attaching data adapter to spinner
-        calendarioSpinner.setAdapter(dataAdapter);*/
-
-
-// Relacionado la escucha de selección de GenreSpinner
-        // calendarioSpinner.setOnItemSelectedListener(this);
-
-
-        // Setup caldroid fragment
-        // **** If you want normal CaldroidFragment, use below line ****
-        // caldroidFragment = new CaldroidFragment();
-
-        // //////////////////////////////////////////////////////////////////////
-        // **** This is to show customized fragment. If you want customized version, uncomment below line ****
-        //caldroidFragment = new PantallaCalendarioFragment();
-/*
-        // Setup arguments
-
-        // If Activity is created after rotation TODO
-        if (savedInstanceState != null) {
-            caldroidFragment.restoreStatesFromKey(savedInstanceState,
-                    "CALDROID_SAVED_STATE");
-        }
-        // If activity is created from fresh
-        else {
-            Bundle args = new Bundle();
-            Calendar cal = Calendar.getInstance();
-            args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-            args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-            args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-            args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
-
-            if (modoCompacto==true){
-                Toast.makeText(this, "Modo compacto", Toast.LENGTH_SHORT).show();
-
-            }else{
-                Toast.makeText(this, "OFF", Toast.LENGTH_SHORT).show();
-            }
-
-            // Día que comienza la semana.
-            args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY); //
-
-            // Activar desactivar modo compacto.
-            //args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, !modoCompacto);
-
-            // Calendario predeterminado.
-            args.putString("calendario_predeterminado", calendarioPredeterminado);
-
-            // Activar dark theme
-            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
-
-            caldroidFragment.setArguments(args);
-        }*/
-
-
-        // Actualizar visibilidad de miniaturas
-     /*   boolean miniaturasPref = sharedPref.getBoolean("miniaturas", true);
-        adapter.setConMiniaturas(miniaturasPref);
-
-        //Actualizar cantidad de arrayNominaTurno
-        cantidadItems = Integer.parseInt(sharedPref.getString("numArticulos", "8"));
-        updateAdapter(ConjuntoListas.randomList(cantidadItems));*/
-
-      /*  setCustomResourceForDates();
-
-        // Attach to the activity
-        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.replace(R.id.calendar1, caldroidFragment);
-        t.commit();
-
-        // Setup listener
-        final CaldroidListener listener = new CaldroidListener() {
-
-            @Override
-            public void onSelectDate(Date date, View view) {
-                Toast.makeText(getApplicationContext(), formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChangeMonth(int month, int year) {
-                String text = "month: " + month + " year: " + year;
-                Toast.makeText(getApplicationContext(), text,
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLongClickDate(Date date, View view) {
-                Toast.makeText(getApplicationContext(),
-                        "Long click " + formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCaldroidViewCreated() {
-                if (caldroidFragment.getLeftArrowButton() != null) {
-                    Toast.makeText(getApplicationContext(),
-                            "Caldroid view is created", Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-
-        };
-
-        // Setup Caldroid
-        caldroidFragment.setCaldroidListener(listener);
-
-        final TextView textView = (TextView) findViewById(R.id.textview);
-
-        final Button customizeButton = (Button) findViewById(R.id.customize_button);
-
-        // Customize the calendar
-        customizeButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (undo) {
-                    customizeButton.setText(getString(R.string.customize));
-                    textView.setText("");
-
-                    // Reset calendar
-                    caldroidFragment.clearDisableDates();
-                    caldroidFragment.clearSelectedDates();
-                    caldroidFragment.setMinDate(null);
-                    caldroidFragment.setMaxDate(null);
-                    caldroidFragment.setShowNavigationArrows(true);
-                    caldroidFragment.setEnableSwipe(true);
-                    caldroidFragment.refreshView();
-                    undo = false;
-                    return;
-                }
-
-                // Else
-                undo = true;
-                customizeButton.setText(getString(R.string.undo));
-                Calendar cal = Calendar.getInstance();
-
-                // Min date is last 7 days
-                cal.add(Calendar.DATE, -7);
-                Date minDate = cal.getTime();
-
-                // Max date is next 7 days
-                cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, 14);
-                Date maxDate = cal.getTime();
-
-                // Set selected dates
-                // From Date
-                cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, 2);
-                Date fromDate = cal.getTime();
-
-                // To Date
-                cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, 3);
-                Date toDate = cal.getTime();
-
-                // Set disabled dates
-                ArrayList<Date> disabledDates = new ArrayList<Date>();
-                for (int i = 5; i < 8; i++) {
-                    cal = Calendar.getInstance();
-                    cal.add(Calendar.DATE, i);
-                    disabledDates.add(cal.getTime());
-                }
-
-                // Customize
-                caldroidFragment.setMinDate(minDate);
-                caldroidFragment.setMaxDate(maxDate);
-                caldroidFragment.setDisableDates(disabledDates);
-                caldroidFragment.setSelectedDates(fromDate, toDate);
-                caldroidFragment.setShowNavigationArrows(false);
-                caldroidFragment.setEnableSwipe(false);
-
-                caldroidFragment.refreshView();
-
-                // Move to date
-                // cal = Calendar.getInstance();
-                // cal.add(Calendar.MONTH, 12);
-                // caldroidFragment.moveToDate(cal.getTime());
-
-                String text = "Today: " + formatter.format(new Date()) + "\n";
-                text += "Min Date: " + formatter.format(minDate) + "\n";
-                text += "Max Date: " + formatter.format(maxDate) + "\n";
-                text += "Select From Date: " + formatter.format(fromDate)
-                        + "\n";
-                text += "Select To Date: " + formatter.format(toDate) + "\n";
-                for (Date date : disabledDates) {
-                    text += "Disabled Date: " + formatter.format(date) + "\n";
-                }
-
-                textView.setText(text);
-            }
-        });
-
-        Button showDialogButton = (Button) findViewById(R.id.show_dialog_button);
-
-        final Bundle state = savedInstanceState;
-        showDialogButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // Setup caldroid to use as dialog
-                dialogCaldroidFragment = new CaldroidFragment();
-                dialogCaldroidFragment.setCaldroidListener(listener);
-
-                // If activity is recovered from rotation
-                final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
-                if (state != null) {
-                    dialogCaldroidFragment.restoreDialogStatesFromKey(
-                            getSupportFragmentManager(), state,
-                            "DIALOG_CALDROID_SAVED_STATE", dialogTag);
-                    Bundle args = dialogCaldroidFragment.getArguments();
-                    if (args == null) {
-                        args = new Bundle();
-                        dialogCaldroidFragment.setArguments(args);
-                    }
-                } else {
-                    // Setup arguments
-                    Bundle bundle = new Bundle();
-                    // Setup dialogTitle
-                    dialogCaldroidFragment.setArguments(bundle);
-                }
-
-                dialogCaldroidFragment.show(getSupportFragmentManager(),
-                        dialogTag);
-            }
-        });*/
     }
 
     @Override
@@ -368,6 +115,11 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
 
         //Obtenemos las preferencias.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("pref_operario_activo", codigoOperario);
+        editor.apply();
+
         boolean modoTemaOscuro = sharedPref.getBoolean("pref_switch_modo_tema_oscuro", false);
         String calendarioPredeterminado = sharedPref.getString("pref_calendario_predeterminado", "");
         String puestoPredeterminado = sharedPref.getString("pref_puesto_predeterminado", "");
@@ -376,6 +128,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
         pref_RetencionHorasExtras = Double.parseDouble(sharedPref.getString("pref_retencion_extras", "0"));
         pref_RetencionContingenciasComunes = 4.7;//Double.parseDouble(sharedPref.getString("pref_retencion_contingencias_comunes", ""));pref_RetencionFormacionDesempleoAccd
         pref_RetencionFormacionDesempleoAccd = 1.7;//Double.parseDouble(sharedPref.getString("pref_retencion_formacion_desempleo_accd", ""));
+
 
         // Setup caldroid fragment
         caldroidFragment = new PantallaCalendarioFragment();
@@ -493,7 +246,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
             @Override
             public void onSelectDate(Date date, View view) {
 
-                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario, formatter.format(date), idCalendario);
+                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario, formatter_fecha.format(date), idCalendario);
 
                 if (cursorFichajeFecha.moveToFirst()) {
                     //Recorremos el cursor hasta que no haya más registros
@@ -501,7 +254,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
                         Intent intent = new Intent(getApplicationContext(), FichajeDetalleActivity.class);
 
                         intent.putExtra(EXTRA_CALENDARIO_ID, idCalendario);
-                        intent.putExtra(EXTRA_FECHA, formatter.format(date));
+                        intent.putExtra(EXTRA_FECHA, formatter_fecha.format(date));
                         intent.putExtra(EXTRA_OPERARIO_ID, codigoOperario);
 
                         startActivityForResult(intent, REQUEST_UPDATE_DELETE_FICHAJE);
@@ -513,7 +266,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
                             // Mostramos un diálogo de selección de turnos
                             DialogoSeleccionTurno dialogo = new DialogoSeleccionTurno();
                             dialogo.show(getSupportFragmentManager(), "SeleccionarTurno");
-                            fechaSeleccionada = formatter.format(date);
+                            fechaSeleccionada = formatter_fecha.format(date);
                         } else {
                             Toast.makeText(getApplicationContext(), "Debe seleccionar un Puesto antes de realizar el Fichaje", Toast.LENGTH_SHORT).show();
                         }
@@ -540,20 +293,20 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
             @Override
             public void onLongClickDate(Date date, View view) {
 
-                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario, formatter.format(date), idCalendario);
+                Cursor cursorFichajeFecha = datos.obtenerFichajeFecha(codigoOperario, formatter_fecha.format(date), idCalendario);
 
                 if (cursorFichajeFecha.moveToFirst()) {
                     //Recorremos el cursor hasta que no haya más registros
                     do {
                         Bundle args = new Bundle();
-                        args.putString("fecha", formatter.format(date));
+                        args.putString("fecha", formatter_fecha.format(date));
                         SimpleDialog dialogo = new SimpleDialog();
 
                         dialogo.setArguments(args);
                         dialogo.show(getSupportFragmentManager(), "EliminarFichaje");
                     } while (cursorFichajeFecha.moveToNext());
                 } else {
-                    Toast.makeText(getApplicationContext(), "No hay fichajes para: " + formatter.format(date),
+                    Toast.makeText(getApplicationContext(), "No hay fichajes para: " + formatter_fecha.format(date),
                             Toast.LENGTH_SHORT).show();
 
                 }
@@ -860,7 +613,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
 
                     Date dateObj;
                     try {
-                        dateObj = formatter.parse(fechaFichaje);
+                        dateObj = formatter_hora_minutos.parse(fechaFichaje);
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(dateObj);
 
@@ -921,7 +674,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
                 ColorDrawable colorFondo = new ColorDrawable(Color.WHITE);
                 Date date = null;
                 try {
-                    date = formatter.parse(fecha);
+                    date = formatter_fecha.parse(fecha);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

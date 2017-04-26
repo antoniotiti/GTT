@@ -225,7 +225,7 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-
+            bindPreferenceSummaryToValue(findPreference("pref_operario_activo"));
             bindPreferenceSummaryToValue(findPreference("pref_dia_comienzo_semana"));
             bindPreferenceSummaryToValue(findPreference("pref_retencion_irpf"));
             bindPreferenceSummaryToValue(findPreference("pref_retencion_extras"));

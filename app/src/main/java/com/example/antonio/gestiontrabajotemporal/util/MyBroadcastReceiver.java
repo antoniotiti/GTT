@@ -6,6 +6,14 @@ import android.content.Intent;
 
 import com.example.antonio.gestiontrabajotemporal.ui.MainActivity;
 
+/**
+ * Nuestro BroadcastReceiver se configurará para responder a una determinada acción del sistema,
+ * y el propio sistema será el encargado de notificar al BroadcastReceiver de que ha sucedido dicha acción.
+ * Notificamos a nuesto BroadcastReceiver cuando el sistema ha completado el proceso de arranque,
+ * registrándolo al ACTION_BOOT_COMPLETED en el manifest.xml.
+ *
+ * Iniciamos el servicio.
+ */
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
     public void onReceive(Context paramContext, Intent paramIntent) {

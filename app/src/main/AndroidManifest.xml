@@ -85,20 +85,22 @@
             <intent-filter>
                 <action android:name="com.example.antonio.gestiontrabajotemporal.util.MyService" />
             </intent-filter>
+
         </service>
 
         <receiver android:name=".util.MyBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
+        </receiver>
+        <receiver android:name=".util.MyReceiver">
         </receiver>
 
         <activity
             android:name=".nominadetalle.NominaDetalle"
             android:label="@string/title_activity_nomina_detalle"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

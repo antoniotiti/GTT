@@ -148,6 +148,12 @@
     <string name="pref_default_irpf">2</string>
     <string name="pref_default_retencion_extra">4.7</string>
     <string name="pref_retencion_extras">Retencion Horas Extras:</string>
+    <string name="pref_operario_activo">Operario Activo:</string>
+    <string name="modo_activar">A</string>
+    <string name="modo_desactivar">D</string>
+    <string name="modo_no_cambiar">0</string>
+    <string name="silencio_modo">S</string>
+    <string name="vibrate_modo">V</string>
 
 
 </resources>
