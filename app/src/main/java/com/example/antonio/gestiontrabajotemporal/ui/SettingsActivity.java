@@ -1,11 +1,9 @@
 package com.example.antonio.gestiontrabajotemporal.ui;
 
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -18,11 +16,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -33,7 +31,6 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -48,8 +45,7 @@ import java.util.List;
  */
 public class SettingsActivity extends PreferenceActivity {
 
-   static OperacionesBaseDatos datos;
-
+    static OperacionesBaseDatos datos;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -71,14 +67,12 @@ public class SettingsActivity extends PreferenceActivity {
                         index >= 0
                                 ? listPreference.getEntries()[index]
                                 : null);
-
             } else if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
                 // using RingtoneManager.
                 if (TextUtils.isEmpty(stringValue)) {
                     // Empty values correspond to 'silent' (no ringtone).
                     preference.setSummary(R.string.pref_ringtone_silent);
-
                 } else {
                     Ringtone ringtone = RingtoneManager.getRingtone(
                             preference.getContext(), Uri.parse(stringValue));
@@ -93,7 +87,6 @@ public class SettingsActivity extends PreferenceActivity {
                         preference.setSummary(name);
                     }
                 }
-
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -137,7 +130,6 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
-
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(this);
 
@@ -147,7 +139,6 @@ public class SettingsActivity extends PreferenceActivity {
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
     private void setupActionBar() {
-
         LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
         Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.settings_toolbar, root, false);
         root.addView(bar, 0); // insert at top
@@ -157,11 +148,6 @@ public class SettingsActivity extends PreferenceActivity {
                 finish();
             }
         });
-        /*ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }*/
     }
 
     @Override
@@ -206,9 +192,6 @@ public class SettingsActivity extends PreferenceActivity {
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
-
-    ///////Fragmentos/////////////////////////////////
-
     /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
@@ -229,11 +212,7 @@ public class SettingsActivity extends PreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("pref_dia_comienzo_semana"));
             bindPreferenceSummaryToValue(findPreference("pref_retencion_irpf"));
             bindPreferenceSummaryToValue(findPreference("pref_retencion_extras"));
-
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
         }
-
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -263,7 +242,6 @@ public class SettingsActivity extends PreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-
         }
 
         @Override
@@ -284,7 +262,6 @@ public class SettingsActivity extends PreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DataSyncPreferenceFragment extends PreferenceFragment {
 
-
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -295,25 +272,29 @@ public class SettingsActivity extends PreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
 
-            ListPreference calendariosList= obtenerCalendarios();
+            ListPreference calendariosList = obtenerCalendarios();
             bindPreferenceSummaryToValue(calendariosList);
 
-            ListPreference puestosList= obtenerPuestos();
+            ListPreference puestosList = obtenerPuestos();
             bindPreferenceSummaryToValue(puestosList);
-
         }
 
+        /**
+         * Método que se encarga de obtener unas lista con los nombres de los puestos almacenados
+         * en la BBDD para mostrarlos en las preferencias.
+         *
+         * @return Lista con los nombres de los puestos almacenados en la BBDD.
+         */
         private ListPreference obtenerPuestos() {
-            ListPreference puestosList = (ListPreference)findPreference("pref_puesto_predeterminado");
+            ListPreference puestosList = (ListPreference) findPreference("pref_puesto_predeterminado");
 
             try {
                 Cursor puestos = datos.obtenerPuestos();
 
                 List<String> entryValues = new ArrayList<>();
 
-                if(puestos != null && puestos.getCount() > 0){
+                if (puestos != null && puestos.getCount() > 0) {
                     puestos.moveToFirst();
                     do {
                         entryValues.add(puestos.getString(puestos.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE)));
@@ -331,22 +312,26 @@ public class SettingsActivity extends PreferenceActivity {
                 puestosList.setTitle(R.string.pref_puesto_predeterminado_title);
 
             } catch (Exception e) {
-                Toast.makeText(getActivity(), "Error encountered.",
-                        Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_LONG).show();
             }
             return puestosList;
         }
 
-
+        /**
+         * Método que se encarga de obtener unas lista con los nombres de los Calendarios almacenados
+         * en la BBDD para mostrarlos en las preferencias.
+         *
+         * @return Lista con los nombres de los Calendarios almacenados en la BBDD.
+         */
         private ListPreference obtenerCalendarios() {
-            ListPreference calendariosList = (ListPreference)findPreference("pref_calendario_predeterminado");
+            ListPreference calendariosList = (ListPreference) findPreference("pref_calendario_predeterminado");
 
             try {
                 Cursor calendarios = datos.obtenerCalendarios();
 
                 List<String> entryValues = new ArrayList<>();
 
-                if(calendarios != null && calendarios.getCount() > 0){
+                if (calendarios != null && calendarios.getCount() > 0) {
                     calendarios.moveToFirst();
                     do {
                         entryValues.add(calendarios.getString(calendarios.getColumnIndex(NombresColumnasBaseDatos.Calendarios.NOMBRE)));
@@ -364,8 +349,7 @@ public class SettingsActivity extends PreferenceActivity {
                 calendariosList.setTitle(R.string.pref_calendario_predeterminado_title);
 
             } catch (Exception e) {
-                Toast.makeText(getActivity(), "Error encountered.",
-                        Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_LONG).show();
             }
             return calendariosList;
         }
@@ -380,5 +364,4 @@ public class SettingsActivity extends PreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
 }

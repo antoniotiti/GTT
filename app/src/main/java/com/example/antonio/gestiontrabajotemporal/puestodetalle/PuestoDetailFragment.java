@@ -2,6 +2,7 @@ package com.example.antonio.gestiontrabajotemporal.puestodetalle;
 //TODO los layout para los puestos,añadir descripccion ouesto base datos y modificar todo lo  que conlleve
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -35,6 +36,7 @@ public class PuestoDetailFragment extends Fragment {
 
     OperacionesBaseDatos datos;
 
+    private Context context;
     EditText editTextNombrePuesto, editTextDescripcionPuesto;
     private String mPuestoId;
     private CollapsingToolbarLayout mCollapsingView;
@@ -58,6 +60,7 @@ public class PuestoDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getActivity().getApplicationContext();
 
         if (getArguments() != null) {
             mPuestoId = getArguments().getString(ARG_PUESTO_ID);
@@ -116,8 +119,8 @@ public class PuestoDetailFragment extends Fragment {
 
     private void addEditPuesto() {
 
-        nombrePuestoValidado = validarEditTextVacio(editTextNombrePuesto);
-        descripcionPuestoValidado = validarEditTextVacio(editTextDescripcionPuesto);
+        nombrePuestoValidado = validarEditTextVacio(context, editTextNombrePuesto);
+        descripcionPuestoValidado = validarEditTextVacio(context, editTextDescripcionPuesto);
 
 
         if (nombrePuestoValidado && descripcionPuestoValidado) {
@@ -307,10 +310,10 @@ Puesto     */
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
                 case R.id.editText_nombre_puesto:
-                    nombrePuestoValidado = validarEditTextVacio(editTextNombrePuesto);
+                    nombrePuestoValidado = validarEditTextVacio(context, editTextNombrePuesto);
                     break;
                 case R.id.editText_descripcion_puesto:
-                    descripcionPuestoValidado = validarEditTextVacio(editTextDescripcionPuesto);
+                    descripcionPuestoValidado = validarEditTextVacio(context, editTextDescripcionPuesto);
                     break;
             }
         }

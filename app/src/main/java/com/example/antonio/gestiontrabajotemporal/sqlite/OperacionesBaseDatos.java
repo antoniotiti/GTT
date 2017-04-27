@@ -325,6 +325,12 @@ public final class OperacionesBaseDatos {
         return resultado > 0;
     }
 
+    /**
+     * Método encargado de obtener el password de un usuario mediante el idoperario
+     * @param idOperario Identificador del operario
+     * @return EL password del operario.
+     * @throws CursorIndexOutOfBoundsException
+     */
     public String obtenerPasswordOperarioId(String idOperario) throws CursorIndexOutOfBoundsException {
 
         SQLiteDatabase db = baseDatos.getWritableDatabase();

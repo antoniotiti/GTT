@@ -25,7 +25,7 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
- * Fragmento con diálogo básico
+ * Diálogo para mostrar los Turnos que existen en la BBDD
  */
 public class DialogoSeleccionTurno extends DialogFragment {
 
@@ -127,8 +127,7 @@ public class DialogoSeleccionTurno extends DialogFragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mDialogoAdapter.swapCursor(cursor);
             } else {
-                Toast.makeText(getActivity(),
-                        "No hay turnos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.no_hay_turnos), Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.antonio.gestiontrabajotemporal.util;
 
-
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -18,13 +17,12 @@ public class TimeDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Iniciar con el tiempo actual
-        final Calendar c = Calendar.getInstance();
+        final Calendar c = Calendar.getInstance(); //Iniciar con el tiempo actual
         c.set(0, 0, 0, 0, 0, 0);
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        // Retornar en nueva instancia del dialogo selector de tiempo
+        //Retornar en nueva instancia del diálogo selector de tiempo
         return new TimePickerDialog(
                 getActivity(),
                 (TimePickerDialog.OnTimeSetListener) getTargetFragment(),
@@ -32,5 +30,4 @@ public class TimeDialog extends DialogFragment {
                 minute,
                 true);
     }
-
 }

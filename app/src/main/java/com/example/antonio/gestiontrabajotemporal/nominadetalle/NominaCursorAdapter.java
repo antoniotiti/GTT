@@ -14,7 +14,7 @@ import com.example.antonio.gestiontrabajotemporal.R;
 
 import java.util.ArrayList;
 
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.form;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.FORMATO_DECIMAL;
 
 
 public class NominaCursorAdapter extends BaseAdapter {
@@ -90,28 +90,28 @@ public class NominaCursorAdapter extends BaseAdapter {
         textViewNombreTurno.setText(nominaTurno.getNombreTurno());
 
         TextView textViewHorasTrabajadas = (TextView) v.findViewById(R.id.textView_valor_horas);
-        textViewHorasTrabajadas.setText(form.format(nominaTurno.getHorasTrabajadas()));
+        textViewHorasTrabajadas.setText(FORMATO_DECIMAL.format(nominaTurno.getHorasTrabajadas()));
         TextView textViewPrecioHorasNormal = (TextView) v.findViewById(R.id.textView_precio_hora);
-        textViewPrecioHorasNormal.setText(form.format(nominaTurno.getPrecioHoraTrabajada()) + "€");
+        textViewPrecioHorasNormal.setText(FORMATO_DECIMAL.format(nominaTurno.getPrecioHoraTrabajada()) + "€");
         TextView textViewTOtalHorasNormal = (TextView) v.findViewById(R.id.textView_total_hora);
-        textViewTOtalHorasNormal.setText(form.format(nominaTurno.getTotalEurosHorasTrabajadas()) + "€");
+        textViewTOtalHorasNormal.setText(FORMATO_DECIMAL.format(nominaTurno.getTotalEurosHorasTrabajadas()) + "€");
 
         TextView textViewHorasNocturnas = (TextView) v.findViewById(R.id.textView_valor_horas_nocturnas);
-        textViewHorasNocturnas.setText(form.format(nominaTurno.getHorasTrabajadasNocturnas()));
+        textViewHorasNocturnas.setText(FORMATO_DECIMAL.format(nominaTurno.getHorasTrabajadasNocturnas()));
         TextView textViewPrecioHorasNocturnas = (TextView) v.findViewById(R.id.textView_precio_hora_nocturnas);
-        textViewPrecioHorasNocturnas.setText(form.format(nominaTurno.getPrecioHoraTrabajadaNocturna()) + "€");
+        textViewPrecioHorasNocturnas.setText(FORMATO_DECIMAL.format(nominaTurno.getPrecioHoraTrabajadaNocturna()) + "€");
         TextView textViewTOtalHorasNocturnas = (TextView) v.findViewById(R.id.textView_total_hora_nocturnas);
-        textViewTOtalHorasNocturnas.setText(form.format(nominaTurno.getTotalEurosHorasTrabajadasNocturnas()) + "€");
+        textViewTOtalHorasNocturnas.setText(FORMATO_DECIMAL.format(nominaTurno.getTotalEurosHorasTrabajadasNocturnas()) + "€");
 
         TextView textViewHorasExtras = (TextView) v.findViewById(R.id.textView_valor_horas_extras);
-        textViewHorasExtras.setText(form.format(nominaTurno.getHorasTrabajadasExtras()));
+        textViewHorasExtras.setText(FORMATO_DECIMAL.format(nominaTurno.getHorasTrabajadasExtras()));
         TextView textViewPrecioHorasExtras = (TextView) v.findViewById(R.id.textView_precio_hora_extras);
-        textViewPrecioHorasExtras.setText(form.format(nominaTurno.getPrecioHoraTrabajadaExtras()) + "€");
+        textViewPrecioHorasExtras.setText(FORMATO_DECIMAL.format(nominaTurno.getPrecioHoraTrabajadaExtras()) + "€");
         TextView textViewTOtalHorasExtras = (TextView) v.findViewById(R.id.textView_total_hora_extras);
-        textViewTOtalHorasExtras.setText(form.format(nominaTurno.getTotalEurosHorasTrabajadasExtras()) + "€");
+        textViewTOtalHorasExtras.setText(FORMATO_DECIMAL.format(nominaTurno.getTotalEurosHorasTrabajadasExtras()) + "€");
 
         TextView textViewTotalBrutoTurno = (TextView) v.findViewById(R.id.textView_total_bruto_turno);
-        textViewTotalBrutoTurno.setText(form.format(totalNetoTurno) + "€");
+        textViewTotalBrutoTurno.setText(FORMATO_DECIMAL.format(totalNetoTurno) + "€");
 
         return v;
     }

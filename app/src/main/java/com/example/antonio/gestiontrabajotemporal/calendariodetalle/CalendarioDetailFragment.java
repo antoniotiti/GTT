@@ -1,6 +1,7 @@
 package com.example.antonio.gestiontrabajotemporal.calendariodetalle;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -33,6 +34,7 @@ public class CalendarioDetailFragment extends Fragment {
     private static final String ARG_CALENDARIO_ID = "calendarioId";
 
     OperacionesBaseDatos datos;
+    private Context context;
 
     EditText editTextNombreCalendario, editTextDescripcionCalendario;
     private String mCalendarioId;
@@ -57,6 +59,7 @@ public class CalendarioDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getActivity().getApplicationContext();
 
         if (getArguments() != null) {
             mCalendarioId = getArguments().getString(ARG_CALENDARIO_ID);
@@ -110,8 +113,8 @@ public class CalendarioDetailFragment extends Fragment {
 
     private void addEditCalendario() {
 
-        nombreCalendarioValidado = validarEditTextVacio(editTextNombreCalendario);
-        descripcionCalendarioValidado = validarEditTextVacio(editTextDescripcionCalendario);
+        nombreCalendarioValidado = validarEditTextVacio(context, editTextNombreCalendario);
+        descripcionCalendarioValidado = validarEditTextVacio(context, editTextDescripcionCalendario);
 
         if (nombreCalendarioValidado && descripcionCalendarioValidado) {
 
@@ -297,10 +300,10 @@ public class CalendarioDetailFragment extends Fragment {
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
                 case R.id.editText_nombre_calendario:
-                    nombreCalendarioValidado = validarEditTextVacio(editTextNombreCalendario);
+                    nombreCalendarioValidado = validarEditTextVacio(context, editTextNombreCalendario);
                     break;
                 case R.id.editText_descripcion_calendario:
-                    descripcionCalendarioValidado = validarEditTextVacio(editTextDescripcionCalendario);
+                    descripcionCalendarioValidado = validarEditTextVacio(context, editTextDescripcionCalendario);
                     break;
             }
         }

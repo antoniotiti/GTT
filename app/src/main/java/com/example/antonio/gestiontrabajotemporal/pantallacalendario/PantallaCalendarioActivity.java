@@ -45,9 +45,9 @@ import java.util.Map;
 
 import hirondelle.date4j.DateTime;
 
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.form;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.FORMATO_DECIMAL;
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_fecha;
-import static com.example.antonio.gestiontrabajotemporal.util.Validar.FORMATO_FECHA_DATETIME;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.FORMATO_FECHA_DATETIME;
 
 
 @SuppressLint("SimpleDateFormat")
@@ -442,8 +442,8 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
             totalNeto = totalEurosHorasTrabajadas + totalEurosHorasTrabajadasNocturnas + totalEurosHorasTrabajadasExtras - retencionIrpf - retencionHorasExtras - retencionContingenciasComunes - retencionFormacionDesempleoAccd;
 
             diasTrabajados.setText(String.valueOf(numeroDiasTrabajados));
-            horasTrabajadas.setText(form.format(totalHorasTrabajadas));
-            nominaValor.setText(form.format(totalNeto) + "€");
+            horasTrabajadas.setText(FORMATO_DECIMAL.format(totalHorasTrabajadas));
+            nominaValor.setText(FORMATO_DECIMAL.format(totalNeto) + "€");
         } else {
             Toast.makeText(getApplicationContext(), "No hay días trabajados en el mes", Toast.LENGTH_SHORT).show();
         }

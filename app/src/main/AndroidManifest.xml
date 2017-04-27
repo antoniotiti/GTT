@@ -81,20 +81,20 @@
             android:label="@string/title_activity_recuperar_password"
             android:theme="@style/AppTheme" />
 
-        <service android:name=".util.ServicioGTT">
+        <service android:name=".servicio.ServicioGTT">
             <intent-filter>
                 <action android:name="com.example.antonio.gestiontrabajotemporal.util.MyService" />
             </intent-filter>
 
         </service>
 
-        <receiver android:name=".util.MyBroadcastReceiver">
+        <receiver android:name=".servicio.MyBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".util.MyReceiver">
+        <receiver android:name=".servicio.MyReceiver">
         </receiver>
 
         <activity

@@ -26,7 +26,7 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
- * Fragmento con diálogo básico
+ * Diálogo para mostrar los Puestos que existen en la BBDD
  */
 public class DialogoSeleccionPuesto extends DialogFragment {
 
@@ -64,7 +64,6 @@ public class DialogoSeleccionPuesto extends DialogFragment {
                 dialog.dismiss();
             }
         });
-
         ImageView close = (ImageView) layout.findViewById(R.id.closePuesto);
         close.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -98,13 +97,11 @@ public class DialogoSeleccionPuesto extends DialogFragment {
 
         try {
             listener = (OnItemClickListener) activity;
-
         } catch (ClassCastException e) {
             throw new ClassCastException(
                     activity.toString() + getString(R.string.error_OnItemClickListener));
         }
     }
-
 
     /**
      * {@link PantallaCalendarioActivity#onItemClick(String, String)}
@@ -128,8 +125,7 @@ public class DialogoSeleccionPuesto extends DialogFragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mDialogoAdapter.swapCursor(cursor);
             } else {
-                Toast.makeText(getActivity(),
-                        "No hay Puestos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.no_hay_puestos), Toast.LENGTH_SHORT).show();
             }
         }
     }

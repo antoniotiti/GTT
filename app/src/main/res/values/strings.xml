@@ -154,6 +154,30 @@
     <string name="modo_no_cambiar">0</string>
     <string name="silencio_modo">S</string>
     <string name="vibrate_modo">V</string>
+    <string name="password_no_valido">Password no válido</string>
+    <string name="codigo_operario_no_valido">Código de operario no válido</string>
+    <string name="campo_vacio">Campo Vacío</string>
+    <string name="formato_fecha_correcto">Formato fecha correcto yyyy-MM-dd</string>
+    <string name="nss_no_valido">EL NSS no es válido.</string>
+    <string name="nss_12_digitos">El NSS debe tener 12 dígitos</string>
+    <string name="telefono_no_valido">El teléfono introducido no es válido</string>
+    <string name="email_no_valido">Email no válido</string>
+    <string name="letra_dni_no_valido">La letra del NIE o NIF no es válida</string>
+    <string name="dni_no_valido">El NIE o NIF no es válido</string>
+    <string name="password_erroneo">Contraseña erronea</string>
+    <string name="operario_no_registrado">Operario no registrado</string>
+    <string name="password_caracteres_erroneos">La contraseña debe tener mínimo 8 caracteres, incluir mayúsculas y minúsculas, al menos un número y no debe contener espacios en blanco</string>
+    <string name="codigo_operario_erroneo">El Código de operario debe contener 4 dígitos comenzando por 8</string>
+    <string name="error_datos_introducido">Error en los datos introducido</string>
+    <string name="email_enviado_corectamente">Email enviado correctamente</string>
+    <string name="error_enviar_email">Ha ocurrido un erro Email No enviado</string>
+    <string name="operario_creado_correctamente">El operario se ha registrado correctamente</string>
+    <string name="password_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="rellenar_campor_correctamente">Rellene todos los campos correctamente</string>
+    <string name="error">Error</string>
+    <string name="no_hay_turnos">No hay turnos</string>
+    <string name="no_hay_puestos">No hay puestos</string>
+    <string name="no_hay_calendarios">No hay calendarios</string>
 
 
 </resources>

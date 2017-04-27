@@ -15,17 +15,11 @@ import com.example.antonio.gestiontrabajotemporal.R;
  */
 public class SimpleDialog extends DialogFragment {
 
-    public SimpleDialog() {
-    }
-
-    public interface OnSimpleDialogListener {
-        void onPossitiveButtonClick(String tag, String fecha);// Eventos Botón Positivo
-
-        void onNegativeButtonClick(String tag, String fecha);// Eventos Botón Negativo
-    }
-
     // Interfaz de comunicación
     OnSimpleDialogListener listener;
+
+    public SimpleDialog() {
+    }
 
     @NonNull
     @Override
@@ -37,7 +31,7 @@ public class SimpleDialog extends DialogFragment {
     /**
      * Crea un diálogo de alerta sencillo dependiendo del tag que se reciba
      *
-     * @param fecha
+     * @param fecha Fecha seleccionada
      * @return Nuevo diálogo
      */
     public AlertDialog createSimpleDialog(final String fecha) {
@@ -71,7 +65,6 @@ public class SimpleDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                 listener.onPossitiveButtonClick(tag, fecha);
                             }
                         })
@@ -85,18 +78,20 @@ public class SimpleDialog extends DialogFragment {
         return builder.create();
     }
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         try {
             listener = (OnSimpleDialogListener) activity;
-
         } catch (ClassCastException e) {
             throw new ClassCastException(
                     activity.toString() + getString(R.string.error_OnSimpleDialogListener));
-
         }
+    }
+
+    public interface OnSimpleDialogListener {
+        void onPossitiveButtonClick(String tag, String fecha); //Eventos Botón Positivo
+        void onNegativeButtonClick(String tag, String fecha); //Eventos Botón Negativo
     }
 }

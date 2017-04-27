@@ -12,9 +12,9 @@ import com.example.antonio.gestiontrabajotemporal.R;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 
 
-public class DialogoSeleccionTurnoAdapter extends CursorAdapter {
+class DialogoSeleccionTurnoAdapter extends CursorAdapter {
 
-    public DialogoSeleccionTurnoAdapter(Context context, Cursor c) {
+    DialogoSeleccionTurnoAdapter(Context context, Cursor c) {
         super(context, c, 0);
     }
 

@@ -26,7 +26,7 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
- * Fragmento con diálogo básico
+ * Diálogo para mostrar los Calendarios que existen en la BBDD
  */
 public class DialogoSeleccionCalendario extends DialogFragment {
 
@@ -78,7 +78,6 @@ public class DialogoSeleccionCalendario extends DialogFragment {
 
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
-
         // Carga de datos
         cargarCalendarios();
 
@@ -95,16 +94,13 @@ public class DialogoSeleccionCalendario extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
         try {
             listener = (OnItemClickListener) activity;
-
         } catch (ClassCastException e) {
             throw new ClassCastException(
                     activity.toString() + getString(R.string.error_OnItemClickListener));
         }
     }
-
 
     /**
      * {@link PantallaCalendarioActivity#onItemClick(String, String)}
@@ -128,8 +124,7 @@ public class DialogoSeleccionCalendario extends DialogFragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mDialogoAdapter.swapCursor(cursor);
             } else {
-                Toast.makeText(getActivity(),
-                        "No hay Calendarios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.no_hay_calendarios), Toast.LENGTH_SHORT).show();
             }
         }
     }

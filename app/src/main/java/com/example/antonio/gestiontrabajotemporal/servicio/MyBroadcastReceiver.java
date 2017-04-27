@@ -1,4 +1,4 @@
-package com.example.antonio.gestiontrabajotemporal.util;
+package com.example.antonio.gestiontrabajotemporal.servicio;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

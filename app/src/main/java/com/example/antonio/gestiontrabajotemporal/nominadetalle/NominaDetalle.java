@@ -16,8 +16,7 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 
 import java.util.ArrayList;
 
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.form;
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.redondear2Decimales;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.FORMATO_DECIMAL;
 
 public class NominaDetalle extends AppCompatActivity {
 
@@ -187,7 +186,7 @@ public class NominaDetalle extends AppCompatActivity {
             textViewTelefonoOperario.setText(telefonoOperario);
             textViewEmailOperario.setText(emailOperario);
             textViewFechaAntiguedadOperario.setText(fechaInicioOperario);
-            textViewTotalNeto.setText(form.format(totalNeto) + "€");
+            textViewTotalNeto.setText(FORMATO_DECIMAL.format(totalNeto) + "€");
 
         } else {
             Toast.makeText(getApplicationContext(), "No hay dias trabajados en el mes", Toast.LENGTH_SHORT).show();
