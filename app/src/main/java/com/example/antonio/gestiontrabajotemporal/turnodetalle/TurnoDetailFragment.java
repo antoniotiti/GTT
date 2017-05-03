@@ -42,6 +42,7 @@ import org.xdty.preference.colorpicker.ColorPickerSwatch;
 import java.util.Calendar;
 
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraDecimal;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraFormateada;
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHorasTrabajadas;
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_hora_minutos;
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEditTextVacio;
@@ -544,7 +545,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             editTextHoraInicio2.setText(turno.getHoraInicio2());
             editTextHoraFin2.setText(turno.getHoraFin2());
         }
-        editTextHoraTrabajadaNoche.setText(String.valueOf(turno.getHorasTrabajadasNocturnas()));
+        editTextHoraTrabajadaNoche.setText(calcularHoraFormateada(turno.getHorasTrabajadasNocturnas()));
         editTextPrecioHora.setText(String.valueOf(turno.getPrecioHora()));
         editTextPrecioHoraNocturna.setText(String.valueOf(turno.getPrecioHoraNocturnas()));
         editTextPrecioHoraExtra.setText(String.valueOf(turno.getPrecioHoraExtra()));

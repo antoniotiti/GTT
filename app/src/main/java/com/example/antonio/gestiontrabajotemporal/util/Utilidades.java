@@ -50,6 +50,20 @@ public class Utilidades {
     }
 
     /**
+     * Metodo que se encargar de pasar una hora pasada por parámetros en decimal a formato kk:mm.
+     *
+     * @param hora Hora que se quiere formatear.
+     * @return La hora formateada.
+     */
+    public static String calcularHoraFormateada(float hora) {
+        String horaDecimal;
+        int hours = (int) hora;
+        int minutes = (int) (hora * 60) % 60;
+        horaDecimal = hours + ":" + minutes;
+        return horaDecimal;
+    }
+
+    /**
      * Método que se encarga de calcular el número de horas trabajadas en total.
      *
      * @param horaInicio1  Hora de inicio
