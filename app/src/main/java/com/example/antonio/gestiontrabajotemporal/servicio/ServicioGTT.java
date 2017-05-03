@@ -23,6 +23,8 @@ import java.util.Calendar;
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_fecha;
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_hora_minutos;
 
+//TODO
+
 public class ServicioGTT extends Service {
 
     private static final String TAG = ServicioGTT.class.getSimpleName();

@@ -75,24 +75,37 @@ public class NombresColumnasBaseDatos {
         }*/
     }
 
+    /**
+     * Método que se encarga de generar un id aleatorio para un Puesto.
+     */
     public static class Puestos implements ColumnasPuesto {
         public static String generarIdPuesto() {
             return "PU-" + UUID.randomUUID().toString();
         }
     }
 
+    /**
+     * Método que se encarga de generar un id aleatorio para un Turno.
+     */
     public static class Turnos implements ColumnasTurno {
         public static String generarIdTurno() {
             return "TU-" + UUID.randomUUID().toString();
         }
     }
 
+
+    /**
+     * Método que se encarga de generar un id aleatorio para un Fichaje.
+     */
     public static class Fichajes implements ColumnasFichaje {
         public static String generarIdFichaje() {
             return "FI-" + UUID.randomUUID().toString();
         }
     }
 
+    /**
+     * Método que se encarga de generar un id aleatorio para un Calendario.
+     */
     public static class Calendarios implements ColumnasCalendario {
         public static String generarIdCalendario() {
             return "CA-" + UUID.randomUUID().toString();

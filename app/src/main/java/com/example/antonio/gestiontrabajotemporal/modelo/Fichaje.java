@@ -1,23 +1,19 @@
 package com.example.antonio.gestiontrabajotemporal.modelo;
 
-
+/**
+ * Clase para la creación de objetos Fichaje
+ */
 public class Fichaje {
 
     public String idOperario;
-
     public String fecha;
-
     public String idTurno;
-
     public String idPuesto;
-
     public String idCalendario;
-
     public Double horaExtra;
-
     public String comentario;
 
-    public Fichaje(String idOperario, String fecha, String idTurno, String idPuesto, String idCalendario, Double horaExtra, String comentario ) {
+    public Fichaje(String idOperario, String fecha, String idTurno, String idPuesto, String idCalendario, Double horaExtra, String comentario) {
         this.idOperario = idOperario;
         this.fecha = fecha;
         this.idTurno = idTurno;

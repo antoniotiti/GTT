@@ -58,18 +58,27 @@ public final class OperacionesBaseDatos {
         return instancia;
     }
 
-    // [OPERACIONES_PUESTO]
+    //[INICIO OPERACIONES_PUESTO]
+
+    /**
+     * Método que se encarga de obtener todos los puestos de la BBDD.
+     *
+     * @return Cursor con todos los Puestos obtenidos
+     */
     public Cursor obtenerPuestos() {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = String.format("SELECT * FROM %s", Tablas.PUESTO);
-
         return db.rawQuery(sql, null);
     }
 
+    /**
+     * Método que se encarga de obtener un puesto dado su id por parámetro.
+     *
+     * @param puestoId Id del puesto que queremos obtener los datos.
+     * @return Cursor con el puesto obtenido.
+     */
     public Cursor obtenerPuestoById(String puestoId) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         Cursor c = db.query(
                 Tablas.PUESTO,
                 null,
@@ -81,9 +90,14 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    /**
+     * Método que se encarga de obtener el id del puesto dado su nombre por parámetro.
+     *
+     * @param nombrePuesto Nombre del puesto que queremos obtener el id.
+     * @return Id del puesto obtenido.
+     */
     public Cursor obtenerIdPuestoByNombre(String nombrePuesto) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         Cursor c = db.query(
                 Tablas.PUESTO,
                 new String[]{Puestos.ID},
@@ -95,11 +109,16 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    /**
+     * Método que se encarga de insertar un puesto en la BBDD.
+     *
+     * @param puesto Puesto a insertar en la BBDD.
+     * @return Id del puesto insertado.
+     */
     public String insertarPuesto(Puesto puesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         String idPuestoInsertado = null;
-        // Generar Pk
-        String idPuesto = Puestos.generarIdPuesto();
+        String idPuesto = Puestos.generarIdPuesto(); //Generamos un id aleatorio
 
         ContentValues valores = new ContentValues();
         valores.put(Puestos.ID, idPuesto);
@@ -110,11 +129,18 @@ public final class OperacionesBaseDatos {
             db.insertOrThrow(Tablas.PUESTO, null, valores);
             idPuestoInsertado = idPuesto;
         } catch (SQLiteConstraintException e) {
-
+            e.printStackTrace();
         }
         return idPuestoInsertado;
     }
 
+    /**
+     * Método que se encarga de editar un puesto.
+     *
+     * @param puesto   Datos del puesto que queremos editar
+     * @param idPuesto ID del puesto que queremos editar
+     * @return Devuelve 1 si se ha editado correctamente el puesto, 0 si no se ha editado.
+     */
     public int editarPuesto(Puesto puesto, String idPuesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         int puestosEditados = 0;
@@ -127,36 +153,47 @@ public final class OperacionesBaseDatos {
         String[] whereArgs = {idPuesto};
         try {
             puestosEditados = db.update(Tablas.PUESTO, valores, whereClause, whereArgs);
-
         } catch (SQLiteConstraintException e) {
-
+            e.printStackTrace();
         }
-
         return puestosEditados;
     }
 
+    /**
+     * Método que se encarga de borrar un puesto dado su id por parámetro.
+     *
+     * @param idPuesto Id del puesto a borrar
+     * @return Devuelve 1 si se ha borrado correctamente el puesto. 0 si no se ha borrado.
+     */
     public int eliminarPuesto(String idPuesto) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         String whereClause = String.format("%s=?", Puestos.ID);
         String[] whereArgs = {idPuesto};
-
         return db.delete(Tablas.PUESTO, whereClause, whereArgs);
     }
-    // [OPERACIONES_PUESTO]
+    //[FIN OPERACIONES_PUESTO]
 
-    // [OPERACIONES_CALENDARIO]
+    //[INICIO OPERACIONES_CALENDARIO]
+
+    /**
+     * Método que se encarga de obtener todos los calendarios de la BBDD.
+     *
+     * @return Cursor con todos los calendarios obtenidos.
+     */
     public Cursor obtenerCalendarios() {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = String.format("SELECT * FROM %s", Tablas.CALENDARIO);
-
         return db.rawQuery(sql, null);
     }
 
+    /**
+     * Método que se encarga de obtener un calendario dado su id por parámetro.
+     *
+     * @param calendarioId Id del calendario del que queremos obteer los datos
+     * @return Cursor con los datos del calendario
+     */
     public Cursor obtenerCalendarioById(String calendarioId) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         Cursor c = db.query(
                 Tablas.CALENDARIO,
                 null,
@@ -168,6 +205,12 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    /**
+     * Método que se encarga de obtener el id del calendario dado su nombre por parámetro.
+     *
+     * @param nombreCalendario Nombre del calendario
+     * @return Id del calendario obtenido
+     */
     public Cursor obtenerIdCalendarioByNombre(String nombreCalendario) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
@@ -182,12 +225,16 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    /**
+     * Método que se encarga de insertar un calendario en la BBDD.
+     *
+     * @param calendario Calendario a insertar en la BBDD.
+     * @return Id del calendario insertado.
+     */
     public String insertarCalendario(Calendario calendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         String idCalendarioInsertado = null;
-
-        // Generar Pk
-        String idCalendario = Calendarios.generarIdCalendario();
+        String idCalendario = Calendarios.generarIdCalendario(); //Generamos un id aleatorio
 
         ContentValues valores = new ContentValues();
         valores.put(Calendarios.ID, idCalendario);
@@ -198,12 +245,18 @@ public final class OperacionesBaseDatos {
             db.insertOrThrow(Tablas.CALENDARIO, null, valores);
             idCalendarioInsertado = idCalendario;
         } catch (SQLiteConstraintException e) {
-
+            e.printStackTrace();
         }
-
         return idCalendarioInsertado;
     }
 
+    /**
+     * Método que se encarga de editar un calendario.
+     *
+     * @param calendario   Datos del calendario que queremos editar
+     * @param idCalendario ID del calendario que queremos editar
+     * @return Devuelve 1 si se ha editado correctamente el calendario, 0 si no se ha editado.
+     */
     public int editarCalendario(Calendario calendario, String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         int calendariosEditados = 0;
@@ -217,37 +270,47 @@ public final class OperacionesBaseDatos {
 
         try {
             calendariosEditados = db.update(Tablas.CALENDARIO, valores, whereClause, whereArgs);
-
         } catch (SQLiteConstraintException e) {
-
+            e.printStackTrace();
         }
-
         return calendariosEditados;
     }
 
+    /**
+     * Método que se encarga de borrar un calendario dado su id por parámetro.
+     *
+     * @param idCalendario Id del calendario a borrar
+     * @return Devuelve 1 si se ha borrado correctamente el calendario. 0 si no se ha borrado.
+     */
     public int eliminarCalendario(String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         String whereClause = String.format("%s=?", Calendarios.ID);
         String[] whereArgs = {idCalendario};
-
-
         return db.delete(Tablas.CALENDARIO, whereClause, whereArgs);
     }
-    // [OPERACIONES_CALENDARIO]
+    // [FIN OPERACIONES_CALENDARIO]
 
-    // [OPERACIONES_OPERARIO]
+    // [INICIO OPERACIONES_OPERARIO]
+
+    /**
+     * Método que se encarga de obtener todos los operarios de la BBDD.
+     *
+     * @return Cursor con todos los operarios obtenidos.
+     */
     public Cursor obtenerOperarios() {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = String.format("SELECT * FROM %s", Tablas.OPERARIO);
-
         return db.rawQuery(sql, null);
     }
 
+    /**
+     * Método que se encarga de obtener un operarios dado su id por parámetro.
+     *
+     * @param operarioId Id del operarios del que queremos obteer los datos
+     * @return Cursor con los datos del operarios
+     */
     public Cursor obtenerOperarioById(String operarioId) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         Cursor c = db.query(
                 Tablas.OPERARIO,
                 null,
@@ -259,12 +322,17 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    /**
+     * Método que se encarga de insertar un operario en la BBDD.
+     *
+     * @param operario Operario a insertar en la BBDD.
+     * @return Id del operario insertado.
+     */
     public String insertarOperario(Operario operario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         String idOperarioInsertado = null;
 
         ContentValues valores = new ContentValues();
-
         valores.put(Operarios.ID, operario.idOperario);
         valores.put(Operarios.DNI, operario.dni);
         valores.put(Operarios.NOMBRE, operario.nombre);
@@ -277,21 +345,24 @@ public final class OperacionesBaseDatos {
         valores.put(Operarios.FECHA_INICIO, operario.fechaInicio);
         valores.put(Operarios.NUMERO_S_S, operario.numeroSS);
         valores.put(Operarios.PASSWORD, operario.password);
-
         try {
             db.insertOrThrow(Tablas.OPERARIO, null, valores);
             idOperarioInsertado = operario.idOperario;
         } catch (SQLiteConstraintException e) {
-
+            e.printStackTrace();
         }
-
         return idOperarioInsertado;
-
     }
 
+    /**
+     * Método que se encarga de editar un operario.
+     *
+     * @param operario   Datos del operario que queremos editar
+     * @param idOperario ID del operario que queremos editar
+     * @return Devuelve true si se ha editado correctamente el operario, false si no se ha editado.
+     */
     public boolean editarOperario(Operario operario, String idOperario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         ContentValues valores = new ContentValues();
         valores.put(Operarios.DNI, operario.dni);
         valores.put(Operarios.NOMBRE, operario.nombre);
@@ -305,36 +376,37 @@ public final class OperacionesBaseDatos {
         valores.put(Operarios.NUMERO_S_S, operario.numeroSS);
         valores.put(Operarios.PASSWORD, operario.password);
 
-
         String whereClause = String.format("%s=?", Operarios.ID);
         String[] whereArgs = {idOperario};
 
         int resultado = db.update(Tablas.OPERARIO, valores, whereClause, whereArgs);
-
-        return resultado > 0;
-    }
-
-    public boolean eliminarOperario(String idOperario) {
-        SQLiteDatabase db = baseDatos.getWritableDatabase();
-
-        String whereClause = String.format("%s=?", Operarios.ID);
-        String[] whereArgs = {idOperario};
-
-        int resultado = db.delete(Tablas.OPERARIO, whereClause, whereArgs);
-
         return resultado > 0;
     }
 
     /**
-     * Método encargado de obtener el password de un usuario mediante el idoperario
+     * Método que se encarga de borrar un operario dado su id por parámetro.
+     *
+     * @param idOperario Id del operario a borrar
+     * @return Devuelve true si se ha borrado correctamente el operario. False si no se ha borrado.
+     */
+    public boolean eliminarOperario(String idOperario) {
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+        String whereClause = String.format("%s=?", Operarios.ID);
+        String[] whereArgs = {idOperario};
+
+        int resultado = db.delete(Tablas.OPERARIO, whereClause, whereArgs);
+        return resultado > 0;
+    }
+
+    /**
+     * Método encargado de obtener el password de un usuario mediante el id del operario dado por parámetro.
+     *
      * @param idOperario Identificador del operario
-     * @return EL password del operario.
+     * @return El password del operario.
      * @throws CursorIndexOutOfBoundsException
      */
     public String obtenerPasswordOperarioId(String idOperario) throws CursorIndexOutOfBoundsException {
-
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         Cursor cursor = db.query(
                 Tablas.OPERARIO,
                 new String[]{Operarios.PASSWORD},
@@ -345,15 +417,21 @@ public final class OperacionesBaseDatos {
                 null);
 
         cursor.moveToFirst();
-        String password = cursor.getString(cursor.getColumnIndex(Operarios.PASSWORD));
-        cursor.close();
+        String password = cursor.getString(cursor.getColumnIndex(Operarios.PASSWORD)); //Obtenemos el password
+        cursor.close();//Cerramos el cursor
         return password;
     }
 
-    public String obtenerPasswordOperarioId(String idOperario,String email) throws CursorIndexOutOfBoundsException {
-
+    /**
+     * Método encargado de obtener el password de un usuario mediante el id y email del operario dado por parámetro.
+     *
+     * @param idOperario Identificador del operario
+     * @param email      Email del operario
+     * @return El password del operario.
+     * @throws CursorIndexOutOfBoundsException
+     */
+    public String obtenerPasswordOperarioId(String idOperario, String email) throws CursorIndexOutOfBoundsException {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         String whereClause = String.format("%s=? AND %s=?", Operarios.ID, Operarios.EMAIL);
         String[] whereArgs = {idOperario, email};
 
@@ -366,24 +444,33 @@ public final class OperacionesBaseDatos {
                 null);
 
         cursor.moveToFirst();
-        String password = cursor.getString(cursor.getColumnIndex(Operarios.PASSWORD));
-        cursor.close();
+        String password = cursor.getString(cursor.getColumnIndex(Operarios.PASSWORD)); //Obtenemos el password
+        cursor.close(); //Cerramos el cursor
         return password;
     }
-    // [OPERACIONES_OPERARIO]
+    // [FIN OPERACIONES_OPERARIO]
 
     // [OPERACIONES_TURNO]
+
+    /**
+     * Método que se encarga de obtener todos los turnos de la BBDD.
+     *
+     * @return Cursor con todos los turnos obtenidos.
+     */
     public Cursor obtenerTurnos() {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = String.format("SELECT * FROM %s", Tablas.TURNO);
-
         return db.rawQuery(sql, null);
     }
 
+    /**
+     * Método que se encarga de obtener un turno dado su id por parámetro.
+     *
+     * @param turnoId Id del turno del que queremos obtener los datos
+     * @return Cursor con los datos del turno
+     */
     public Cursor obtenerTurnoById(String turnoId) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         Cursor c = db.query(
                 Tablas.TURNO,
                 null,
@@ -395,35 +482,18 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
-    /*public boolean eliminarTurno(String idTurno) {
-        SQLiteDatabase db = baseDatos.getWritableDatabase();
-
-        String whereClause = String.format("%s=?", Turnos.ID);
-        String[] whereArgs = {idTurno};
-
-        int resultado = db.delete(Tablas.TURNO, whereClause, whereArgs);
-
-        return resultado > 0;
-    }
-
-    public int eliminarTurno(String idTurno) {
-        SQLiteDatabase db = baseDatos.getWritableDatabase();
-
-        return db.delete(
-                Tablas.TURNO,
-                Turnos.ID + " LIKE ?",
-                new String[]{idTurno});
-    }*/
-
+    /**
+     * Método que se encarga de insertar un turno en la BBDD.
+     *
+     * @param turno Turno a insertar en la BBDD.
+     * @return Id del turno insertado.
+     */
     public String insertarTurno(Turno turno) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         String idTurnoInsertado = null;
-
-        // Generar Pk
-        String idTurno = Turnos.generarIdTurno();
+        String idTurno = Turnos.generarIdTurno();//Generamos un id aleatorio
 
         ContentValues valores = new ContentValues();
-
         valores.put(Turnos.ID, idTurno);
         valores.put(Turnos.NOMBRE, turno.nombreTurno);
         valores.put(Turnos.ABREVIATURA_NOMBRE_TURNO, turno.abreviaturaNombreTurno);
@@ -447,12 +517,18 @@ public final class OperacionesBaseDatos {
             db.insertOrThrow(Tablas.TURNO, null, valores);
             idTurnoInsertado = idTurno;
         } catch (SQLiteConstraintException e) {
-
+            e.printStackTrace();
         }
         return idTurnoInsertado;
-
     }
 
+    /**
+     * Método que se encarga de editar un turno.
+     *
+     * @param turno   Datos del turno que queremos editar
+     * @param turnoId ID del turno que queremos editar
+     * @return Devuelve 1 si se ha editado correctamente el turno, 0 si no se ha editado.
+     */
     public int editarTurno(Turno turno, String turnoId) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         int turnosEditados = 0;
@@ -478,29 +554,36 @@ public final class OperacionesBaseDatos {
 
         String whereClause = String.format("%s=?", Turnos.ID);
         String[] whereArgs = {turnoId};
-
         try {
             turnosEditados = db.update(Tablas.TURNO, valores, whereClause, whereArgs);
-
         } catch (SQLiteConstraintException e) {
-
+            e.printStackTrace();
         }
-
         return turnosEditados;
     }
 
+    /**
+     * Método que se encarga de borrar un turno dado su id por parámetro.
+     *
+     * @param idTurno Id del turno a borrar
+     * @return Devuelve 1 si se ha borrado correctamente el turno. 0 si no se ha borrado.
+     */
     public int eliminarTurno(String idTurno) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         String whereClause = String.format("%s=?", Turnos.ID);
         String[] whereArgs = {idTurno};
-
         return db.delete(Tablas.TURNO, whereClause, whereArgs);
     }
-    // [OPERACIONES_TURNO]
+    // [FIN OPERACIONES_TURNO]
 
-    // [OPERACIONES_FICHAJE]
+    // [INICIO OPERACIONES_FICHAJE]
 
+    /**
+     * Método que se encarga de insertar un fichaje en la BBDD.
+     *
+     * @param fichaje Fichaje a insertar en la BBDD.
+     * @return Id del fichaje insertado.
+     */
     public long insertarFichaje(Fichaje fichaje) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         long fichajeInsertado = 0;
@@ -513,20 +596,23 @@ public final class OperacionesBaseDatos {
         valores.put(Fichajes.ID_CALENDARIO, fichaje.idCalendario);
         valores.put(Fichajes.HORA_EXTRA, fichaje.horaExtra);
         valores.put(Fichajes.COMENTARIO, fichaje.comentario);
-
         try {
             // Insertar fichaje
             fichajeInsertado = db.insertOrThrow(Tablas.FICHAJE, null, valores);
         } catch (SQLiteConstraintException e) {
             e.printStackTrace();
-
         }
         return fichajeInsertado;
     }
 
+    /**
+     * Método que se encarga de editar un fichaje.
+     *
+     * @param fichaje Datos del fichaje que queremos editar
+     * @return Devuelve true si se ha editado correctamente el fichaje, false si no se ha editado.
+     */
     public boolean editarFichaje(Fichaje fichaje) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         ContentValues valores = new ContentValues();
         valores.put(Fichajes.ID_TURNO, fichaje.idTurno);
         valores.put(Fichajes.ID_PUESTO, fichaje.idPuesto);
@@ -538,45 +624,62 @@ public final class OperacionesBaseDatos {
         String[] whereArgs = {fichaje.idOperario, fichaje.fecha, fichaje.idCalendario};
 
         int resultado = db.update(Tablas.FICHAJE, valores, whereClause, whereArgs);
-
         return resultado > 0;
     }
 
+    /**
+     * Método que se encarga de borrar un Fichaje dado el id del operario, la fecha del fichaje
+     * y el id del calendario por parámetro.
+     *
+     * @param idOperario   Id del operario
+     * @param fecha        Fecha
+     * @param idCalendario Id del calendario
+     * @return Devuelve true si se ha borrado correctamente el fichaje. False si no se ha borrado.
+     */
     public boolean eliminarFichaje(String idOperario, String fecha, String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         String whereClause = String.format("%s=? AND %s=? AND %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA, Fichajes.ID_CALENDARIO);
         String[] whereArgs = {idOperario, fecha, idCalendario};
 
         int resultado = db.delete(Tablas.FICHAJE, whereClause, whereArgs);
-
         return resultado > 0;
     }
 
+    /**
+     * Método que se encarga de obtener un fichaje dado el id del operario, la fecha y el id del
+     * calendario por parámetro.
+     *
+     * @param idOperario   Id del operario
+     * @param fecha        Fecha
+     * @param idCalendario Id del calendario
+     * @return Cursor con los datos del fichaje
+     */
     public Cursor obtenerFichajeFecha(String idOperario, String fecha, String idCalendario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-
         String whereClause = String.format("%s=? AND %s=? AND %s=?", Fichajes.ID_OPERARIO, Fichajes.FECHA, Fichajes.ID_CALENDARIO);
         String[] whereArgs = {idOperario, fecha, idCalendario};
 
         Cursor resultado = db.query(Tablas.FICHAJE, null, whereClause, whereArgs, null, null, null);
-
         return resultado;
     }
 
     public Cursor obtenerFichajesParaCalendario() {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-
         builder.setTables(FICHAJE_JOIN_OPERARIO_TURNO_PUESTO_Y_CALENDARIO);
-
         return builder.query(db, proyFichaje, null, null, null, null, null);
     }
 
+    /**
+     * Método que se encarga de obtener los datos necesarios del fichaje para mostrarlos
+     * en la pantalla de calendario.
+     *
+     * @param idOperario Id del operario
+     * @param calendario Id del calendario
+     * @return Cursor con los datos del fichaje
+     */
     public Cursor obtenerFichajesParaCalendario(String idOperario, String calendario) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = "SELECT " + Operarios.ID + ", " + Fichajes.ID_TURNO + ", " + Fichajes.ID_PUESTO
                 + ", " + Fichajes.FECHA + ", " + Fichajes.HORA_EXTRA + ", " + Turnos.NOMBRE + ", "
                 + Turnos.ABREVIATURA_NOMBRE_TURNO + ", " + Turnos.COLOR_FONDO + ", " + Turnos.COLOR_TEXTO
@@ -586,23 +689,21 @@ public final class OperacionesBaseDatos {
                 + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
                 + " = " + Calendarios.ID + ")"
                 + " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO + " LIKE '" + calendario + "'";
-
         Cursor c = db.rawQuery(sql, null);
-
-       /* Cursor c = db.query(
-                Tablas.FICHAJE,
-                null,
-                Fichajes.ID_OPERARIO + " LIKE ? AND " + Fichajes.ID_CALENDARIO + " LIKE ?",
-                new String[]{idOperario, calendario},
-                null,
-                null,
-                null);*/
         return c;
     }
 
+    /**
+     * Método que se encarga de obtener los datos necesarios del fichaje para mostrarlos
+     * en la pantalla de calendario.
+     *
+     * @param idOperario Id del operario
+     * @param calendario Id del calendario
+     * @param fecha      Fecha
+     * @return Cursor con los datos del fichaje
+     */
     public Cursor obtenerFichajesParaCalendario(String idOperario, String calendario, String fecha) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Turnos.ABREVIATURA_NOMBRE_TURNO + ", "
                 + Turnos.COLOR_FONDO + ", " + Turnos.COLOR_TEXTO +
                 " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
@@ -610,14 +711,21 @@ public final class OperacionesBaseDatos {
                 + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
                 + " = " + Calendarios.ID + ")" +
                 " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " LIKE '" + fecha + "'";
-
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
 
+    /**
+     * Método que se encarga de obtener los datos necesarios del fichaje para mostrarlos
+     * en la pantalla de detalle.
+     *
+     * @param idOperario Id del operario
+     * @param calendario Id del calendario
+     * @param fecha      Fecha
+     * @return Cursor con los datos del fichaje
+     */
     public Cursor obtenerFichajesParaDetalle(String idOperario, String calendario, String fecha) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Fichajes.COMENTARIO + ", "
                 + Turnos.ABREVIATURA_NOMBRE_TURNO + ", " + Turnos.NOMBRE + ", " + Turnos.ID + ", "
                 + Turnos.COLOR_FONDO + ", " + Turnos.COLOR_TEXTO + ", " + Operarios.NOMBRE + ", "
@@ -629,11 +737,18 @@ public final class OperacionesBaseDatos {
                 + " = " + Puestos.ID + ")" +
                 " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO
                 + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " LIKE '" + fecha + "'";
-
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
 
+    /**
+     * Método que se encarga de obtener los datos de la alarma
+     *
+     * @param idOperario Id del operario
+     * @param calendario Id del calendario
+     * @param fecha      Fecha
+     * @return Cursor con los datos de la alarma
+     */
     public Cursor obtenerAlarmaFichaje(String idOperario, String calendario, String fecha) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
 
@@ -651,9 +766,16 @@ public final class OperacionesBaseDatos {
         return c;
     }
 
+    /**
+     * Método que se encarga de obtener los datos del modo del teléfono
+     *
+     * @param idOperario Id del operario
+     * @param calendario Id del calendario
+     * @param fecha      Fecha
+     * @return Cursor con los datos del modo del teléfono
+     */
     public Cursor obtenerModoTelefonoFichaje(String idOperario, String calendario, String fecha) {
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = "SELECT " + Turnos.MODO_TELEFONO +
                 " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
                 + " = " + Turnos.ID + ") INNER JOIN " + Tablas.OPERARIO + " ON (" + Fichajes.ID_OPERARIO
@@ -665,10 +787,18 @@ public final class OperacionesBaseDatos {
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
+
+    /**
+     * Método encargado de obtener los datos necesarios para calcular la nómina.
+     *
+     * @param calendario   Id del calendario
+     * @param idOperario   Id del operario
+     * @param primerDiaMes Fecha del primer día del mes que se ha trabajado
+     * @param ultimoDiaMes Fecha del último día del mes que se ha trabajado
+     * @return Datos necesarios para calcular la nómina
+     */
     public Cursor obtenerDatosNomina(String calendario, String idOperario, String primerDiaMes, String ultimoDiaMes) {
-
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Turnos.HORAS_TRABAJADAS + ", "
                 + Turnos.HORAS_TRABAJADAS_NOCTURNAS + ", " + Turnos.PRECIO_HORA + ", "
                 + Turnos.PRECIO_HORA_EXTRA + ", " + Turnos.PRECIO_HORA_NOCTURNAS +
@@ -680,24 +810,29 @@ public final class OperacionesBaseDatos {
                 " WHERE " + Fichajes.ID_OPERARIO + " LIKE '" + idOperario + "' AND " + Fichajes.ID_CALENDARIO
                 + " LIKE '" + calendario + "' AND " + Fichajes.FECHA + " >= Date ('" + primerDiaMes + "') AND "
                 + Fichajes.FECHA + " <= Date ('" + ultimoDiaMes + "')";
-        // (Date(column_date) >= Date (2000-01-01) AND Date(column_date) <= Date (2050-01-01))
 
         Cursor c = db.rawQuery(sql, null);
         return c;
-
     }
 
+    /**
+     * Método encargado de obtener los datos necesarios para calcular la nómina en detalle.
+     *
+     * @param calendario   Id del calendario
+     * @param idOperario   Id del operario
+     * @param primerDiaMes Fecha del primer día del mes que se ha trabajado
+     * @param ultimoDiaMes Fecha del último día del mes que se ha trabajado
+     * @return Datos necesarios para calcular la nómina en detalle
+     */
     public Cursor obtenerDatosNominaDetalle(String calendario, String idOperario, String primerDiaMes, String ultimoDiaMes) {
-
         SQLiteDatabase db = baseDatos.getReadableDatabase();
-
         String sql = "SELECT " + Fichajes.HORA_EXTRA + ", " + Turnos.HORAS_TRABAJADAS + ", "
                 + Turnos.HORAS_TRABAJADAS_NOCTURNAS + ", " + Turnos.PRECIO_HORA + ", "
                 + Turnos.PRECIO_HORA_EXTRA + ", " + Turnos.PRECIO_HORA_NOCTURNAS + ", " + Turnos.NOMBRE +
-                ", " + Puestos.NOMBRE + ", " + Operarios.FECHA_INICIO +  ", " + Operarios.NUMERO_S_S +
-                ", " + Operarios.NOMBRE +  ", " + Operarios.APELLIDOS +  ", " + Operarios.DIRECCION +
-                ", " + Operarios.DNI +  ", " + Operarios.EMAIL +  ", " + Operarios.TELEFONO +
-                ", " + Operarios.FOTO +", " + Operarios.FECHA_NACIMIENTO +
+                ", " + Puestos.NOMBRE + ", " + Operarios.FECHA_INICIO + ", " + Operarios.NUMERO_S_S +
+                ", " + Operarios.NOMBRE + ", " + Operarios.APELLIDOS + ", " + Operarios.DIRECCION +
+                ", " + Operarios.DNI + ", " + Operarios.EMAIL + ", " + Operarios.TELEFONO +
+                ", " + Operarios.FOTO + ", " + Operarios.FECHA_NACIMIENTO +
                 " FROM " + Tablas.FICHAJE + " INNER JOIN " + Tablas.TURNO + " ON (" + Fichajes.ID_TURNO
                 + " = " + Turnos.ID + ") INNER JOIN " + Tablas.OPERARIO + " ON (" + Fichajes.ID_OPERARIO
                 + " = " + Operarios.ID + ") INNER JOIN " + Tablas.CALENDARIO + " ON (" + Fichajes.ID_CALENDARIO
@@ -711,22 +846,21 @@ public final class OperacionesBaseDatos {
         return c;
 
     }
+    // [FIN OPERACIONES_FICHAJE]
 
-
-    /*SELECT O.idOperario, F.id_turno, F.id_puesto, F.fecha, F.horaExtra,  T.nombreTurno, T.abreviaturaNombreTurno, T.colorFondo, T.colorTexto, C.idCalendario
-FROM fichaje F INNER JOIN turno T ON (F.id_turno = T.idTurno) INNER JOIN operario O ON (F.id_operario = O.idOperario) INNER JOIN calendario C ON (F.id_calendario = C.idCalendario)
-WHERE O.idOperario LIKE '8246' AND C.idCalendario like 'CA-a9854abd-eb2c-4f10-b124-245ab996d711'*/
-
-
-    // [OPERACIONES_FICHAJE]
-
+    /**
+     * Metodo que se encarga de abrir la BBDD en modo escritura.
+     *
+     * @return
+     */
     public SQLiteDatabase getDb() {
         return baseDatos.getWritableDatabase();
     }
 
+    /**
+     * Método que se encarga de cerrar la BBDD.
+     */
     public void close() {
         baseDatos.close();
     }
-
-
 }

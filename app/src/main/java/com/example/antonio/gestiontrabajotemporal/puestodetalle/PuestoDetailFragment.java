@@ -1,5 +1,4 @@
 package com.example.antonio.gestiontrabajotemporal.puestodetalle;
-//TODO los layout para los puestos,añadir descripccion ouesto base datos y modificar todo lo  que conlleve
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,18 +34,16 @@ public class PuestoDetailFragment extends Fragment {
     private static final String ARG_PUESTO_ID = "puestoId";
 
     OperacionesBaseDatos datos;
-
-    private Context context;
     EditText editTextNombrePuesto, editTextDescripcionPuesto;
+    private Context context;
     private String mPuestoId;
     private CollapsingToolbarLayout mCollapsingView;
-    private boolean nombrePuestoValidado=false, descripcionPuestoValidado = false;
+    private boolean nombrePuestoValidado = false, descripcionPuestoValidado = false;
 
     /**
      * Constructor por defecto.
      */
     public PuestoDetailFragment() {
-        // Required empty public constructor
     }
 
     public static PuestoDetailFragment newInstance(String puestoId) {
@@ -76,10 +73,12 @@ public class PuestoDetailFragment extends Fragment {
 
         mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout_puesto);
 
+        //Obtenemos las referencias de las vistas.
         editTextNombrePuesto = (EditText) root.findViewById(R.id.editText_nombre_puesto);//
-        editTextNombrePuesto.addTextChangedListener(new MyTextWatcher(editTextNombrePuesto));
-
         editTextDescripcionPuesto = (EditText) root.findViewById(R.id.editText_descripcion_puesto);
+
+        //Establecemos los Listener
+        editTextNombrePuesto.addTextChangedListener(new MyTextWatcher(editTextNombrePuesto));
         editTextDescripcionPuesto.addTextChangedListener(new MyTextWatcher(editTextDescripcionPuesto));
 
         // Obtenemos la instancia del adaptador de Base de Datos.
@@ -97,7 +96,6 @@ public class PuestoDetailFragment extends Fragment {
      */
     public void borrarPuesto() {
         new DeletePuestoTask().execute();
-        //Toast.makeText(getActivity(), "Puesto Borrado", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -105,108 +103,88 @@ public class PuestoDetailFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_save:
                 addEditPuesto();
-
-                //new AddEditPuestoTask().execute();
                 break;
             case R.id.action_delete:
                 new SimpleDialog().show(getFragmentManager(), "EliminarPuesto");
-
-                //new DeletePuestoTask().execute();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
+    /**
+     * Método que se encarga de añadir un Puesto a la BBDD validando los datos previamente.
+     */
     private void addEditPuesto() {
 
         nombrePuestoValidado = validarEditTextVacio(context, editTextNombrePuesto);
         descripcionPuestoValidado = validarEditTextVacio(context, editTextDescripcionPuesto);
-
-
+        //Comprobamos que todos los datos esten validados
         if (nombrePuestoValidado && descripcionPuestoValidado) {
-
-                String nombrePuesto = editTextNombrePuesto.getText().toString();
-                String descripcionPuesto = editTextDescripcionPuesto.getText().toString();
-
-                Puesto puestoInsertar = new Puesto(nombrePuesto, descripcionPuesto);
-
-                new AddEditPuestoTask().execute(puestoInsertar);
+            String nombrePuesto = editTextNombrePuesto.getText().toString();
+            String descripcionPuesto = editTextDescripcionPuesto.getText().toString();
+            //Creamos un puesto con todos los datos validados.
+            Puesto puestoInsertar = new Puesto(nombrePuesto, descripcionPuesto);
+            //Añadimos el puesto a la BBDD
+            new AddEditPuestoTask().execute(puestoInsertar);
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Acciones
     }
 
     /**
      * Método encargado de mostrar en pantalla los datos del Puesto seleccionado.
-Puesto     */
+     *
+     * @param puesto Puesto del cual queremos mostrar los datos en pantalla.
+     */
     private void showPuesto(Puesto puesto) {
-
         mCollapsingView.setTitle(puesto.getNombrePuesto());
-
         editTextNombrePuesto.setText(puesto.getNombrePuesto());
         editTextDescripcionPuesto.setText(puesto.getDescripcionPuesto());
     }
-
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha borrado o no el puesto de la BBDD.
+     *
+     * @param requery Si se ha borrado o no el puesto.
+     */
     private void showPuestoScreenFromDelete(boolean requery) {
         if (!requery) {
-            showDeleteError();
+            Toast.makeText(getActivity(), getString(R.string.error_eliminar_puesto), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Puesto eliminado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.puesto_eliminado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-//  datos.close();
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha creado o no el puesto en la BBDD.
+     *
+     * @param requery Si se ha creado o no el puesto.
+     */
     private void showPuestoScreenFromAdd(Boolean requery) {
         if (!requery) {
-            showAddError();
+            Toast.makeText(getActivity(), getString(R.string.error_crear_puesto), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Puesto creado correctamente", Toast.LENGTH_SHORT).show();
-            getActivity().setResult(Activity.RESULT_OK); // datos.close();
+            Toast.makeText(getActivity(), getString(R.string.puesto_creado_correctamente), Toast.LENGTH_SHORT).show();
+            getActivity().setResult(Activity.RESULT_OK);
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha editado o no el puesto en la BBDD.
+     *
+     * @param requery Si se ha editado o no el puesto.
+     */
     private void showPuestoScreenFromEdit(Boolean requery) {
         if (!requery) {
-            showEditError();
+            Toast.makeText(getActivity(), getString(R.string.error_editar_puesto), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Puesto editado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.puesto_editado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
             // datos.close();
             getActivity().finish();
         }
-    }
-
-    //Mostrar Errores
-    private void showLoadError() {
-        Toast.makeText(getActivity(),
-                "Error al cargar información", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showDeleteError() {
-        Toast.makeText(getActivity(),
-                "Error al eliminar el Puesto seleccionado", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showAddError() {
-        Toast.makeText(getActivity(),
-                "Error al crear el Puesto", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showEditError() {
-        Toast.makeText(getActivity(),
-                "Error al editar el Puesto seleccionado", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -237,10 +215,9 @@ Puesto     */
             if (cursor != null && cursor.moveToLast()) {
                 showPuesto(new Puesto(cursor));
             } else {
-                showLoadError();
+                Toast.makeText(getActivity(), getString(R.string.error_cargar_informacion), Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     /**
@@ -269,7 +246,11 @@ Puesto     */
      * Clase asíncrona encargada de crear o editar un puesto.
      */
     private class AddEditPuestoTask extends AsyncTask<Puesto, Void, Boolean> {
-
+        /**
+         * Insertamos o editamos el turno
+         * @param puestos
+         * @return
+         */
         @Override
         protected Boolean doInBackground(Puesto... puestos) {
             if (mPuestoId != null) {
@@ -291,7 +272,7 @@ Puesto     */
     }
 
     /**
-     *
+     * Clase privada encargada de validar los datos mientras se introducen.
      */
     private class MyTextWatcher implements TextWatcher {
 

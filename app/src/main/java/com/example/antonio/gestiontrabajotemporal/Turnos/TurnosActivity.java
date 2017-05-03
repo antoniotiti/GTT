@@ -1,11 +1,8 @@
 package com.example.antonio.gestiontrabajotemporal.turnos;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.example.antonio.gestiontrabajotemporal.R;
 
@@ -16,10 +13,8 @@ public class TurnosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_turnos);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
 
+        setToolbar(); //Añadir la Toolbar.
 
         TurnosFragment fragment = (TurnosFragment)
                 getSupportFragmentManager().findFragmentById(R.id.turnos_container);
@@ -31,25 +26,23 @@ public class TurnosActivity extends AppCompatActivity {
                     .add(R.id.turnos_container, fragment)
                     .commit();
         }
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_turnos);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
+
+    /**
+     * Método que se encarga de establecer la toolbar.
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+    }
+
     /**
      * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
-     *
-     * @return
      */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
-
 }

@@ -109,7 +109,7 @@ public class Registro extends Activity {
     }
 
     /**
-     * Clase privada encargada de validar los datos introducidos.
+     * Clase privada encargada de validar los datos mientras se introducen.
      */
     private class MyTextWatcher implements TextWatcher {
 

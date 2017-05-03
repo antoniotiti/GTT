@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.antonio.gestiontrabajotemporal.R;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 
-
 public class CalendariosCursorAdapter extends CursorAdapter {
 
     public CalendariosCursorAdapter(Context context, Cursor c) {

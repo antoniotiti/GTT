@@ -16,14 +16,9 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puesto_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_puesto_detalle);
+        setToolbar(); //Añadir la Toolbar.
 
         String puestoId = getIntent().getStringExtra(PuestosActivity.EXTRA_PUESTO_ID);
-
-        toolbar.setTitle(puestoId == null ? "Añadir Puesto" : "Editar Puesto");//TODO Cambia el titulo?
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
 
         PuestoDetailFragment fragment = (PuestoDetailFragment)
                 getSupportFragmentManager().findFragmentById(R.id.puesto_detail_container);
@@ -37,9 +32,16 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
     }
 
     /**
+     * Método que se encarga de establecer la toolbar.
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_puesto_detalle);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+    }
+
+    /**
      * Método encargado de crear el menú en la SupportActionBar.
-     * @param menu
-     * @return
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,8 +51,6 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
 
     /**
      * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
-     *
-     * @return
      */
     @Override
     public boolean onSupportNavigateUp() {
@@ -61,13 +61,11 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
     /**
      * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un puesto de la lista.
      * Borra el puesto seleccionado
-     * @param tag
-     * @param fecha
      */
     @Override
     public void onPossitiveButtonClick(String tag, String fecha) {
         PuestoDetailFragment fragment = (PuestoDetailFragment) getSupportFragmentManager().findFragmentById(R.id.puesto_detail_container);
-        if (fragment instanceof PuestoDetailFragment) {
+        if (fragment != null) {
             fragment.borrarPuesto();
         }
     }
@@ -75,12 +73,9 @@ public class PuestoDetalleActivity extends AppCompatActivity implements SimpleDi
     /**
      * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un puesto de la lista.
      * Muestra un mensaje.
-     * @param tag
-     * @param fecha
      */
     @Override
     public void onNegativeButtonClick(String tag, String fecha) {
         Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
     }
-
 }

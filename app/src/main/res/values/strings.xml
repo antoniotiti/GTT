@@ -178,6 +178,39 @@
     <string name="no_hay_turnos">No hay turnos</string>
     <string name="no_hay_puestos">No hay puestos</string>
     <string name="no_hay_calendarios">No hay calendarios</string>
+    <string name="turno_eliminado_correctamente">Turno eliminado correctamente</string>
+    <string name="turno_creado_correctamente">Turno creado correctamente</string>
+    <string name="turno_editado_correctamente">Turno editado correctamente</string>
+    <string name="error_cargar_informacion">Error al cargar información</string>
+    <string name="error_eliminar_turno">Error al eliminar el Turno seleccionado</string>
+    <string name="error_crear_turno">Error al crear el Turno</string>
+    <string name="error_editar_turno">Error al editar el Turno seleccionado</string>
+    <string name="puesto_eliminado_correctamente">Puesto eliminado correctamente</string>
+    <string name="error_eliminar_puesto">Error al eliminar el Puesto seleccionado</string>
+    <string name="puesto_creado_correctamente">Puesto creado correctamente</string>
+    <string name="error_crear_puesto">Error al crear el Puesto</string>
+    <string name="puesto_editado_correctamente">Puesto editado correctamente </string>
+    <string name="error_editar_puesto"> Error al editar el Puesto seleccionado</string>
+    <string name="seleccionar_puesto">Debe seleccionar un Puesto antes de realizar el Fichaje</string>
+    <string name="seleccionar_calendario">Debe seleccionar un Calendario antes de realizar el Fichaje</string>
+    <string name="no_hay_dias_trabajados">No hay días trabajados en el mes</string>
+    <string name="fichaje_eliminado">Fichaje eliminado:</string>
+    <string name="fichaje_modificado">Fichaje modificado:</string>
+    <string name="fichaje_no_eliminado">No se ha eliminado el fichaje:</string>
+    <string name="fichaje_no_modificado">No se ha modificado el fichaje:</string>
+    <string name="no_hay_fichajes">No hay fichajes</string>
+    <string name="fichaje_eliminado_correctamente">Fichaje eliminado correctamente</string>
+    <string name="error_eliminar_fichaje">Error al eliminar el Fichaje seleccionado</string>
+    <string name="error_crear_fichaje">Error al crear el Fichaje</string>
+    <string name="fichaje_creado_correctamente">Fichaje creado correctamente</string>
+    <string name="fichaje_editado_correctamente">Fichaje editado correctamente</string>
+    <string name="error_editar_fichaje">Error al editar el Fichaje seleccionado</string>
+    <string name="error_eliminar_calendario">Error al eliminar el Calendario seleccionado</string>
+    <string name="calendario_eliminado_correctamente">Calendario eliminado correctamente</string>
+    <string name="error_crear_calendario">Error al crear el Calendario</string>
+    <string name="calendario_creado_correctamente">Calendario creado correctamente</string>
+    <string name="error_editar_calendario">Error al editar el Calendario seleccionado</string>
+    <string name="calendario_editado_correctamente">Calendario editado correctamente</string>
 
 
 </resources>

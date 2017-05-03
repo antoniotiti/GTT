@@ -16,14 +16,9 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_calendario_detalle);
+        setToolbar(); //Añadir la Toolbar.
 
         String calendarioId = getIntent().getStringExtra(CalendariosActivity.EXTRA_CALENDARIO_ID);
-
-        toolbar.setTitle(calendarioId == null ? "Añadir Calendario" : "Editar Calendario");//TODO Cambia el titulo?
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
 
         CalendarioDetailFragment fragment = (CalendarioDetailFragment)
                 getSupportFragmentManager().findFragmentById(R.id.calendario_detail_container);
@@ -37,7 +32,17 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
     }
 
     /**
+     * Método que se encarga de establecer la toolbar.
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_calendario_detalle);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+    }
+
+    /**
      * Método encargado de crear el menú en la SupportActionBar.
+     *
      * @param menu
      * @return
      */
@@ -49,8 +54,6 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
 
     /**
      * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
-     *
-     * @return
      */
     @Override
     public boolean onSupportNavigateUp() {
@@ -61,13 +64,11 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
     /**
      * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un calendario de la lista.
      * Borra el calendario seleccionado
-     * @param tag
-     * @param fecha
      */
     @Override
     public void onPossitiveButtonClick(String tag, String fecha) {
         CalendarioDetailFragment fragment = (CalendarioDetailFragment) getSupportFragmentManager().findFragmentById(R.id.calendario_detail_container);
-        if (fragment instanceof CalendarioDetailFragment) {
+        if (fragment != null) {
             fragment.borrarCalendario();
         }
     }
@@ -75,12 +76,9 @@ public class CalendarioDetalleActivity extends AppCompatActivity implements Simp
     /**
      * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un calendario de la lista.
      * Muestra un mensaje.
-     * @param tag
-     * @param fecha
      */
     @Override
     public void onNegativeButtonClick(String tag, String fecha) {
-        Toast.makeText(this, "Cancelar", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.cancelar), Toast.LENGTH_LONG).show();
     }
-
 }

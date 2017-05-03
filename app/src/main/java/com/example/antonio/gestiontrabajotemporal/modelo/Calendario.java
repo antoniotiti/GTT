@@ -4,6 +4,9 @@ import android.database.Cursor;
 
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 
+/**
+ * Clase para la creación de objetos Calendarios
+ */
 public class Calendario {
 
     public String idCalendario;
@@ -13,15 +16,17 @@ public class Calendario {
     public Calendario(String idCalendario, String nombreCalendario, String descripcionCalendario) {
         this.idCalendario = idCalendario;
         this.nombreCalendario = nombreCalendario;
-        this.descripcionCalendario=descripcionCalendario;
+        this.descripcionCalendario = descripcionCalendario;
     }
-    public Calendario( String nombreCalendario, String descripcionCalendario) {
+
+    public Calendario(String nombreCalendario, String descripcionCalendario) {
         this.idCalendario = null;
         this.nombreCalendario = nombreCalendario;
-        this.descripcionCalendario=descripcionCalendario;
+        this.descripcionCalendario = descripcionCalendario;
     }
+
     public Calendario(Cursor cursor) {
-        this.idCalendario =cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Calendarios.ID));
+        this.idCalendario = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Calendarios.ID));
         this.nombreCalendario = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Calendarios.NOMBRE));
         this.descripcionCalendario = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Calendarios.DESCRIPCION));
     }

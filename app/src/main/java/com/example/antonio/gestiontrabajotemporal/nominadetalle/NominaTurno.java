@@ -1,10 +1,9 @@
 package com.example.antonio.gestiontrabajotemporal.nominadetalle;
 
 /**
- * Created by Antonio on 5/4/17.
+ * Clase para la creación de objetos NominaTurno
  */
-
-public class NominaTurno {
+class NominaTurno {
 
     private String nombreTurno;
     private Double horasTrabajadas;
@@ -17,12 +16,11 @@ public class NominaTurno {
     private Double totalEurosHorasTrabajadasNocturnas;
     private Double totalEurosHorasTrabajadasExtras;
 
-
     public NominaTurno() {
         super();
     }
 
-    public NominaTurno(String nombreTurno, Double horasTrabajadas, Double horasTrabajadasNocturnas, Double horasTrabajadasExtras, Double precioHoraTrabajada, Double precioHoraTrabajadaExtras, Double precioHoraTrabajadaNocturna, Double totalEurosHorasTrabajadas, Double totalEurosHorasTrabajadasNocturnas, Double totalEurosHorasTrabajadasExtras) {
+    NominaTurno(String nombreTurno, Double horasTrabajadas, Double horasTrabajadasNocturnas, Double horasTrabajadasExtras, Double precioHoraTrabajada, Double precioHoraTrabajadaExtras, Double precioHoraTrabajadaNocturna, Double totalEurosHorasTrabajadas, Double totalEurosHorasTrabajadasNocturnas, Double totalEurosHorasTrabajadasExtras) {
         this.nombreTurno = nombreTurno;
         this.horasTrabajadas = horasTrabajadas;
         this.horasTrabajadasNocturnas = horasTrabajadasNocturnas;
@@ -35,7 +33,7 @@ public class NominaTurno {
         this.totalEurosHorasTrabajadasExtras = totalEurosHorasTrabajadasExtras;
     }
 
-    public String getNombreTurno() {
+    String getNombreTurno() {
         return nombreTurno;
     }
 
@@ -43,7 +41,7 @@ public class NominaTurno {
         this.nombreTurno = nombreTurno;
     }
 
-    public Double getHorasTrabajadas() {
+    Double getHorasTrabajadas() {
         return horasTrabajadas;
     }
 
@@ -51,7 +49,7 @@ public class NominaTurno {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public Double getHorasTrabajadasNocturnas() {
+    Double getHorasTrabajadasNocturnas() {
         return horasTrabajadasNocturnas;
     }
 
@@ -59,7 +57,7 @@ public class NominaTurno {
         this.horasTrabajadasNocturnas = horasTrabajadasNocturnas;
     }
 
-    public Double getHorasTrabajadasExtras() {
+    Double getHorasTrabajadasExtras() {
         return horasTrabajadasExtras;
     }
 
@@ -67,7 +65,7 @@ public class NominaTurno {
         this.horasTrabajadasExtras = horasTrabajadasExtras;
     }
 
-    public Double getPrecioHoraTrabajada() {
+    Double getPrecioHoraTrabajada() {
         return precioHoraTrabajada;
     }
 
@@ -75,7 +73,7 @@ public class NominaTurno {
         this.precioHoraTrabajada = precioHoraTrabajada;
     }
 
-    public Double getPrecioHoraTrabajadaExtras() {
+    Double getPrecioHoraTrabajadaExtras() {
         return precioHoraTrabajadaExtras;
     }
 
@@ -83,7 +81,7 @@ public class NominaTurno {
         this.precioHoraTrabajadaExtras = precioHoraTrabajadaExtras;
     }
 
-    public Double getPrecioHoraTrabajadaNocturna() {
+    Double getPrecioHoraTrabajadaNocturna() {
         return precioHoraTrabajadaNocturna;
     }
 
@@ -91,7 +89,7 @@ public class NominaTurno {
         this.precioHoraTrabajadaNocturna = precioHoraTrabajadaNocturna;
     }
 
-    public Double getTotalEurosHorasTrabajadas() {
+    Double getTotalEurosHorasTrabajadas() {
         return totalEurosHorasTrabajadas;
     }
 
@@ -99,7 +97,7 @@ public class NominaTurno {
         this.totalEurosHorasTrabajadas = totalEurosHorasTrabajadas;
     }
 
-    public Double getTotalEurosHorasTrabajadasNocturnas() {
+    Double getTotalEurosHorasTrabajadasNocturnas() {
         return totalEurosHorasTrabajadasNocturnas;
     }
 
@@ -107,7 +105,7 @@ public class NominaTurno {
         this.totalEurosHorasTrabajadasNocturnas = totalEurosHorasTrabajadasNocturnas;
     }
 
-    public Double getTotalEurosHorasTrabajadasExtras() {
+    Double getTotalEurosHorasTrabajadasExtras() {
         return totalEurosHorasTrabajadasExtras;
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.antonio.gestiontrabajotemporal.ui.MainActivity;
+//TODO
 
 /**
  * Nuestro BroadcastReceiver se configurará para responder a una determinada acción del sistema,

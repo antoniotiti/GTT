@@ -32,7 +32,6 @@ public class TurnosFragment extends Fragment {
      * Constructor por defecto.
      */
     public TurnosFragment() {
-        // Required empty public constructor
     }
 
     public static TurnosFragment newInstance() {
@@ -44,10 +43,11 @@ public class TurnosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_turnos, container, false);
 
-        // Referencias UI
+        //Obtenemos las referencias de las vistas.
         ListView mTurnosList = (ListView) root.findViewById(R.id.turnos_list);
-        mTurnosAdapter = new TurnosCursorAdapter(getActivity(), null);
         FloatingActionButton mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_turnos);
+
+        mTurnosAdapter = new TurnosCursorAdapter(getActivity(), null);
 
         // Setup
         mTurnosList.setAdapter(mTurnosAdapter);
@@ -81,16 +81,6 @@ public class TurnosFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Activity.RESULT_OK == resultCode) {
             cargarTurnos();
-          /*  switch (requestCode) {
-                case REQUEST_ADD_TURNO:
-                    Toast.makeText(getActivity(),"Turno guardado correctamente", Toast.LENGTH_SHORT).show();
-                    cargarTurnos();
-                    break;
-                case REQUEST_UPDATE_DELETE_TURNO:
-                    Toast.makeText(getActivity(),"Turno eliminado correctamente", Toast.LENGTH_SHORT).show();
-                    cargarTurnos();
-                    break;
-            }*/
         }
     }
 
@@ -102,7 +92,7 @@ public class TurnosFragment extends Fragment {
     }
 
     /**
-     * Método encargado de mostrar la ventana de descripcionPuesto del Turno vacía para crear un Turno nuevo.
+     * Método encargado de mostrar la pantalla de descripcion del Turno vacía para crear un Turno nuevo.
      */
     private void showAddScreen() {
         Intent intent = new Intent(getActivity(), TurnoDetalleActivity.class);
@@ -110,14 +100,14 @@ public class TurnosFragment extends Fragment {
     }
 
     /**
-     * Método encargado de mostrar la ventana de descripcionPuesto del Turno, mostrando los datos del mismo
-     * obtenidos mediante el id del turno seleccionado de la lista, para editarlo.
+     * Método encargado de mostrar la pantalla de descripción del Turno, mostrando los datos del mismo
+     * obtenidos mediante el id del turno seleccionado de la lista.
      *
      * @param turnoId Turno seleccionado de la lista.
      */
     private void showDetailScreen(String turnoId) {
         Intent intent = new Intent(getActivity(), TurnoDetalleActivity.class);
-        intent.putExtra(TurnosActivity.EXTRA_TURNO_ID, turnoId);
+        intent.putExtra(TurnosActivity.EXTRA_TURNO_ID, turnoId); //Enviamos el id del turno para mostrar los detalles
         startActivityForResult(intent, REQUEST_UPDATE_DELETE_TURNO);
     }
 
@@ -136,10 +126,7 @@ public class TurnosFragment extends Fragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mTurnosAdapter.swapCursor(cursor);
             } else {
-                Toast.makeText(getActivity(),
-                        "No hay turnos", Toast.LENGTH_SHORT).show();
-                // cargarTurnos();//TODO no se si va, cuando no haya turnos recargar para no mostrar nada?
-                //getActivity().finish();
+                Toast.makeText(getActivity(), getString(R.string.no_hay_turnos), Toast.LENGTH_SHORT).show();
             }
         }
     }

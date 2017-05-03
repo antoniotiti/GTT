@@ -18,13 +18,13 @@ import java.util.Map;
 
 import hirondelle.date4j.DateTime;
 
-public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.FORMATO_FECHA_DATETIME;
 
-    OperacionesBaseDatos datos;
+class PantallaCalendarioAdapter extends CaldroidGridAdapter {
 
-    public PantallaCalendarioAdapter(Context context, int month, int year,
-                                     Map<String, Object> caldroidData,
-                                     Map<String, Object> extraData) {
+    PantallaCalendarioAdapter(Context context, int month, int year,
+                              Map<String, Object> caldroidData,
+                              Map<String, Object> extraData) {
         super(context, month, year, caldroidData, extraData);
     }
 
@@ -34,7 +34,7 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
         View cellView = convertView;
 
         // Obtenemos la instancia del adaptador de Base de Datos.
-        datos = OperacionesBaseDatos.obtenerInstancia(context);
+        OperacionesBaseDatos datos = OperacionesBaseDatos.obtenerInstancia(context);
 
         // Obtenemos el codigo de operario y el calendario de la Actividad
         String codigoOperario = (String) extraData.get("OPERARIO");
@@ -42,8 +42,9 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
 
         // Obtenemos la fecha de la celda
         DateTime dateTime = this.datetimeList.get(position);
+
         // Formatemamos la fecha
-        String fechaFormateada = dateTime.format("YYYY-MM-DD");
+        String fechaFormateada = dateTime.format(FORMATO_FECHA_DATETIME);
 
         // For reuse
         if (convertView == null) {
@@ -61,7 +62,7 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
         TextView txtHoraExtra = (TextView) cellView.findViewById(R.id.txt_hora_extra);
 
         // Establecemos el día correspondiente a cada celda
-        txtDia.setText("" + dateTime.getDay());
+        txtDia.setText(String.format("%d", dateTime.getDay()));
         txtDia.setTextColor(Color.BLACK);
         txtTurno.setText("");
         txtHoraExtra.setText("");
@@ -86,7 +87,6 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
         if (cursorFichajes.moveToFirst()) {
             // Recorremos el cursor hasta que no haya más registros
             do {
-
                 String horasExtras = Double.toString(cursorFichajes.getDouble(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Fichajes.HORA_EXTRA)));
                 String abreviaturnaNombreTurno = cursorFichajes.getString(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
                 int colorFondoTurno = cursorFichajes.getInt(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_FONDO));
@@ -112,6 +112,7 @@ public class PantallaCalendarioAdapter extends CaldroidGridAdapter {
                 }
             } while (cursorFichajes.moveToNext());
         }
+        cursorFichajes.close();
 
         // Set custom color if required
         setCustomResources(dateTime, cellView, txtDia);

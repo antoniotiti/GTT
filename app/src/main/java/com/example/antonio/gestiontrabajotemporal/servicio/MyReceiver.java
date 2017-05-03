@@ -12,6 +12,7 @@ import com.example.antonio.gestiontrabajotemporal.ui.MainActivity;
 import com.example.antonio.gestiontrabajotemporal.ui.Registro;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+//TODO
 
 /**
  * Nuestro BroadcastReceiver se configurará para responder a una determinada acción del sistema,

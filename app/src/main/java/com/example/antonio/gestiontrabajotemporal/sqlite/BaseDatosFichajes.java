@@ -7,51 +7,26 @@ import android.os.Build;
 import android.provider.BaseColumns;
 
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Calendarios;
+import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Fichajes;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Operarios;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Puestos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Turnos;
-import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Fichajes;
 
 /**
  * Clase que administra la conexión de la base de datos y su estructuración
  */
-public class BaseDatosFichajes extends SQLiteOpenHelper {
+class BaseDatosFichajes extends SQLiteOpenHelper {
 
-    private static final String NOMBRE_BASE_DATOS = "Fichajes.db";
+    private static final String NOMBRE_BASE_DATOS = "Fichajes.db"; //Nombre de la BBDD
 
-    private static final int VERSION_ACTUAL = 1;
+    private static final int VERSION_ACTUAL = 1; //Versión de la BBDD
 
     private final Context contexto;
 
-    interface Tablas {
-        String CALENDARIO = "CALENDARIO";
-        String PUESTO = "PUESTO";
-        String OPERARIO = "OPERARIO";
-        String TURNO = "TURNO";
-        String FICHAJE = "FICHAJE";
-    }
-
-    interface Referencias {
-
-        String ID_CALENDARIO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
-                Tablas.CALENDARIO, Calendarios.ID);
-
-        String ID_PUESTO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
-                Tablas.PUESTO, Puestos.ID);
-
-        String ID_OPERARIO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
-                Tablas.OPERARIO, Operarios.ID);
-
-        String ID_TURNO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
-                Tablas.TURNO, Turnos.ID);
-
-    }
-
-    public BaseDatosFichajes(Context contexto) {
+    BaseDatosFichajes(Context contexto) {
         super(contexto, NOMBRE_BASE_DATOS, null, VERSION_ACTUAL);
         this.contexto = contexto;
     }
-
 
     @Override
     public void onOpen(SQLiteDatabase db) {
@@ -130,5 +105,26 @@ public class BaseDatosFichajes extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    interface Tablas {
+        String CALENDARIO = "CALENDARIO";
+        String PUESTO = "PUESTO";
+        String OPERARIO = "OPERARIO";
+        String TURNO = "TURNO";
+        String FICHAJE = "FICHAJE";
+    }
 
+    interface Referencias {
+
+        String ID_CALENDARIO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
+                Tablas.CALENDARIO, Calendarios.ID);
+
+        String ID_PUESTO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
+                Tablas.PUESTO, Puestos.ID);
+
+        String ID_OPERARIO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
+                Tablas.OPERARIO, Operarios.ID);
+
+        String ID_TURNO = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
+                Tablas.TURNO, Turnos.ID);
+    }
 }

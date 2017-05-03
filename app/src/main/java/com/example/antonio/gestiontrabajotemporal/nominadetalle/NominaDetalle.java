@@ -23,13 +23,10 @@ public class NominaDetalle extends AppCompatActivity {
     OperacionesBaseDatos datos;
     String calendario, operario, primerDiaMes, ultimoDiaMes;
     double totalNeto, pref_RetencionIrpf, pref_RetencionHorasExtras,
-            pref_RetencionContingenciasComunes, pref_RetencionFormacionDesempleoAccd;;
+            pref_RetencionContingenciasComunes, pref_RetencionFormacionDesempleoAccd;
     int numeroDiasTrabajados;
 
     ArrayList<NominaTurno> nominaTurnos = new ArrayList<>();
-
-
-    private NominaCursorAdapter mNominaAdapter;
     TextView textViewNombreApellidoOperario, textViewFechaNacimientoOperario, textViewDireccionOperario, textViewDniOperario,
             textViewNSSOperario, textViewTelefonoOperario, textViewEmailOperario, textViewFechaAntiguedadOperario, textViewTotalNeto;
 
@@ -37,9 +34,8 @@ public class NominaDetalle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nomina_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+        setToolbar(); //Añadir la Toolbar.
+
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(this);
 
@@ -47,12 +43,11 @@ public class NominaDetalle extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         pref_RetencionIrpf = Double.parseDouble(sharedPref.getString("pref_retencion_irpf", "0"));
         pref_RetencionHorasExtras = Double.parseDouble(sharedPref.getString("pref_retencion_extras", "0"));
-        pref_RetencionContingenciasComunes = 4.7;//Double.parseDouble(sharedPref.getString("pref_retencion_contingencias_comunes", ""));pref_RetencionFormacionDesempleoAccd
-        pref_RetencionFormacionDesempleoAccd = 1.7;//Double.parseDouble(sharedPref.getString("pref_retencion_formacion_desempleo_accd", ""));
+        pref_RetencionContingenciasComunes = Double.parseDouble(sharedPref.getString("pref_retencion_contingencias_comunes", "4.7"));
+        pref_RetencionFormacionDesempleoAccd = Double.parseDouble(sharedPref.getString("pref_retencion_formacion_desempleo_accd", "1.7"));
 
         // Referencias UI
         ListView mTurnosList = (ListView) findViewById(R.id.listview_nomina);
-
         textViewNombreApellidoOperario = (TextView) findViewById(R.id.textView_nombre_apellido_operario);
         textViewFechaNacimientoOperario = (TextView) findViewById(R.id.textView_fecha_nacimiento_operario);
         textViewDniOperario = (TextView) findViewById(R.id.textView_dni_operario);
@@ -63,39 +58,30 @@ public class NominaDetalle extends AppCompatActivity {
         textViewFechaAntiguedadOperario = (TextView) findViewById(R.id.textView_fecha_antiguedad_operario);
         textViewTotalNeto = (TextView) findViewById(R.id.textView_total_neto_valor);
 
-        //Recibimos el código de usuario y password de la página de logeo.
+        //Recibimos datos desde la pantalla de calendario.
         Bundle bundle = getIntent().getExtras();
-
-        calendario = getIntent().getExtras().getString("calendario");
-        operario = getIntent().getExtras().getString("operario");
-        primerDiaMes = getIntent().getExtras().getString("primerDiaMes");
-        ultimoDiaMes = getIntent().getExtras().getString("ultimoDiaMes");
+        calendario = bundle.getString("calendario");
+        operario = bundle.getString("operario");
+        primerDiaMes = bundle.getString("primerDiaMes");
+        ultimoDiaMes = bundle.getString("ultimoDiaMes");
 
         calcularDetalleNomina();
-
-        mNominaAdapter = new NominaCursorAdapter(this, nominaTurnos);
-
-        /*LayoutInflater inflater = getLayoutInflater();
-
-        ViewGroup footer = (ViewGroup) inflater.inflate(R.layout.list_view_footer, mTurnosList, false);
-
-        //TextView totalNeto = (TextView) footer.findViewById(R.id.textView_total_neto_valor);
-
-        mTurnosList.addFooterView(footer, null, false);*/
+        //Creamos el adaptador para la lista.
+        NominaCursorAdapter mNominaAdapter = new NominaCursorAdapter(this, nominaTurnos);
         // Setup
-        mTurnosList.setAdapter(mNominaAdapter);
-
-
+        if (mTurnosList != null) {
+            mTurnosList.setAdapter(mNominaAdapter);
+        }
     }
 
+    /**
+     * Método que se encarga de calcular la nómina con detalles.
+     */
     private void calcularDetalleNomina() {
-        totalNeto=0;
-
+        totalNeto = 0;
         Cursor cursorDatosNomina = datos.obtenerDatosNominaDetalle(calendario, operario, primerDiaMes, ultimoDiaMes);
-
         if (cursorDatosNomina.moveToFirst()) {
-
-            numeroDiasTrabajados = cursorDatosNomina.getCount();
+            numeroDiasTrabajados = cursorDatosNomina.getCount();//Obtenemos el número de días trabajados
             ArrayList<String> arrayTurnos = new ArrayList<>();
             ArrayList<Double> arrayHorasTrabajadas = new ArrayList<>();
             ArrayList<Double> arrayHorasTrabajadasExtras = new ArrayList<>();
@@ -160,11 +146,13 @@ public class NominaDetalle extends AppCompatActivity {
                 double totalEurosHorasTrabajadasNocturnas = arrayHorasTrabajadasNocturnas.get(i) * arrayPrecioHorasTrabajadasNocturnas.get(i);
                 double totalEurosHorasTrabajadasExtras = arrayHorasTrabajadasExtras.get(i) * arrayPrecioHorasTrabajadasExtras.get(i);
 
+                //Calculamos las bases necesarias para la nómina
                 double baseIrpf = totalEurosHorasTrabajadas + totalEurosHorasTrabajadasNocturnas + totalEurosHorasTrabajadasExtras;//+indemnizacion
                 double baseHorasExtras = totalEurosHorasTrabajadasExtras;
                 double baseContingenciasComunes = totalEurosHorasTrabajadas + totalEurosHorasTrabajadasNocturnas;
                 double baseFormacionDesempleoAccd = totalEurosHorasTrabajadas + totalEurosHorasTrabajadasNocturnas + totalEurosHorasTrabajadasExtras;
 
+                //Calculamos las retenciones
                 double retencionIrpf = baseIrpf * pref_RetencionIrpf / 100;
                 double retencionHorasExtras = baseHorasExtras * pref_RetencionHorasExtras / 100;
                 double retencionContingenciasComunes = baseContingenciasComunes * pref_RetencionContingenciasComunes / 100;
@@ -186,22 +174,28 @@ public class NominaDetalle extends AppCompatActivity {
             textViewTelefonoOperario.setText(telefonoOperario);
             textViewEmailOperario.setText(emailOperario);
             textViewFechaAntiguedadOperario.setText(fechaInicioOperario);
-            textViewTotalNeto.setText(FORMATO_DECIMAL.format(totalNeto) + "€");
-
+            textViewTotalNeto.setText(String.format("%s€", FORMATO_DECIMAL.format(totalNeto)));
         } else {
-            Toast.makeText(getApplicationContext(), "No hay dias trabajados en el mes", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.no_hay_dias_trabajados), Toast.LENGTH_SHORT).show();
+            this.finish();
         }
     }
 
     /**
+     * Método que se encarga de establecer la toolbar.
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+    }
+
+    /**
      * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
-     *
-     * @return
      */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
-
 }

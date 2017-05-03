@@ -1,31 +1,22 @@
 package com.example.antonio.gestiontrabajotemporal.modelo;
 
+/**
+ * Clase para la creación de objetos Operarios
+ */
 public class Operario {
 
     public String idOperario;
-
     public String dni;
-
     public String nombre;
-
     public String apellidos;
-
     public String foto;
-
     public String direccion;
-
     public String fechaNacimiento;
-
     public String telefono;
-
     public String email;
-
     public String fechaInicio;
-
     public String numeroSS;
-
     public String password;
-
 
     public Operario(String idOperario, String dni, String nombre, String apellidos, String foto, String direccion, String fechaNacimiento, String telefono, String email, String fechaInicio, String numeroSS, String password) {
         this.idOperario = idOperario;

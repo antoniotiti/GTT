@@ -4,6 +4,9 @@ import android.database.Cursor;
 
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 
+/**
+ * Clase para la creación de objetos Puesto
+ */
 public class Puesto {
 
     public String idPuesto;
@@ -17,6 +20,7 @@ public class Puesto {
         this.nombrePuesto = nombrePuesto;
         this.descripcionPuesto = descripcionPuesto;
     }
+
     public Puesto(String nombrePuesto, String descripcionPuesto) {
         this.idPuesto = null;
         this.nombrePuesto = nombrePuesto;
@@ -24,7 +28,7 @@ public class Puesto {
     }
 
     public Puesto(Cursor cursor) {
-        this.idPuesto =cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Puestos.ID));
+        this.idPuesto = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Puestos.ID));
         this.nombrePuesto = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE));
         this.descripcionPuesto = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Puestos.DESCRIPCION));
     }

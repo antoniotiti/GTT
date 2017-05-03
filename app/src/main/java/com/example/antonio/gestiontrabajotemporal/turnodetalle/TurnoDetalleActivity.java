@@ -16,13 +16,9 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_turno_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno_detalle);
+        setToolbar(); //Añadir la Toolbar.
 
-        String turnoId = getIntent().getStringExtra(TurnosActivity.EXTRA_TURNO_ID);
-        toolbar.setTitle(turnoId == null ? "Añadir Turno" : "Editar Turno");//TODO Cambia el titulo?
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+        String turnoId = getIntent().getStringExtra(TurnosActivity.EXTRA_TURNO_ID);//Obtenemos el id del turno de la pantalla anterior
 
         TurnoDetailFragment fragment = (TurnoDetailFragment)
                 getSupportFragmentManager().findFragmentById(R.id.turno_detail_container);
@@ -36,9 +32,16 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     }
 
     /**
+     * Método que se encarga de establecer la toolbar.
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_turno_detalle);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+    }
+
+    /**
      * Método encargado de crear el menú en la SupportActionBar.
-     * @param menu
-     * @return
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,8 +51,6 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
 
     /**
      * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
-     *
-     * @return
      */
     @Override
     public boolean onSupportNavigateUp() {
@@ -60,13 +61,11 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     /**
      * Método encargado de recoger el evento al pulsar en "Ok" del SimpleDialog para borrar un turno de la lista.
      * Borra el turno seleccionado
-     * @param tag
-     * @param fecha
      */
     @Override
     public void onPossitiveButtonClick(String tag, String fecha) {
         TurnoDetailFragment fragment = (TurnoDetailFragment) getSupportFragmentManager().findFragmentById(R.id.turno_detail_container);
-        if (fragment instanceof TurnoDetailFragment) {
+        if (fragment != null) {
             fragment.borrarTurno();
         }
     }
@@ -74,12 +73,9 @@ public class TurnoDetalleActivity extends AppCompatActivity implements SimpleDia
     /**
      * Método encargado de recoger el evento al pulsar en "Cancelar" del SimpleDialog para borrar un turno de la lista.
      * Muestra un mensaje.
-     * @param tag
-     * @param fecha
      */
     @Override
     public void onNegativeButtonClick(String tag, String fecha) {
         Toast.makeText(this, getString(R.string.cancelar), Toast.LENGTH_LONG).show();
     }
-
 }

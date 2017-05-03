@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
 import com.example.antonio.gestiontrabajotemporal.calendariodetalle.CalendarioDetalleActivity;
-import com.example.antonio.gestiontrabajotemporal.calendarios.CalendariosActivity;
-import com.example.antonio.gestiontrabajotemporal.calendarios.CalendariosCursorAdapter;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 
@@ -34,7 +32,6 @@ public class CalendariosFragment extends Fragment {
      * Constructor por defecto.
      */
     public CalendariosFragment() {
-        // Required empty public constructor
     }
 
     public static CalendariosFragment newInstance() {
@@ -46,10 +43,11 @@ public class CalendariosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_calendarios, container, false);
 
-        // Referencias UI
+        //Obtenemos las referencias de las vistas.
         ListView mCalendariosList = (ListView) root.findViewById(R.id.calendarios_list);
-        mCalendariosAdapter = new CalendariosCursorAdapter(getActivity(), null);
         FloatingActionButton mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_calendario);
+
+        mCalendariosAdapter = new CalendariosCursorAdapter(getActivity(), null);
 
         // Setup
         mCalendariosList.setAdapter(mCalendariosAdapter);
@@ -83,16 +81,6 @@ public class CalendariosFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Activity.RESULT_OK == resultCode) {
             cargarCalendarios();
-            /*switch (requestCode) {
-                case AddEditLawyerActivity.REQUEST_ADD_CALENDARIO:
-                    Toast.makeText(getActivity(),"Calendario guardado correctamente", Toast.LENGTH_SHORT).show();
-                    cargarCalendarios();
-                    break;
-                case REQUEST_UPDATE_DELETE_CALENDARIO:
-                    Toast.makeText(getActivity(),"Calendario eliminado correctamente", Toast.LENGTH_SHORT).show();
-                    cargarCalendarios();
-                    break;
-            }*/
         }
     }
 
@@ -138,8 +126,7 @@ public class CalendariosFragment extends Fragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mCalendariosAdapter.swapCursor(cursor);
             } else {
-                Toast.makeText(getActivity(),
-                        "No hay calendarios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),getString(R.string.no_hay_calendarios), Toast.LENGTH_SHORT).show();
             }
         }
     }

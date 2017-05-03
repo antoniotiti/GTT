@@ -1,5 +1,4 @@
 package com.example.antonio.gestiontrabajotemporal.fichajedetalle;
-//TODO los layout para los calendarios,añadir descripccion ouesto base datos y modificar todo lo  que conlleve
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,7 +28,7 @@ import com.example.antonio.gestiontrabajotemporal.util.SimpleDialog;
  * Use the {@link FichajeDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FichajeDetailFragment extends Fragment implements View.OnClickListener{
+public class FichajeDetailFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_CALENDARIO_ID = "calendarioId";
     private static final String ARG_FECHA = "fecha";
@@ -38,19 +37,17 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
     OperacionesBaseDatos datos;
 
     EditText editTextCodigoOperarioFichajeDetalle, editTextNombreOperarioFichajeDetalle, editTextTurnoFichajeDetalle, editTextPuestoFichajeDetalle, editTextComentarioFichajeDetalle, editTextHorasExtrasFichajeDetalle;
+    TextView textViewPrevisualizacionTurnoFichajeDetalle;
     private String mCalendarioId;
     private String mFecha;
     private String mOperarioId;
     private String mTurnoId;
     private String mPuestoId;
-    private CollapsingToolbarLayout mCollapsingView;
-    TextView textViewPrevisualizacionTurnoFichajeDetalle;
 
     /**
      * Constructor por defecto.
      */
     public FichajeDetailFragment() {
-        // Required empty public constructor
     }
 
     public static FichajeDetailFragment newInstance(String calendarioId, String fecha, String operarioId) {
@@ -66,7 +63,6 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mCalendarioId = getArguments().getString(ARG_CALENDARIO_ID);
             mFecha = getArguments().getString(ARG_FECHA);
@@ -78,33 +74,26 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_fichaje_detail, container, false);
-
-        mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout_fichaje);
-
+        //Obtenemos las referencias de las vistas.
+        CollapsingToolbarLayout mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout_fichaje);
         editTextNombreOperarioFichajeDetalle = (EditText) root.findViewById(R.id.editText_NombreOperarioFichajeDetalle);
         editTextCodigoOperarioFichajeDetalle = (EditText) root.findViewById(R.id.editText_CodigoOperarioFichajeDetalle);
         editTextTurnoFichajeDetalle = (EditText) root.findViewById(R.id.editText_TurnoFichajeDetalle);
-        editTextTurnoFichajeDetalle.setOnClickListener(this);
         editTextPuestoFichajeDetalle = (EditText) root.findViewById(R.id.editText_PuestoFichajeDetalle);
-        editTextPuestoFichajeDetalle.setOnClickListener(this);
-
         editTextHorasExtrasFichajeDetalle = (EditText) root.findViewById(R.id.editText_HorasExtraFichajeDetalle);
         editTextComentarioFichajeDetalle = (EditText) root.findViewById(R.id.editText_ComentarioFichajeDetalle);
-
         textViewPrevisualizacionTurnoFichajeDetalle = (TextView) root.findViewById(R.id.textView_prev_turnoFichajeDetalle);
+
+        //Establecemos los Listener
+        editTextTurnoFichajeDetalle.setOnClickListener(this);
+        editTextPuestoFichajeDetalle.setOnClickListener(this);
         textViewPrevisualizacionTurnoFichajeDetalle.setOnClickListener(this);
 
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
 
-        new GetFichajeTask().execute();
-
-        // Carga de datos
-       /* if (mCalendarioId != null) {
-            new GetCalendarioByIdTask().execute();//Cargamos los datos del calendario seleccionado
-        }*/
+        new GetFichajeTask().execute();//Cargamos los fichajes
         return root;
     }
 
@@ -133,19 +122,11 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
      * Método encargado de lanzar la tarea en segundo plano para editar un fichaje.
      */
     public void editarFichaje() {
-
-        //TODO Crear un Fichaje con los datos editados. Debe coger los ID de turno y puesto
         Double mHoraExtra = Double.parseDouble(editTextHorasExtrasFichajeDetalle.getText().toString());
         String mComentario = editTextComentarioFichajeDetalle.getText().toString();
 
         Fichaje fichajeinsertar = new Fichaje(mOperarioId, mFecha, mTurnoId, mPuestoId, mCalendarioId, mHoraExtra, mComentario);
         new EditFichajeTask().execute(fichajeinsertar);
-    }
-
-    //TODO borrar
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Acciones
     }
 
     /**
@@ -154,7 +135,6 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
     private void showFichajeDetalle(Cursor fichaje) {
 
         if (fichaje.moveToFirst()) {
-
             String mNombreOperario = fichaje.getString(fichaje.getColumnIndex(NombresColumnasBaseDatos.Operarios.NOMBRE));
             mNombreOperario += " " + fichaje.getString(fichaje.getColumnIndex(NombresColumnasBaseDatos.Operarios.APELLIDOS));
             String mNombreTurno = fichaje.getString(fichaje.getColumnIndex(NombresColumnasBaseDatos.Turnos.NOMBRE));
@@ -170,137 +150,128 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
             textViewPrevisualizacionTurnoFichajeDetalle.setBackgroundColor(mColorFondoTurno);
             textViewPrevisualizacionTurnoFichajeDetalle.setTextColor(mColorTextoTurno);
             textViewPrevisualizacionTurnoFichajeDetalle.setText(mAbreviaturaTurno);
-
             editTextCodigoOperarioFichajeDetalle.setText(mOperarioId);
             editTextNombreOperarioFichajeDetalle.setText(mNombreOperario);
             editTextTurnoFichajeDetalle.setText(mNombreTurno);
             editTextPuestoFichajeDetalle.setText(mNombrePuesto);
             editTextHorasExtrasFichajeDetalle.setText(String.valueOf(mHoraExtra));
             editTextComentarioFichajeDetalle.setText(mComentario);
-
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha borrado o no el fichaje de la BBDD.
+     *
+     * @param requery Si se ha borrado o no el fichaje.
+     */
     private void showFichajeScreenFromDelete(boolean requery) {
         if (!requery) {
-            showDeleteError();
+            Toast.makeText(getActivity(), getString(R.string.error_eliminar_fichaje), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Fichaje eliminado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.fichaje_eliminado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-//  datos.close();
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha creado o no el fichaje en la BBDD.
+     *
+     * @param requery Si se ha creado o no el fichaje.
+     */
     private void showFichajeScreenFromAdd(Boolean requery) {
         if (!requery) {
-            showAddError();
+            Toast.makeText(getActivity(), getString(R.string.error_crear_fichaje), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Fichaje creado correctamente", Toast.LENGTH_SHORT).show();
-            getActivity().setResult(Activity.RESULT_OK); // datos.close();
+            Toast.makeText(getActivity(),getString(R.string.fichaje_creado_correctamente), Toast.LENGTH_SHORT).show();
+            getActivity().setResult(Activity.RESULT_OK);
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha editado o no el fichaje en la BBDD.
+     *
+     * @param requery Si se ha editado o no el fichaje.
+     */
     private void showFichajeScreenFromEdit(Boolean requery) {
         if (!requery) {
-            showEditError();
+
+            Toast.makeText(getActivity(),getString(R.string.error_editar_fichaje), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Fichaje editado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),getString(R.string.fichaje_editado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
             // datos.close();
             getActivity().finish();
         }
     }
 
-    //Mostrar Errores
-    private void showLoadError() {
-        Toast.makeText(getActivity(),
-                "Error al cargar información", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showDeleteError() {
-        Toast.makeText(getActivity(),
-                "Error al eliminar el Fichaje seleccionado", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showAddError() {
-        Toast.makeText(getActivity(),
-                "Error al crear el Fichaje", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showEditError() {
-        Toast.makeText(getActivity(),
-                "Error al editar el Fichaje seleccionado", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onClick(View v) {
-        switch (v.getId() /*to get clicked view id**/) {
+        switch (v.getId() /*Obtenemos el id de la vista clicada.*/) {
 
             case R.id.textView_prev_turnoFichajeDetalle:
                 new DialogoSeleccionTurno().show(getFragmentManager(), "SeleccionarTurno");
                 break;
             case R.id.editText_TurnoFichajeDetalle:
-                 new DialogoSeleccionTurno().show(getFragmentManager(), "SeleccionarTurno");
+                new DialogoSeleccionTurno().show(getFragmentManager(), "SeleccionarTurno");
                 break;
             case R.id.editText_PuestoFichajeDetalle:
-                //TODO seleccion de puestos
                 new DialogoSeleccionPuesto().show(getFragmentManager(), "SeleccionarPuesto");
                 break;
-
         }
     }
 
+    /**
+     * Método que se encarga de obtener los datos de un puesto dado su id por parámetro y establecer
+     * el nombre en la pantalla
+     *
+     * @param currentId Id del puesto
+     */
     public void obtenerSetearPuesto(String currentId) {
         String idPuesto = currentId;
         String nombrePuesto = "";
 
         Cursor cursorIdPuesto = datos.obtenerPuestoById(idPuesto);
-
         //Nos aseguramos de que existe al menos un registro
         if (cursorIdPuesto.moveToFirst()) {
-            //Recorremos el cursor hasta que no haya más registros
-            do {
-                nombrePuesto = cursorIdPuesto.getString(cursorIdPuesto.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE));
-                mPuestoId = cursorIdPuesto.getString(cursorIdPuesto.getColumnIndex(NombresColumnasBaseDatos.Puestos.ID));
-
-            } while (cursorIdPuesto.moveToNext());
+            nombrePuesto = cursorIdPuesto.getString(cursorIdPuesto.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE));
+            mPuestoId = cursorIdPuesto.getString(cursorIdPuesto.getColumnIndex(NombresColumnasBaseDatos.Puestos.ID));
         }
         editTextPuestoFichajeDetalle.setText(nombrePuesto);
     }
 
+    /**
+     * Método que se encarga de obtener los datos de un turno dado su id por parámetro y establecer
+     * los datos necesarios  en la pantalla
+     *
+     * @param currentId Id del turno
+     */
     public void obtenerSetearTurno(String currentId) {
-
         String idTurno = currentId;
         String nombreTurno = "";
 
         Cursor cursorIdTurno = datos.obtenerTurnoById(idTurno);
-
         //Nos aseguramos de que existe al menos un registro
         if (cursorIdTurno.moveToFirst()) {
-                nombreTurno = cursorIdTurno.getString(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.NOMBRE));
-                mTurnoId = cursorIdTurno.getString(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.ID));
-                int mColorFondoTurno = cursorIdTurno.getInt(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_FONDO));
-                int mColorTextoTurno = cursorIdTurno.getInt(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_TEXTO));
-                String mAbreviaturaTurno = cursorIdTurno.getString(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
+            nombreTurno = cursorIdTurno.getString(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.NOMBRE));
+            mTurnoId = cursorIdTurno.getString(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.ID));
+            int mColorFondoTurno = cursorIdTurno.getInt(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_FONDO));
+            int mColorTextoTurno = cursorIdTurno.getInt(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_TEXTO));
+            String mAbreviaturaTurno = cursorIdTurno.getString(cursorIdTurno.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
 
-                textViewPrevisualizacionTurnoFichajeDetalle.setBackgroundColor(mColorFondoTurno);
-                textViewPrevisualizacionTurnoFichajeDetalle.setTextColor(mColorTextoTurno);
-                textViewPrevisualizacionTurnoFichajeDetalle.setText(mAbreviaturaTurno);
+            textViewPrevisualizacionTurnoFichajeDetalle.setBackgroundColor(mColorFondoTurno);
+            textViewPrevisualizacionTurnoFichajeDetalle.setTextColor(mColorTextoTurno);
+            textViewPrevisualizacionTurnoFichajeDetalle.setText(mAbreviaturaTurno);
         }
         editTextTurnoFichajeDetalle.setText(nombreTurno);
     }
 
-
     /**
-     * Clase asíncrona encargada de obtener los datos del fichaje selecciondo y mostrarlos en pantalla,
+     * Clase asíncrona encargada de obtener los datos del fichaje seleccionado y mostrarlos en pantalla,
      * en caso de que no se obtengan los datos muetra un mensaje de error.
      */
     private class GetFichajeTask extends AsyncTask<Void, Void, Cursor> {
@@ -327,7 +298,7 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
             if (cursor != null && cursor.moveToLast()) {
                 showFichajeDetalle(cursor);
             } else {
-                showLoadError();
+                Toast.makeText(getActivity(),getString(R.string.error_cargar_informacion), Toast.LENGTH_SHORT).show();
             }
         }
 

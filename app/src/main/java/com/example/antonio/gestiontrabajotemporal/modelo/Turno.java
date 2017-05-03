@@ -1,10 +1,12 @@
 package com.example.antonio.gestiontrabajotemporal.modelo;
 
-
 import android.database.Cursor;
 
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 
+/**
+ * Clase para la creación de objetos Turno
+ */
 public class Turno {
 
     public String idTurno, nombreTurno, abreviaturaNombreTurno, horaInicio1, horaFin1, horaInicio2, horaFin2, horaAviso, modoTelefono;

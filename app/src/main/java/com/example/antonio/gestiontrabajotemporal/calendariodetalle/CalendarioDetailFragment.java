@@ -2,7 +2,6 @@ package com.example.antonio.gestiontrabajotemporal.calendariodetalle;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,11 +31,9 @@ import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEdi
 public class CalendarioDetailFragment extends Fragment {
 
     private static final String ARG_CALENDARIO_ID = "calendarioId";
-
     OperacionesBaseDatos datos;
-    private Context context;
-
     EditText editTextNombreCalendario, editTextDescripcionCalendario;
+    private Context context;
     private String mCalendarioId;
     private CollapsingToolbarLayout mCollapsingView;
     private boolean nombreCalendarioValidado = false, descripcionCalendarioValidado = false;
@@ -45,7 +42,6 @@ public class CalendarioDetailFragment extends Fragment {
      * Constructor por defecto.
      */
     public CalendarioDetailFragment() {
-        // Required empty public constructor
     }
 
     public static CalendarioDetailFragment newInstance(String calendarioId) {
@@ -75,10 +71,12 @@ public class CalendarioDetailFragment extends Fragment {
 
         mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout_calendario);
 
-        editTextNombreCalendario = (EditText) root.findViewById(R.id.editText_nombre_calendario);//
-        editTextNombreCalendario.addTextChangedListener(new MyTextWatcher(editTextNombreCalendario));
-
+        //Obtenemos las referencias de las vistas.
+        editTextNombreCalendario = (EditText) root.findViewById(R.id.editText_nombre_calendario);
         editTextDescripcionCalendario = (EditText) root.findViewById(R.id.editText_descripcion_calendario);
+
+        //Establecemos los Listener
+        editTextNombreCalendario.addTextChangedListener(new MyTextWatcher(editTextNombreCalendario));
         editTextDescripcionCalendario.addTextChangedListener(new MyTextWatcher(editTextDescripcionCalendario));
 
         // Obtenemos la instancia del adaptador de Base de Datos.
@@ -98,6 +96,12 @@ public class CalendarioDetailFragment extends Fragment {
         new DeleteCalendarioTask().execute();
     }
 
+
+    /**
+     * Ejecutamos una acción al seleccionar una opcion del menú.
+     *
+     * @param item Opcion del menu seleccionada
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -111,25 +115,20 @@ public class CalendarioDetailFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Método que se encarga de insertar o editar un calendario
+     */
     private void addEditCalendario() {
-
         nombreCalendarioValidado = validarEditTextVacio(context, editTextNombreCalendario);
         descripcionCalendarioValidado = validarEditTextVacio(context, editTextDescripcionCalendario);
 
         if (nombreCalendarioValidado && descripcionCalendarioValidado) {
-
             String nombreCalendario = editTextNombreCalendario.getText().toString();
             String descripcionCalendario = editTextDescripcionCalendario.getText().toString();
 
             Calendario calendarioInsertar = new Calendario(nombreCalendario, descripcionCalendario);
-
             new AddEditCalendarioTask().execute(calendarioInsertar);
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Acciones
     }
 
     /**
@@ -139,66 +138,56 @@ public class CalendarioDetailFragment extends Fragment {
     private void showCalendario(Calendario calendario) {
 
         mCollapsingView.setTitle(calendario.getNombreCalendario());
-
         editTextNombreCalendario.setText(calendario.getNombreCalendario());
         editTextDescripcionCalendario.setText(calendario.getDescripcionCalendario());
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha borrado o no el calendario de la BBDD.
+     *
+     * @param requery Si se ha borrado o no el calendario.
+     */
     private void showCalendarioScreenFromDelete(boolean requery) {
         if (!requery) {
-            showDeleteError();
+            Toast.makeText(getActivity(), getString(R.string.error_eliminar_calendario), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Calendario eliminado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.calendario_eliminado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha creado o no el calendario en la BBDD.
+     *
+     * @param requery Si se ha creado o no el calendario.
+     */
     private void showCalendarioScreenFromAdd(Boolean requery) {
         if (!requery) {
-            showAddError();
+            Toast.makeText(getActivity(), getString(R.string.error_crear_calendario), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Calendario creado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.calendario_creado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK); // datos.close();
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha editado o no el calendario en la BBDD.
+     *
+     * @param requery Si se ha editado o no el calendario.
+     */
     private void showCalendarioScreenFromEdit(Boolean requery) {
         if (!requery) {
-            showEditError();
+            Toast.makeText(getActivity(), getString(R.string.error_editar_calendario), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Calendario editado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.calendario_editado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
             getActivity().finish();
         }
-    }
-
-    //Mostrar Errores
-    private void showLoadError() {
-        Toast.makeText(getActivity(),
-                "Error al cargar información", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showDeleteError() {
-        Toast.makeText(getActivity(),
-                "Error al eliminar el Calendario seleccionado", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showAddError() {
-        Toast.makeText(getActivity(),
-                "Error al crear el Calendario", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showEditError() {
-        Toast.makeText(getActivity(),
-                "Error al editar el Calendario seleccionado", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -229,7 +218,7 @@ public class CalendarioDetailFragment extends Fragment {
             if (cursor != null && cursor.moveToLast()) {
                 showCalendario(new Calendario(cursor));
             } else {
-                showLoadError();
+                Toast.makeText(getActivity(), getString(R.string.error_cargar_informacion), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -281,7 +270,7 @@ public class CalendarioDetailFragment extends Fragment {
     }
 
     /**
-     *
+     * Clase privada encargada de validar los datos mientras se introducen.
      */
     private class MyTextWatcher implements TextWatcher {
 

@@ -231,8 +231,8 @@ public class MainActivity extends AppCompatActivity {
                 String idOperario1 = datos.insertarOperario(new Operario("8246", "74880029x", "Antonio", "Carrillo Cuenca", "foto", "Direccion", "16/07/1985", "629916157", "antoniotiti@hotmail.com", "1/10/2014", "numeross", "Password1"));
 
                 // Inserción Truno
-                String idTurno1 = datos.insertarTurno(new Turno(null, "Mañana CPD", "M_CPD", "07:10", "15:00", 0, "inicio2", "fin2", 0, 0, 8.90, 12.64, 11.60, 1, 1, "06:30", "ADVA00", -16776961, -16777216));
-                String idTurno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "14:10", "22:00", 0, "inicio2", "fin2", 0, 0, 8.90, 12.64, 11.60, 1, 1, "13:30", "ADVAAD", -16776961, -16777216));
+                String idTurno1 = datos.insertarTurno(new Turno(null, "Mañana CPD", "M_CPD", "07:10", "15:00", 0, "inicio2", "fin2", 7.83333349227905f, 0, 8.90, 12.64, 11.60, 1, 1, "06:30", "ADVA00", -16023485, -1));
+                String idTurno2 = datos.insertarTurno(new Turno(null, "Tarde CPD", "T_CPD", "14:10", "22:00", 0, "inicio2", "fin2", 7.83333349227905f, 0, 8.90, 12.64, 11.60, 1, 1, "13:30", "ADVAAD", -7461718, -16777216));
 
                 // Inserción Fichaje
                 datos.insertarFichaje(new Fichaje(idOperario1, "2017-02-01", idTurno1, idPuesto1, idCalendario1, 1.5, "comentario"));

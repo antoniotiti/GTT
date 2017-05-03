@@ -32,7 +32,6 @@ public class PuestosFragment extends Fragment {
      * Constructor por defecto.
      */
     public PuestosFragment() {
-        // Required empty public constructor
     }
 
     public static PuestosFragment newInstance() {
@@ -44,10 +43,11 @@ public class PuestosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_puestos, container, false);
 
-        // Referencias UI
+        //Obtenemos las referencias de las vistas.
         ListView mPuestosList = (ListView) root.findViewById(R.id.puestos_list);
-        mPuestosAdapter = new PuestosCursorAdapter(getActivity(), null);
         FloatingActionButton mAddButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_puesto);
+
+        mPuestosAdapter = new PuestosCursorAdapter(getActivity(), null);
 
         // Setup
         mPuestosList.setAdapter(mPuestosAdapter);
@@ -81,16 +81,6 @@ public class PuestosFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Activity.RESULT_OK == resultCode) {
             cargarPuestos();
-            /*switch (requestCode) {
-                case AddEditLawyerActivity.REQUEST_ADD_PUESTO:
-                    Toast.makeText(getActivity(),"Puesto guardado correctamente", Toast.LENGTH_SHORT).show();
-                    cargarPuestos();
-                    break;
-                case REQUEST_UPDATE_DELETE_PUESTO:
-                    Toast.makeText(getActivity(),"Puesto eliminado correctamente", Toast.LENGTH_SHORT).show();
-                    cargarPuestos();
-                    break;
-            }*/
         }
     }
 
@@ -136,8 +126,7 @@ public class PuestosFragment extends Fragment {
             if (cursor != null && cursor.getCount() > 0) {
                 mPuestosAdapter.swapCursor(cursor);
             } else {
-                Toast.makeText(getActivity(),
-                        "No hay puestos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.no_hay_puestos), Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.antonio.gestiontrabajotemporal.turnodetalle;
 
-
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -42,7 +41,9 @@ import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
 import java.util.Calendar;
 
-import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.*;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraDecimal;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHorasTrabajadas;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_hora_minutos;
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEditTextVacio;
 
 /**
@@ -84,12 +85,10 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     private CollapsingToolbarLayout mCollapsingView;
     private Context context;
 
-
     /**
      * Constructor por defecto.
      */
     public TurnoDetailFragment() {
-        // Required empty public constructor
     }
 
     public static TurnoDetailFragment newInstance(String turnoId) {
@@ -119,8 +118,8 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
         mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout_turno);
 
-        activeTime = Calendar.getInstance();
-        activeTime.set(0, 0, 0, 0, 0, 0);
+        activeTime = Calendar.getInstance(); //Obtenemos la hora actual
+        activeTime.set(0, 0, 0, 0, 0, 0); //Establecemos la hora a 0
 
 /////////////////////Inicio Diálogo selección de color///////////////
         //Colores para seleccionar.
@@ -151,104 +150,75 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         });
 /////////////////////Fin Diálogo selección de color///////////////
 
+        //Obtenemos las referencias de las vistas.
         textViewPrevisualizacionTurno = (TextView) root.findViewById(R.id.textView_prev_turno);
-
         editTextNombreTurno = (EditText) root.findViewById(R.id.editText_NombreTurno);//
-        editTextNombreTurno.addTextChangedListener(new MyTextWatcher(editTextNombreTurno));
-
         editTextAbreviaturaTurno = (EditText) root.findViewById(R.id.editText_AbreviaturaTurno);
-        editTextAbreviaturaTurno.addTextChangedListener(new MyTextWatcher(editTextAbreviaturaTurno));
-
         btnSeleccionColorFondo = (Button) root.findViewById(R.id.btn_SeleccionColorFondo);
-        btnSeleccionColorFondo.setOnClickListener(this);
-
         btnSeleccionColorTexto = (Button) root.findViewById(R.id.btn_SeleccionColorTexto);
-        btnSeleccionColorTexto.setOnClickListener(this);
-
         editTextHoraInicio1 = (EditText) root.findViewById(R.id.editText_valor_hora_inicio_1);
-        editTextHoraInicio1.setOnClickListener(this);
-        editTextHoraInicio1.addTextChangedListener(new MyTextWatcher(editTextHoraInicio1));
-
         editTextHoraFin1 = (EditText) root.findViewById(R.id.editText_valor_hora_fin_1);
-        editTextHoraFin1.setOnClickListener(this);
-        editTextHoraFin1.addTextChangedListener(new MyTextWatcher(editTextHoraFin1));
-
         editTextHoraInicio2 = (EditText) root.findViewById(R.id.editText_valor_hora_inicio_2);
-        editTextHoraInicio2.setOnClickListener(this);
-        editTextHoraInicio2.addTextChangedListener(new MyTextWatcher(editTextHoraInicio2));
-
         editTextHoraFin2 = (EditText) root.findViewById(R.id.editText_valor_hora_fin_2);
-        editTextHoraFin2.setOnClickListener(this);
-        editTextHoraFin2.addTextChangedListener(new MyTextWatcher(editTextHoraFin2));
-
         textViewHoraTrabajada = (TextView) root.findViewById((R.id.textView_valor_horas_trabajadas));
-
         editTextHoraTrabajadaNoche = (EditText) root.findViewById((R.id.editText_valor_horas_trabajadas_noche));
-        editTextHoraTrabajadaNoche.setOnClickListener(this);
-
         editTextPrecioHora = (EditText) root.findViewById((R.id.editTextValorPrecioHoras));
-        editTextPrecioHora.addTextChangedListener(new MyTextWatcher(editTextPrecioHora));
-
         editTextPrecioHoraNocturna = (EditText) root.findViewById((R.id.editTextValorPrecioNoche));
-        // editTextPrecioHoraNocturna.addTextChangedListener(new MyTextWatcher(editTextPrecioHoraNocturna));
-
         editTextPrecioHoraExtra = (EditText) root.findViewById((R.id.editTextValorPrecioExtra));
-        // editTextPrecioHoraExtra.addTextChangedListener(new MyTextWatcher(editTextPrecioHoraExtra));
-
         editTextAvisoHora = (EditText) root.findViewById(R.id.editText_valor_aviso_hora);
-        editTextAvisoHora.setOnClickListener(this);
-        editTextAvisoHora.addTextChangedListener(new MyTextWatcher(editTextAvisoHora));
-
         relativeLayoutHorioTurnoPartido = (RelativeLayout) root.findViewById(R.id.layout_turno_partido);//Layout para mostrar el turno partido
         relativeLayoutHorioTurnoPartido.setVisibility(View.GONE);//Por defecto está invisible y no ocupa espacio en el layout
-
         relativeLayoutAviso = (RelativeLayout) root.findViewById(R.id.layout_seleccion_hora_aviso);//Layout para mostrar el aviso
         relativeLayoutAviso.setVisibility(View.GONE);//Por defecto está invisible y no ocupa espacio en el layout
-
         linearLayoutModosTelefono = (LinearLayout) root.findViewById(R.id.layout_modos_telefono);//Layout para mostrar los modos del telefonoo
         linearLayoutModosTelefono.setVisibility(View.GONE);//Por defecto está invisible y no ocupa espacio en el layout
-
-//////////////////RadioGroup y RadioButton
         radioGroupWifiInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_wifi_inicio);
-
+        radioGroupWifiFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_wifi_fin);
+        radioGroupBluetoothInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_bluetooth_inicio);
+        radioGroupBluetoothFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_bluetooth_fin);
+        radioGroupSonidoInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_sonido_inicio);
+        radioGroupSonidoFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_sonido_fin);
         radioButtonWifiInicioActivar = (RadioButton) radioGroupWifiInicio.getChildAt(0);
         radioButtonWifiInicioDesactivar = (RadioButton) radioGroupWifiInicio.getChildAt(1);
         radioButtonWifiInicioNoCambiar = (RadioButton) radioGroupWifiInicio.getChildAt(2);
-
-        radioGroupWifiFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_wifi_fin);
-
         radioButtonWifiFinActivar = (RadioButton) radioGroupWifiFin.getChildAt(0);
         radioButtonWifiFinDesactivar = (RadioButton) radioGroupWifiFin.getChildAt(1);
         radioButtonWifiFinNoCambiar = (RadioButton) radioGroupWifiFin.getChildAt(2);
-
-        radioGroupBluetoothInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_bluetooth_inicio);
-
         radioButtonBluetoothInicioActivar = (RadioButton) radioGroupBluetoothInicio.getChildAt(0);
         radioButtonBluetoothInicioDesactivar = (RadioButton) radioGroupBluetoothInicio.getChildAt(1);
         radioButtonBluetoothInicioNoCambiar = (RadioButton) radioGroupBluetoothInicio.getChildAt(2);
-
-        radioGroupBluetoothFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_bluetooth_fin);
-
         radioButtonBluetoothFiniActivar = (RadioButton) radioGroupBluetoothFin.getChildAt(0);
         radioButtonBluetoothFinDesactivar = (RadioButton) radioGroupBluetoothFin.getChildAt(1);
         radioButtonBluetoothFinNoCambiar = (RadioButton) radioGroupBluetoothFin.getChildAt(2);
-
-        radioGroupSonidoInicio = (RadioGroup) root.findViewById(R.id.radioGroup_modo_sonido_inicio);
-
         radioButtonSonidoInicio = (RadioButton) radioGroupSonidoInicio.getChildAt(0);
         radioButtonVibracionInicio = (RadioButton) radioGroupSonidoInicio.getChildAt(1);
         radioButtonSilencioInicio = (RadioButton) radioGroupSonidoInicio.getChildAt(2);
         radioButtonSonidoInicioNoCambiar = (RadioButton) radioGroupSonidoInicio.getChildAt(3);
-
-        radioGroupSonidoFin = (RadioGroup) root.findViewById(R.id.radioGroup_modo_sonido_fin);
-
         radioButtonSonidoFin = (RadioButton) radioGroupSonidoFin.getChildAt(0);
         radioButtonVibracionFin = (RadioButton) radioGroupSonidoFin.getChildAt(1);
         radioButtonSilencioFin = (RadioButton) radioGroupSonidoFin.getChildAt(2);
         radioButtonSonidoFinNoCambiar = (RadioButton) radioGroupSonidoFin.getChildAt(3);
-//////////////////RadioGroup y RadioButton
-
         switchTurnoPartido = (Switch) root.findViewById(R.id.switch_turno_partido);
+        switchAviso = (Switch) root.findViewById(R.id.switch_avisos);
+        switchAvisoDiaAntes = (Switch) root.findViewById(R.id.switch_aviso_dia_antes);
+        switchModosTelefono = (Switch) root.findViewById(R.id.switch_modo_telefono);
+
+        //Establecemos los Listener
+        editTextNombreTurno.addTextChangedListener(new MyTextWatcher(editTextNombreTurno));
+        editTextAbreviaturaTurno.addTextChangedListener(new MyTextWatcher(editTextAbreviaturaTurno));
+        editTextHoraInicio1.setOnClickListener(this);
+        editTextHoraInicio1.addTextChangedListener(new MyTextWatcher(editTextHoraInicio1));
+        editTextHoraFin1.setOnClickListener(this);
+        editTextHoraFin1.addTextChangedListener(new MyTextWatcher(editTextHoraFin1));
+        editTextHoraInicio2.setOnClickListener(this);
+        editTextHoraInicio2.addTextChangedListener(new MyTextWatcher(editTextHoraInicio2));
+        editTextHoraFin2.setOnClickListener(this);
+        editTextHoraFin2.addTextChangedListener(new MyTextWatcher(editTextHoraFin2));
+        editTextHoraTrabajadaNoche.setOnClickListener(this);
+        editTextPrecioHora.addTextChangedListener(new MyTextWatcher(editTextPrecioHora));
+        editTextAvisoHora.setOnClickListener(this);
+        editTextAvisoHora.addTextChangedListener(new MyTextWatcher(editTextAvisoHora));
+
         switchTurnoPartido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -261,13 +231,11 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                     editTextHoraInicio2.setError(null);
                     editTextHoraFin2.setText("");
                     editTextHoraFin2.setError(null);
-                    textViewHoraTrabajada.setText(calcularHorasTrabajadas(editTextHoraInicio1, editTextHoraFin1, editTextHoraInicio2, editTextHoraFin2, isChecked));
-                    //editTextHoraTrabajadaNoche.setText(calcularHorasNocturnas(editTextHoraInicio1,editTextHoraFin1,editTextHoraInicio2,editTextHoraFin2,isChecked));
+                    textViewHoraTrabajada.setText(calcularHorasTrabajadas(editTextHoraInicio1, editTextHoraFin1, editTextHoraInicio2, editTextHoraFin2, false));
                 }
             }
         });
 
-        switchAviso = (Switch) root.findViewById(R.id.switch_avisos);
         switchAviso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -280,20 +248,15 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                     editTextAvisoHora.setError(null);
                     switchAvisoDiaAntes.setChecked(false);
                 }
-                //relativeLayoutAviso.setVisibility(isChecked ? View.VISIBLE : View.GONE);
             }
         });
 
-        switchAvisoDiaAntes = (Switch) root.findViewById(R.id.switch_aviso_dia_antes);
         switchAvisoDiaAntes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ///////TODO
-
             }
         });
 
-        switchModosTelefono = (Switch) root.findViewById(R.id.switch_modo_telefono);
         switchModosTelefono.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -311,6 +274,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                 }
             }
         });
+
+        btnSeleccionColorFondo.setOnClickListener(this);
+        btnSeleccionColorTexto.setOnClickListener(this);
 
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(getActivity());
@@ -330,9 +296,8 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     private void showTimeDialog(EditText timeDisplay) {
         activeTimeDisplay = timeDisplay;
 
-        DialogFragment newFragment = new TimeDialog(); // creating DialogFragment which creates DatePickerDialog
-        newFragment.setTargetFragment(TurnoDetailFragment.this, 0);  // Passing this fragment DatePickerFragment.
-        // As i figured out this is the best way to keep the reference to calling activity when using FRAGMENT.
+        DialogFragment newFragment = new TimeDialog();
+        newFragment.setTargetFragment(TurnoDetailFragment.this, 0);
         newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
     }
 
@@ -343,17 +308,15 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         updateDisplay(activeTimeDisplay, activeTime);
     }
 
-
     private void updateDisplay(EditText dateDisplay, Calendar time) {
         String hora = formatter_hora_minutos.format(time.getTime());
         dateDisplay.setText(hora);
-
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId() /*to get clicked view id**/) {
+        switch (v.getId() /*Obtenemos el id de la vista clicada.*/) {
             case R.id.btn_SeleccionColorFondo:
                 colorPickerDialog.show(getActivity().getFragmentManager(), "colorFondo");
                 break;
@@ -388,81 +351,29 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
      */
     public void borrarTurno() {
         new DeleteTurnoTask().execute();
-        //Toast.makeText(getActivity(), "Turno Borrado", Toast.LENGTH_LONG).show();
     }
 
-
-    /*private boolean validarFormulario() {
-        boolean validado = false;
-        nombreTurnoValidado = validarEditTextVacio(editTextNombreTurno);
-        abreviaturaTurnoValidado = validarEditTextVacio(editTextAbreviaturaTurno);
-        horaInicio1Validado = validarEditTextVacio(editTextHoraInicio1);
-        horaFin1Validado = validarEditTextVacio(editTextHoraFin1);
-        if (switchTurnoPartido.isChecked()) {
-            horaInicio2Validado = validarEditTextVacio(editTextHoraInicio2);
-            horaFin2Validado = validarEditTextVacio(editTextHoraFin2);
-        }
-        precioHoraValidado = validarEditTextVacio(editTextPrecioHora);
-        if (switchAviso.isChecked()) {
-            avisoHoraValidado = validarEditTextVacio(editTextAvisoHora);
-        }
-
-        if (nombreTurnoValidado && abreviaturaTurnoValidado && horaInicio1Validado && horaFin1Validado && precioHoraValidado && horaInicio2Validado && horaFin2Validado && avisoHoraValidado) {
-            try {
-                String nombreTurno = editTextNombreTurno.getText().toString();
-                String abreviaturaTurno = editTextAbreviaturaTurno.getText().toString();
-                String horaInicio1 = editTextHoraInicio1.getText().toString();
-                String horaFin1 = editTextHoraFin1.getText().toString();
-                int turnoPartido = switchTurnoPartido.isChecked() ? 1 : 0; //0(falso) o 1(verdadero)
-                String horaInicio2 = editTextHoraInicio2.getText().toString();
-                String horaFin2 = editTextHoraFin2.getText().toString();
-                float horasTrabajadas = calcularHoraDecimal(textViewHoraTrabajada.getText().toString());
-                float horasTrabajadasNoche = calcularHoraDecimal(editTextHoraTrabajadaNoche.getText().toString());
-                double precioHora = Double.parseDouble(editTextPrecioHora.getText().toString());
-                double precioHoraNocturna = Double.parseDouble(editTextPrecioHoraNocturna.getText().toString());
-                double precioHoraExtra = Double.parseDouble(editTextPrecioHoraExtra.getText().toString());
-                int aviso = switchAviso.isChecked() ? 1 : 0; //0(falso) o 1(verdadero)
-                int avisoDiaAntes = switchAvisoDiaAntes.isChecked() ? 1 : 0; //0(falso) o 1(verdadero)
-                String horaAviso = editTextAvisoHora.getText().toString();
-                String modotelefono = "prueba";
-                int colorFondo = ((ColorDrawable) btnSeleccionColorFondo.getBackground()).getColor();
-                int colorTexto = ((ColorDrawable) btnSeleccionColorTexto.getBackground()).getColor();
-
-                Turno turnoInsertar = new Turno(nombreTurno, abreviaturaTurno, horaInicio1, horaFin1, turnoPartido, horaInicio2, horaFin2, horasTrabajadas, horasTrabajadasNoche, precioHora, precioHoraNocturna, precioHoraExtra, aviso, avisoDiaAntes, horaAviso, modotelefono, colorFondo, colorTexto);
-                String turnoInsertado = datos.insertarTurno(turnoInsertar);
-                if (turnoInsertado != null) {
-                    Toast.makeText(getActivity(), "Turno Creado", Toast.LENGTH_LONG).show();
-                    //datos.close();
-                    getActivity().setResult(turnoInsertado != null ? Activity.RESULT_OK : Activity.RESULT_CANCELED);
-                    getActivity().finish();
-                } else {
-                    Toast.makeText(getActivity(), "Turno " + nombreTurno + " repetido", Toast.LENGTH_LONG).show();
-                }
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-        return validado;
-    }*/
-
-
+    /**
+     * Ejecutamos una acción al seleccionar una opcion del menú.
+     *
+     * @param item Opcion del menu seleccionada
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
                 addEditTurno();
-
-                //new AddEditTurnoTask().execute();
                 break;
             case R.id.action_delete:
                 new SimpleDialog().show(getFragmentManager(), "EliminarTurno");
-
-                //new DeleteTurnoTask().execute();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Método que se encarga de añadir un Turno a la BBDD validando los datos previamente.
+     */
     private void addEditTurno() {
 
         nombreTurnoValidado = validarEditTextVacio(context, editTextNombreTurno);
@@ -474,12 +385,10 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             horaFin2Validado = validarEditTextVacio(context, editTextHoraFin2);
         }
         precioHoraValidado = validarEditTextVacio(context, editTextPrecioHora);
-
         if (switchAviso.isChecked()) {
             avisoHoraValidado = validarEditTextVacio(context, editTextAvisoHora);
         }
-
-
+        //Comprobamos que todos los datos esten validados
         if (nombreTurnoValidado && abreviaturaTurnoValidado && horaInicio1Validado && horaFin1Validado && precioHoraValidado && horaInicio2Validado && horaFin2Validado && avisoHoraValidado) {
             try {
                 String nombreTurno = editTextNombreTurno.getText().toString();
@@ -505,9 +414,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                 } else {
                     modosTelefono = "";
                 }
-
+                //Creamos un turno con todos los datos validados.
                 Turno turnoInsertar = new Turno(nombreTurno, abreviaturaTurno, horaInicio1, horaFin1, turnoPartido, horaInicio2, horaFin2, horasTrabajadas, horasTrabajadasNoche, precioHora, precioHoraNocturna, precioHoraExtra, aviso, avisoDiaAntes, horaAviso, modosTelefono, colorFondo, colorTexto);
-
+                //Añadimos el turno a la BBDD
                 new AddEditTurnoTask().execute(turnoInsertar);
 
             } catch (NumberFormatException e) {
@@ -522,7 +431,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
      * @return String con los modos del teléfono
      */
     private String obtenerModosTelefono() {
-        String modoTelefono= "";
+        String modoTelefono = "";
 
         int radioButtonIdWifiInicio = radioGroupWifiInicio.getCheckedRadioButtonId();
         switch (radioButtonIdWifiInicio) {
@@ -607,19 +516,12 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                 modoTelefono += getString(R.string.modo_no_cambiar);
                 break;
         }
-
-
         return modoTelefono;
     }
 
-    //TODO Borrar en todos los detalles
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Acciones
-    }
 
     /**
-     * Método encargado de mostrar en pantalla los datos del Turno seleccionado.
+     * Método que se encarga de mostrar en pantalla los datos del Turno seleccionado.
      *
      * @param turno Turno del cual queremos mostrar los datos en pantalla.
      */
@@ -651,20 +553,22 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             editTextAvisoHora.setText(turno.getHoraAviso());
             switchAvisoDiaAntes.setChecked(turno.getAvisoDiaAntes() == 1);
         }
-        //TODO modo telefono
         if (turno.getModoTelefono().equals("")) {
             switchModosTelefono.setChecked(false);
-        }else {
+        } else {
             switchModosTelefono.setChecked(true);
             activarModosTelefono(turno);
         }
-
     }
 
+    /**
+     * Método que se encarga de establecer los modos del teléfono en la pantalla de detalle.
+     *
+     * @param turno Turno del cual se quiere visualizar los modos del teléfono
+     */
     private void activarModosTelefono(Turno turno) {
 
         String modoWifiInicio = turno.getModoTelefono().substring(0, 1);
-
         if (modoWifiInicio.equals(getString(R.string.modo_activar))) {
             radioButtonWifiInicioActivar.setChecked(true);
         } else if (modoWifiInicio.equals(getString(R.string.modo_desactivar))) {
@@ -674,7 +578,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         }
 
         String modoWifiFin = turno.getModoTelefono().substring(1, 2);
-
         if (modoWifiFin.equals(getString(R.string.modo_activar))) {
             radioButtonWifiFinActivar.setChecked(true);
         } else if (modoWifiFin.equals(getString(R.string.modo_desactivar))) {
@@ -684,7 +587,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         }
 
         String modoSonidoInicio = turno.getModoTelefono().substring(2, 3);
-
         if (modoSonidoInicio.equals(getString(R.string.modo_activar))) {
             radioButtonSonidoInicio.setChecked(true);
         } else if (modoSonidoInicio.equals(getString(R.string.silencio_modo))) {
@@ -696,7 +598,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         }
 
         String modoSonidoFin = turno.getModoTelefono().substring(3, 4);
-
         if (modoSonidoFin.equals(getString(R.string.modo_activar))) {
             radioButtonSonidoFin.setChecked(true);
         } else if (modoSonidoFin.equals(getString(R.string.silencio_modo))) {
@@ -708,7 +609,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         }
 
         String modoBluetoothInicio = turno.getModoTelefono().substring(4, 5);
-
         if (modoBluetoothInicio.equals(getString(R.string.modo_activar))) {
             radioButtonBluetoothInicioActivar.setChecked(true);
         } else if (modoBluetoothInicio.equals(getString(R.string.modo_desactivar))) {
@@ -718,7 +618,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         }
 
         String modoBluetoothFin = turno.getModoTelefono().substring(5);
-
         if (modoBluetoothFin.equals(getString(R.string.modo_activar))) {
             radioButtonBluetoothFiniActivar.setChecked(true);
         } else if (modoBluetoothFin.equals(getString(R.string.modo_desactivar))) {
@@ -728,64 +627,52 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha borrado o no el turno de la BBDD.
+     *
+     * @param requery Si se ha borrado o no el turno.
+     */
     private void showTurnoScreenFromDelete(boolean requery) {
         if (!requery) {
-            showDeleteError();
+            Toast.makeText(getActivity(), getString(R.string.error_eliminar_turno), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Turno eliminado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.turno_eliminado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-            //  datos.close();
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha creado o no el turno en la BBDD.
+     *
+     * @param requery Si se ha creado o no el turno.
+     */
     private void showTurnoScreenFromAdd(Boolean requery) {
         if (!requery) {
-            showAddError();
+            Toast.makeText(getActivity(), getString(R.string.error_crear_turno), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Turno creado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.turno_creado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-            // datos.close();
             getActivity().finish();
         }
     }
 
+    /**
+     * Método que se encarga de mostrar un mensaje, dependiendo si se ha editado o no el turno en la BBDD.
+     *
+     * @param requery Si se ha editado o no el turno.
+     */
     private void showTurnoScreenFromEdit(Boolean requery) {
         if (!requery) {
-            showEditError();
+            Toast.makeText(getActivity(), getString(R.string.error_editar_turno), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_CANCELED);
         } else {
-            Toast.makeText(getActivity(),
-                    "Turno editado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.turno_editado_correctamente), Toast.LENGTH_SHORT).show();
             getActivity().setResult(Activity.RESULT_OK);
-            // datos.close();
             getActivity().finish();
         }
-    }
-
-    //Mostrar Errores
-    private void showLoadError() {
-        Toast.makeText(getActivity(),
-                "Error al cargar información", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showDeleteError() {
-        Toast.makeText(getActivity(),
-                "Error al eliminar el Turno seleccionado", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showAddError() {
-        Toast.makeText(getActivity(),
-                "Error al crear el Turno", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showEditError() {
-        Toast.makeText(getActivity(),
-                "Error al editar el Turno seleccionado", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -801,7 +688,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
          */
         @Override
         protected Cursor doInBackground(Void... voids) {
-
             return datos.obtenerTurnoById(mTurnoId);
         }
 
@@ -816,10 +702,9 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             if (cursor != null && cursor.moveToLast()) {
                 showTurno(new Turno(cursor));
             } else {
-                showLoadError();
+                Toast.makeText(getActivity(), getString(R.string.error_cargar_informacion), Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     /**
@@ -841,14 +726,17 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         protected void onPostExecute(Integer integer) {
             showTurnoScreenFromDelete(integer > 0);
         }
-
     }
 
     /**
      * Clase asíncrona encargada de crear o editar un turno.
      */
     private class AddEditTurnoTask extends AsyncTask<Turno, Void, Boolean> {
-
+        /**
+         * Insertamos o editamos el turno
+         * @param turnos
+         * @return
+         */
         @Override
         protected Boolean doInBackground(Turno... turnos) {
             if (mTurnoId != null) {
@@ -870,7 +758,7 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     }
 
     /**
-     *
+     * Clase privada encargada de validar los datos mientras se introducen.
      */
     private class MyTextWatcher implements TextWatcher {
 
@@ -924,6 +812,4 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
             }
         }
     }
-
-
 }

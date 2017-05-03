@@ -11,10 +11,9 @@ import android.widget.TextView;
 import com.example.antonio.gestiontrabajotemporal.R;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
 
+class TurnosCursorAdapter extends CursorAdapter {
 
-public class TurnosCursorAdapter extends CursorAdapter {
-
-    public TurnosCursorAdapter(Context context, Cursor c) {
+    TurnosCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
     }
 
