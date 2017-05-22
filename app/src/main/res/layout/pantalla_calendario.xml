@@ -72,7 +72,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/calendar1"
+                android:id="@+id/layout_calendario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
@@ -155,7 +155,6 @@
                     android:layout_alignBaseline="@+id/textView_nomina"
                     android:layout_toEndOf="@+id/textView_nomina"
                     android:labelFor="@+id/textView_nomina_valor"
-                    android:maxLength="7"
                     android:paddingEnd="0dp"
                     android:paddingStart="@dimen/color_swatch_margins_small"
                     android:text="@string/valor_precio_hora"

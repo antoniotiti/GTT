@@ -383,6 +383,7 @@
                     android:paddingEnd="@dimen/color_swatch_margins_small"
                     android:paddingStart="@dimen/color_swatch_margins_small"
                     android:text="@string/horas_trabajadas_normal"
+                    android:textSize="14sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
@@ -395,7 +396,8 @@
                     android:inputType="numberDecimal"
                     android:labelFor="@+id/editTextValorPrecioHoras"
                     android:maxLength="6"
-                    android:text="@string/valor_precio_hora" />
+                    android:text="@string/valor_precio_hora"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textPrecioHoras€"
@@ -406,6 +408,7 @@
                     android:paddingEnd="@dimen/color_swatch_margins_small"
                     android:paddingStart="0dp"
                     android:text="@string/€"
+                    android:textSize="13sp"
                     android:textStyle="normal|bold" />
 
 
@@ -418,6 +421,7 @@
                     android:paddingEnd="@dimen/color_swatch_margins_small"
                     android:paddingStart="@dimen/color_swatch_margins_small"
                     android:text="@string/horas_trabajadas_nocturnas"
+                    android:textSize="14sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
@@ -430,7 +434,8 @@
                     android:inputType="numberDecimal"
                     android:labelFor="@+id/editTextValorPrecioNoche"
                     android:maxLength="6"
-                    android:text="@string/valor_precio_hora" />
+                    android:text="@string/valor_precio_hora"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textPrecioNoche€"
@@ -441,6 +446,7 @@
                     android:paddingEnd="@dimen/color_swatch_margins_small"
                     android:paddingStart="0dp"
                     android:text="@string/€"
+                    android:textSize="13sp"
                     android:textStyle="normal|bold" />
 
                 <TextView
@@ -452,6 +458,7 @@
                     android:paddingEnd="@dimen/color_swatch_margins_small"
                     android:paddingStart="@dimen/color_swatch_margins_small"
                     android:text="@string/horas_trabajadas_extras"
+                    android:textSize="14sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
@@ -464,7 +471,8 @@
                     android:inputType="numberDecimal"
                     android:labelFor="@+id/editTextValorPrecioExtra"
                     android:maxLength="6"
-                    android:text="@string/valor_precio_hora" />
+                    android:text="@string/valor_precio_hora"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textPrecioExtra€"
@@ -475,6 +483,7 @@
                     android:paddingEnd="@dimen/color_swatch_margins_small"
                     android:paddingStart="0dp"
                     android:text="@string/€"
+                    android:textSize="13sp"
                     android:textStyle="normal|bold" />
 
 

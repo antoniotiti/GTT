@@ -45,38 +45,61 @@
         </activity>
         <activity
             android:name=".turnos.TurnosActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_turnos"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".turnodetalle.TurnoDetalleActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_turno_detalle"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".puestos.PuestosActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_puestos"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".puestodetalle.PuestoDetalleActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_puesto_detalle"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".calendarios.CalendariosActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_calendarios"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".calendariodetalle.CalendarioDetalleActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_calendario_detalle"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".fichajedetalle.FichajeDetalleActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_fichaje_detalle"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.RecuperarPassword"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/title_activity_recuperar_password"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".nominadetalle.NominaDetalle"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/title_activity_nomina_detalle"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".operariodetalle.OperarioDetalleActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/title_activity_operario_detalle"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.Info"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/title_activity_info"
+            android:theme="@style/AppTheme"/>
 
-        <service android:name=".servicio.ServicioGTT">
+        <!--<service android:name=".servicio.ServicioGTT">
             <intent-filter>
                 <action android:name="com.example.antonio.gestiontrabajotemporal.util.MyService" />
             </intent-filter>
@@ -85,15 +108,11 @@
         <receiver android:name=".servicio.MyBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".servicio.MyReceiver" />
-
-        <activity
-            android:name=".nominadetalle.NominaDetalle"
-            android:label="@string/title_activity_nomina_detalle"
-            android:theme="@style/AppTheme" />
+        <receiver android:name=".servicio.MyReceiver" />-->
     </application>
 
 </manifest>

@@ -12,12 +12,13 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDato
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Puestos;
 import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos.Turnos;
 
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.NOMBRE_BASE_DATOS;
+
 /**
  * Clase que administra la conexión de la base de datos y su estructuración
  */
 class BaseDatosFichajes extends SQLiteOpenHelper {
 
-    private static final String NOMBRE_BASE_DATOS = "Fichajes.db"; //Nombre de la BBDD
 
     private static final int VERSION_ACTUAL = 1; //Versión de la BBDD
 

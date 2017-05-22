@@ -2,6 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.antonio.gestiontrabajotemporal.pantallacalendario.PantallaCalendarioActivity">
+
+    <item
+        android:id="@+id/ver_operario"
+        android:orderInCategory="100"
+        android:title="@string/operario"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/crear_turno"
         android:orderInCategory="100"
@@ -24,6 +31,12 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_info"
+        android:orderInCategory="100"
+        android:title="@string/info"
         app:showAsAction="never" />
 
 </menu>

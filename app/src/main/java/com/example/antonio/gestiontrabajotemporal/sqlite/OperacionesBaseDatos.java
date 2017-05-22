@@ -389,13 +389,11 @@ public final class OperacionesBaseDatos {
      * @param idOperario Id del operario a borrar
      * @return Devuelve true si se ha borrado correctamente el operario. False si no se ha borrado.
      */
-    public boolean eliminarOperario(String idOperario) {
+    public int eliminarOperario(String idOperario) {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
         String whereClause = String.format("%s=?", Operarios.ID);
         String[] whereArgs = {idOperario};
-
-        int resultado = db.delete(Tablas.OPERARIO, whereClause, whereArgs);
-        return resultado > 0;
+        return db.delete(Tablas.OPERARIO, whereClause, whereArgs);
     }
 
     /**

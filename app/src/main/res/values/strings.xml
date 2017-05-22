@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">GTT</string>
     <string name="app_name_large">Gestión Trabajo Temporal</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_version">1.0</string>
+    <string name="autor">Autor: Antonio Carrilo Cuenca programacionantonio@gmail.com</string>
+    <string name="action_settings">Preferencias</string>
     <string name="dni_usuario">DNI Usuario</string>
     <string name="password">Contraseña</string>
     <string name="repetir_password">Repetir contraseña</string>
@@ -144,10 +146,14 @@
     <string name="cero">0</string>
     <string name="total_neto">Total Neto:</string>
     <string name="nomina_neta">Nómina Neto:</string>
-    <string name="pref_irpf">IRPF (02-45%):</string>
-    <string name="pref_default_irpf">2</string>
+    <string name="pref_default_retencion_irpf">2</string>
     <string name="pref_default_retencion_extra">4.7</string>
+    <string name="pref_default_retencion_contingencias_comunes">4.7</string>
+    <string name="pref_default_retencion_formacion_desempleo_accd">1.7</string>
+    <string name="pref_retencion_irpf">Retencion IRPF (02-45%):</string>
     <string name="pref_retencion_extras">Retencion Horas Extras:</string>
+    <string name="pref_retencion_contingencias_comunes">Retención Contingencias Comunes:</string>
+    <string name="pref_retencion_formacion_desempleo_accd">Retención Formacion/Desempleo:</string>
     <string name="pref_operario_activo">Operario Activo:</string>
     <string name="modo_activar">A</string>
     <string name="modo_desactivar">D</string>
@@ -163,7 +169,7 @@
     <string name="telefono_no_valido">El teléfono introducido no es válido</string>
     <string name="email_no_valido">Email no válido</string>
     <string name="letra_dni_no_valido">La letra del NIE o NIF no es válida</string>
-    <string name="dni_no_valido">El NIE o NIF no es válido</string>
+    <string name="dni_no_valido">El NIE o NIF no es válido. Formato 12345678x</string>
     <string name="password_erroneo">Contraseña erronea</string>
     <string name="operario_no_registrado">Operario no registrado</string>
     <string name="password_caracteres_erroneos">La contraseña debe tener mínimo 8 caracteres, incluir mayúsculas y minúsculas, al menos un número y no debe contener espacios en blanco</string>
@@ -185,6 +191,10 @@
     <string name="error_eliminar_turno">Error al eliminar el Turno seleccionado</string>
     <string name="error_crear_turno">Error al crear el Turno</string>
     <string name="error_editar_turno">Error al editar el Turno seleccionado</string>
+    <string name="operario_eliminado_correctamente">Operario eliminado correctamente</string>
+    <string name="operario_editado_correctamente">Operario editado correctamente</string>
+    <string name="error_eliminar_operario">Error al eliminar el operario seleccionado</string>
+    <string name="error_editar_operario">Error al editar el operario seleccionado</string>
     <string name="puesto_eliminado_correctamente">Puesto eliminado correctamente</string>
     <string name="error_eliminar_puesto">Error al eliminar el Puesto seleccionado</string>
     <string name="puesto_creado_correctamente">Puesto creado correctamente</string>
@@ -211,6 +221,35 @@
     <string name="calendario_creado_correctamente">Calendario creado correctamente</string>
     <string name="error_editar_calendario">Error al editar el Calendario seleccionado</string>
     <string name="calendario_editado_correctamente">Calendario editado correctamente</string>
+    <string name="password_reg_exp">^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$</string>
+    <string name="title_activity_info">Info</string>
+    <string name="version">Versión:</string>
+    <string name="derechos_reservados">\u00A9 All rights reserved.</string>
+    <string name="info">Información de GTT</string>
+    <string name="acerca_de">App creada para el Proyecto Final del CFGS de Desarrollo de Aplicaciones Multiplataformas.</string>
+    <string name="pref_default_dia_comienzo_semana">MONDAY</string>
+    <string name="pref_hablitar_flechas">Hablitar flechas cambio de mes</string>
+    <string name="pref_hablitar_cambio_mes_sin_flechas">Habilitar cambiar de mes sin flechas</string>
+    <string name="pref_hablitar_6_semanas">Mostrar siempre 6 semanas</string>
+    <string name="mensaje_crear_calendario">No hay Calendario creado, ¿quiere crear un Calendario?</string>
+    <string name="mensaje_crear_puesto">No hay Puesto creado, ¿quiere crear un Puesto?</string>
+    <string name="mensaje_crear_turno">No hay Turno creado, ¿quiere crear un Turno?</string>
+    <string name="mensaje_seleccionar_calendario">Debe seleccionar un Calendario</string>
+    <string name="mensaje_seleccionar_puesto">Debe seleccionar un Puesto</string>
+    <string name="pref_habilitar_modo_asistido">Habilitar modo asistido</string>
+    <string name="mensaje_modo_asistido">¿Quiere continuar con el modo asistido?</string>
+    <string name="seleccione_dia_turno">Seleccione un dia del calendario y elija un Turno.</string>
+    <string name="titulo_editar_operario">Editar operario</string>
+    <string name="nombre_operario">Nombre del Operario:</string>
+    <string name="apellido_operario">Apellidos del operario</string>
+    <string name="operario">Operario</string>
+    <string name="title_activity_operario_detalle">Operario Detalle</string>
+    <string name="fecha_inicio">Fecha de inicio</string>
+    <string name="foto_operario">Foto del Operario</string>
+    <string name="mensaje_eliminar_operario">¿Está seguro que desea borrar el operario? Se borrarán todos las datos introducidos.</string>
+    <string name="selecciona_imagen">No seleccionaste una imagen</string>
+    <string name="error_permisos">No has dado los permisos necesarios</string>
+    <string name="pref_header_nomina">Datos Nómina</string>
 
 
 </resources>

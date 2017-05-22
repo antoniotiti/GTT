@@ -1,5 +1,9 @@
 package com.example.antonio.gestiontrabajotemporal.modelo;
 
+import android.database.Cursor;
+
+import com.example.antonio.gestiontrabajotemporal.sqlite.NombresColumnasBaseDatos;
+
 /**
  * Clase para la creación de objetos Operarios
  */
@@ -48,6 +52,20 @@ public class Operario {
         this.password = password;
     }
 
+    public Operario(Cursor cursor) {
+        this.idOperario = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.ID));
+        this.dni = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.DNI));
+        this.nombre = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.NOMBRE));
+        this.apellidos = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.APELLIDOS));
+        this.foto = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.FOTO));
+        this.direccion = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.DIRECCION));
+        this.fechaNacimiento = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.FECHA_NACIMIENTO));
+        this.telefono = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.TELEFONO));
+        this.email = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.EMAIL));
+        this.fechaInicio = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.FECHA_INICIO));
+        this.numeroSS = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.NUMERO_S_S));
+        this.password = cursor.getString(cursor.getColumnIndex(NombresColumnasBaseDatos.Operarios.PASSWORD));
+    }
     public String getIdOperario() {
         return idOperario;
     }

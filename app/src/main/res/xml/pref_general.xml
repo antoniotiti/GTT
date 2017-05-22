@@ -1,10 +1,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:key="pref_operario_activo"
         android:enabled="false"
+        android:key="pref_operario_activo"
         android:title="@string/pref_operario_activo" />
 
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pref_switch_habilitar_modo_asistido"
+        android:title="@string/pref_habilitar_modo_asistido" />
+
     <ListPreference
+        android:defaultValue="@string/pref_default_dia_comienzo_semana"
         android:entries="@array/pref_dia_comienzo_semana_titles"
         android:entryValues="@array/pref_dia_comienzo_semana_values"
         android:key="pref_dia_comienzo_semana"
@@ -14,25 +20,20 @@
     <SwitchPreference
         android:defaultValue="false"
         android:key="pref_switch_modo_tema_oscuro"
-        android:title="@string/pref_titulo_modo_tema_oscuro" />
+        android:title="@string/pref_habilitar_modo_tema_oscuro" />
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_irpf"
-        android:inputType="numberDecimal"
-        android:key="pref_retencion_irpf"
-        android:maxLines="1"
-        android:maxLength="5"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_irpf" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pref_switch_hablitar_flechas"
+        android:title="@string/pref_hablitar_flechas" />
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_retencion_extra"
-        android:inputType="numberDecimal"
-        android:key="pref_retencion_extras"
-        android:maxLines="1"
-        android:maxLength="5"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_retencion_extras" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pref_switch_hablitar_cambio_mes_sin_flechas"
+        android:title="@string/pref_hablitar_cambio_mes_sin_flechas" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pref_switch_hablitar_6_semanas"
+        android:title="@string/pref_hablitar_6_semanas" />
 </PreferenceScreen>

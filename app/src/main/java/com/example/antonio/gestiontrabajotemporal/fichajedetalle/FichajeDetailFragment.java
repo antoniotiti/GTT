@@ -1,18 +1,21 @@
 package com.example.antonio.gestiontrabajotemporal.fichajedetalle;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.antonio.gestiontrabajotemporal.R;
@@ -22,13 +25,20 @@ import com.example.antonio.gestiontrabajotemporal.sqlite.OperacionesBaseDatos;
 import com.example.antonio.gestiontrabajotemporal.util.DialogoSeleccionPuesto;
 import com.example.antonio.gestiontrabajotemporal.util.DialogoSeleccionTurno;
 import com.example.antonio.gestiontrabajotemporal.util.SimpleDialog;
+import com.example.antonio.gestiontrabajotemporal.util.TimeDialog;
+
+import java.util.Calendar;
+
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraDecimal;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraFormateada;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_hora_minutos;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FichajeDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FichajeDetailFragment extends Fragment implements View.OnClickListener {
+public class FichajeDetailFragment extends Fragment implements View.OnClickListener , TimePickerDialog.OnTimeSetListener {
 
     private static final String ARG_CALENDARIO_ID = "calendarioId";
     private static final String ARG_FECHA = "fecha";
@@ -36,13 +46,15 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
 
     OperacionesBaseDatos datos;
 
-    EditText editTextCodigoOperarioFichajeDetalle, editTextNombreOperarioFichajeDetalle, editTextTurnoFichajeDetalle, editTextPuestoFichajeDetalle, editTextComentarioFichajeDetalle, editTextHorasExtrasFichajeDetalle;
+    EditText editTextCodigoOperarioFichajeDetalle, editTextNombreOperarioFichajeDetalle, editTextTurnoFichajeDetalle,
+            editTextPuestoFichajeDetalle, editTextComentarioFichajeDetalle, editTextHorasExtrasFichajeDetalle,activeTimeDisplay;
     TextView textViewPrevisualizacionTurnoFichajeDetalle;
     private String mCalendarioId;
     private String mFecha;
     private String mOperarioId;
     private String mTurnoId;
     private String mPuestoId;
+    Calendar activeTime;
 
     /**
      * Constructor por defecto.
@@ -63,6 +75,8 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activeTime = Calendar.getInstance(); //Obtenemos la hora actual
+        activeTime.set(0, 0, 0, 0, 0, 0); //Establecemos la hora a 0
         if (getArguments() != null) {
             mCalendarioId = getArguments().getString(ARG_CALENDARIO_ID);
             mFecha = getArguments().getString(ARG_FECHA);
@@ -76,7 +90,6 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_fichaje_detail, container, false);
         //Obtenemos las referencias de las vistas.
-        CollapsingToolbarLayout mCollapsingView = (CollapsingToolbarLayout) getActivity().findViewById(R.id.toolbar_layout_fichaje);
         editTextNombreOperarioFichajeDetalle = (EditText) root.findViewById(R.id.editText_NombreOperarioFichajeDetalle);
         editTextCodigoOperarioFichajeDetalle = (EditText) root.findViewById(R.id.editText_CodigoOperarioFichajeDetalle);
         editTextTurnoFichajeDetalle = (EditText) root.findViewById(R.id.editText_TurnoFichajeDetalle);
@@ -88,6 +101,7 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
         //Establecemos los Listener
         editTextTurnoFichajeDetalle.setOnClickListener(this);
         editTextPuestoFichajeDetalle.setOnClickListener(this);
+        editTextHorasExtrasFichajeDetalle.setOnClickListener(this);
         textViewPrevisualizacionTurnoFichajeDetalle.setOnClickListener(this);
 
         // Obtenemos la instancia del adaptador de Base de Datos.
@@ -122,7 +136,7 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
      * Método encargado de lanzar la tarea en segundo plano para editar un fichaje.
      */
     public void editarFichaje() {
-        Double mHoraExtra = Double.parseDouble(editTextHorasExtrasFichajeDetalle.getText().toString());
+        Double mHoraExtra = (double)calcularHoraDecimal(editTextHorasExtrasFichajeDetalle.getText().toString());
         String mComentario = editTextComentarioFichajeDetalle.getText().toString();
 
         Fichaje fichajeinsertar = new Fichaje(mOperarioId, mFecha, mTurnoId, mPuestoId, mCalendarioId, mHoraExtra, mComentario);
@@ -145,7 +159,7 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
             String mNombrePuesto = fichaje.getString(fichaje.getColumnIndex(NombresColumnasBaseDatos.Puestos.NOMBRE));
             mPuestoId = fichaje.getString(fichaje.getColumnIndex(NombresColumnasBaseDatos.Puestos.ID));
             String mComentario = fichaje.getString(fichaje.getColumnIndex(NombresColumnasBaseDatos.Fichajes.COMENTARIO));
-            Double mHoraExtra = fichaje.getDouble(fichaje.getColumnIndex(NombresColumnasBaseDatos.Fichajes.HORA_EXTRA));
+            String mHoraExtra = calcularHoraFormateada(fichaje.getFloat(fichaje.getColumnIndex(NombresColumnasBaseDatos.Fichajes.HORA_EXTRA)));
 
             textViewPrevisualizacionTurnoFichajeDetalle.setBackgroundColor(mColorFondoTurno);
             textViewPrevisualizacionTurnoFichajeDetalle.setTextColor(mColorTextoTurno);
@@ -219,10 +233,48 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
             case R.id.editText_TurnoFichajeDetalle:
                 new DialogoSeleccionTurno().show(getFragmentManager(), "SeleccionarTurno");
                 break;
+            case R.id.editText_HorasExtraFichajeDetalle:
+                showTimeDialog(editTextHorasExtrasFichajeDetalle);
+                break;
             case R.id.editText_PuestoFichajeDetalle:
                 new DialogoSeleccionPuesto().show(getFragmentManager(), "SeleccionarPuesto");
                 break;
         }
+    }
+
+    /**
+     * Método encargado de mostrar un TimeDialog
+     *
+     * @param timeDisplay EditText sobre el que se lanza el TimeDialog
+     */
+    private void showTimeDialog(EditText timeDisplay) {
+        activeTimeDisplay = timeDisplay;
+        FragmentManager fm = getFragmentManager();
+
+        DialogFragment newFragment = new TimeDialog();
+        newFragment.setTargetFragment(FichajeDetailFragment.this, 0);
+        newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+
+        fm.executePendingTransactions();
+        newFragment.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {//Al pulsar en el botón cancelar se borra la hora
+                String hora = "00:00";
+                activeTimeDisplay.setText(hora);
+            }
+        });
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        activeTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        activeTime.set(Calendar.MINUTE, minute);
+        updateDisplay(activeTimeDisplay, activeTime);
+    }
+
+    private void updateDisplay(EditText dateDisplay, Calendar time) {
+        String hora = formatter_hora_minutos.format(time.getTime());
+        dateDisplay.setText(hora);
     }
 
     /**
@@ -278,7 +330,6 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
         /**
          * Obtenemos los datos del fichaje seleccionado
          *
-         * @param voids
          * @return Cursor con los datos del fichaje seleccionado.
          */
         @Override
@@ -311,7 +362,6 @@ public class FichajeDetailFragment extends Fragment implements View.OnClickListe
         /**
          * Eliminamos el fichaje seleccionado
          *
-         * @param voids
          * @return Si se ha eliminado el fichaje
          */
         @Override

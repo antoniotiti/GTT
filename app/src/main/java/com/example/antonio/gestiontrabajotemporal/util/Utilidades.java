@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class Utilidades {
+public final class Utilidades {
+
+    public static final String NOMBRE_BASE_DATOS = "Fichajes.db"; //Nombre de la BBDD
 
     public static final String FORMATO_FECHA_DATETIME = "YYYY-MM-DD"; //Formato fecha para Datetime.
     public static final DecimalFormat FORMATO_DECIMAL = new DecimalFormat("0.00"); //Formato decimal
@@ -20,8 +22,12 @@ public class Utilidades {
     public static SimpleDateFormat formatter_minutos = new SimpleDateFormat(FORMATO_MINUTOS, new Locale("es", "ES"));
     public static SimpleDateFormat formatter_fecha = new SimpleDateFormat(FORMATO_FECHA, new Locale("es", "ES"));
 
+    private Utilidades() {
+        throw new UnsupportedOperationException("Not instanciable class!");
+    }
+
     /**
-     * Método que se encarga de redondear un número decimal a 2 decimales.
+     * Método que se encarga de redondear al alza un número decimal a 2 decimales.
      *
      * @param numero Número decimal a redondear.
      * @return Número redondeado a 2 decimales.
@@ -44,7 +50,7 @@ public class Utilidades {
             int minutos = Integer.parseInt(parts[1]);
             horaDecimal = (float) (horas * 60 + minutos) / 60;//Multiplicas las horas por 60 y le sumas los minutos, para obtener los minutos totales. Lo dividimos por 60 para calcular las horas con decimales.
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return horaDecimal;
     }
@@ -59,7 +65,7 @@ public class Utilidades {
         String horaDecimal;
         int hours = (int) hora;
         int minutes = (int) (hora * 60) % 60;
-        horaDecimal = hours + ":" + minutes;
+        horaDecimal = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes);
         return horaDecimal;
     }
 

@@ -116,26 +116,28 @@ public class NominaDetalle extends AppCompatActivity {
                 double precioHoraTrabajadaExtra = cursorDatosNomina.getDouble(cursorDatosNomina.getColumnIndex(NombresColumnasBaseDatos.Turnos.PRECIO_HORA_EXTRA));
                 double precioHoraTrabajadaNocturna = cursorDatosNomina.getDouble(cursorDatosNomina.getColumnIndex(NombresColumnasBaseDatos.Turnos.PRECIO_HORA_NOCTURNAS));
 
-                if (!arrayTurnos.contains(nombreTurno)) {
-                    arrayTurnos.add(nombreTurno);
+                if (horasTrabajadas > 0 || horasTrabajadasNocturnas > 0 || horasTrabajadasExtras > 0) {//Comprobamos que tenga alguna hora de trabajo, solo mostramos los turnos que tengan horas de trabajo.
+                    if (!arrayTurnos.contains(nombreTurno)) {//Comprobamos si ya está el turno en el array, si no está lo metemos e introducimos los datos
+                        arrayTurnos.add(nombreTurno);
 
-                    arrayHorasTrabajadas.add(horasTrabajadas);
-                    arrayHorasTrabajadasExtras.add(horasTrabajadasExtras);
-                    arrayHorasTrabajadasNocturnas.add(horasTrabajadasNocturnas);
+                        arrayHorasTrabajadas.add(horasTrabajadas);
+                        arrayHorasTrabajadasExtras.add(horasTrabajadasExtras);
+                        arrayHorasTrabajadasNocturnas.add(horasTrabajadasNocturnas);
 
-                    arrayPrecioHorasTrabajadas.add(precioHoraTrabajada);
-                    arrayPrecioHorasTrabajadasExtras.add(precioHoraTrabajadaExtra);
-                    arrayPrecioHorasTrabajadasNocturnas.add(precioHoraTrabajadaNocturna);
+                        arrayPrecioHorasTrabajadas.add(precioHoraTrabajada);
+                        arrayPrecioHorasTrabajadasExtras.add(precioHoraTrabajadaExtra);
+                        arrayPrecioHorasTrabajadasNocturnas.add(precioHoraTrabajadaNocturna);
 
-                } else {
-                    int a = arrayTurnos.indexOf(nombreTurno);
-                    double horasTrabajadasTurno = arrayHorasTrabajadas.get(a) + horasTrabajadas;
-                    double horasTrabajadasExtrasTurno = arrayHorasTrabajadasExtras.get(a) + horasTrabajadasExtras;
-                    double horasTrabajadasNocturnasTurno = arrayHorasTrabajadasNocturnas.get(a) + horasTrabajadasNocturnas;
+                    } else {//Si el turno a está en el array, añadimos los datos
+                        int a = arrayTurnos.indexOf(nombreTurno);
+                        double horasTrabajadasTurno = arrayHorasTrabajadas.get(a) + horasTrabajadas;
+                        double horasTrabajadasExtrasTurno = arrayHorasTrabajadasExtras.get(a) + horasTrabajadasExtras;
+                        double horasTrabajadasNocturnasTurno = arrayHorasTrabajadasNocturnas.get(a) + horasTrabajadasNocturnas;
 
-                    arrayHorasTrabajadas.set(a, horasTrabajadasTurno);
-                    arrayHorasTrabajadasExtras.set(a, horasTrabajadasExtrasTurno);
-                    arrayHorasTrabajadasNocturnas.set(a, horasTrabajadasNocturnasTurno);
+                        arrayHorasTrabajadas.set(a, horasTrabajadasTurno);
+                        arrayHorasTrabajadasExtras.set(a, horasTrabajadasExtrasTurno);
+                        arrayHorasTrabajadasNocturnas.set(a, horasTrabajadasNocturnasTurno);
+                    }
                 }
 
             } while (cursorDatosNomina.moveToNext());

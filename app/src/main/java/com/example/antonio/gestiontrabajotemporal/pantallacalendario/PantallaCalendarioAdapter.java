@@ -19,6 +19,7 @@ import java.util.Map;
 import hirondelle.date4j.DateTime;
 
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.FORMATO_FECHA_DATETIME;
+import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHoraFormateada;
 
 class PantallaCalendarioAdapter extends CaldroidGridAdapter {
 
@@ -67,11 +68,6 @@ class PantallaCalendarioAdapter extends CaldroidGridAdapter {
         txtTurno.setText("");
         txtHoraExtra.setText("");
 
-        // Establecemos el color de los días para el mes anterior y siguiente.
-        if (dateTime.getMonth() != month) {
-            txtDia.setTextColor(Color.LTGRAY);
-        }
-
         // Establecemos el color de la celda remarcada para hoy.
         if (dateTime.equals(getToday())) {
             cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
@@ -85,34 +81,43 @@ class PantallaCalendarioAdapter extends CaldroidGridAdapter {
         Cursor cursorFichajes = datos.obtenerFichajesParaCalendario(codigoOperario, idCalendario, fechaFormateada);
 
         if (cursorFichajes.moveToFirst()) {
-            // Recorremos el cursor hasta que no haya más registros
-            do {
-                String horasExtras = Double.toString(cursorFichajes.getDouble(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Fichajes.HORA_EXTRA)));
-                String abreviaturnaNombreTurno = cursorFichajes.getString(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
-                int colorFondoTurno = cursorFichajes.getInt(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_FONDO));
-                int colorTextoTurno = cursorFichajes.getInt(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_TEXTO));
 
-                txtTurno.setText(abreviaturnaNombreTurno);
-                txtHoraExtra.setText(horasExtras);
+            String horasExtras = calcularHoraFormateada(cursorFichajes.getFloat(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Fichajes.HORA_EXTRA)));
+            String abreviaturnaNombreTurno = cursorFichajes.getString(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.ABREVIATURA_NOMBRE_TURNO));
+            int colorFondoTurno = cursorFichajes.getInt(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_FONDO));
+            int colorTextoTurno = cursorFichajes.getInt(cursorFichajes.getColumnIndex(NombresColumnasBaseDatos.Turnos.COLOR_TEXTO));
 
-                txtDia.setTextColor(colorTextoTurno);
-                txtTurno.setTextColor(colorTextoTurno);
-                txtHoraExtra.setTextColor(colorTextoTurno);
+            txtTurno.setText(abreviaturnaNombreTurno);
+            txtHoraExtra.setText(horasExtras);
 
-                //Si la fecha de la celda coincide con hoy, establecemos un borde para diferenciarla de las demás
-                if (dateTime.equals(getToday())) {
-                    GradientDrawable drawable = new GradientDrawable();
-                    drawable.setShape(GradientDrawable.RECTANGLE);
-                    drawable.setStroke(3, Color.RED);
-                    drawable.setCornerRadius(2);
-                    drawable.setColor(colorFondoTurno);
-                    cellView.setBackground(drawable);
-                } else {
-                    cellView.setBackgroundColor(colorFondoTurno);
-                }
-            } while (cursorFichajes.moveToNext());
+            txtDia.setTextColor(colorTextoTurno);
+            txtTurno.setTextColor(colorTextoTurno);
+            txtHoraExtra.setTextColor(colorTextoTurno);
+
+            //Si la fecha de la celda coincide con hoy, establecemos un borde para diferenciarla de las demás
+            if (dateTime.equals(getToday())) {
+                GradientDrawable drawable = new GradientDrawable();
+                drawable.setShape(GradientDrawable.RECTANGLE);
+                drawable.setStroke(3, Color.RED);
+                drawable.setCornerRadius(2);
+                drawable.setColor(colorFondoTurno);
+                cellView.setBackground(drawable);
+            } else {
+                cellView.setBackgroundColor(colorFondoTurno);
+            }
+
+        } else {
+            cellView.setBackgroundColor(Color.WHITE);
         }
         cursorFichajes.close();
+
+        // Establecemos el color de los días para el mes anterior y siguiente.
+        if (dateTime.getMonth() != month) {
+            txtDia.setTextColor(Color.LTGRAY);
+            txtTurno.setTextColor(Color.LTGRAY);
+            txtHoraExtra.setTextColor(Color.LTGRAY);
+            cellView.getBackground().setAlpha(100);
+        }
 
         // Set custom color if required
         setCustomResources(dateTime, cellView, txtDia);

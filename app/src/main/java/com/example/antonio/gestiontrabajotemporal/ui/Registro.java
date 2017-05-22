@@ -1,9 +1,10 @@
 package com.example.antonio.gestiontrabajotemporal.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -24,7 +25,7 @@ import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarNie
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarPassword;
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarTelefono;
 
-public class Registro extends Activity {
+public class Registro extends AppCompatActivity {
 
     EditText editTextCodigoOperario, editTextDni, editTextNombre, editTextApellidos, editTextFechaNacimiento, editTextNumeroSS, editTextDireccion, editTextTelefono, editTextEmail, editTextPassword, editTextConfirmarPassword;
     Button btnCreateAccount;
@@ -38,6 +39,8 @@ public class Registro extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro);
         context = getApplicationContext();
+
+        setToolbar(); //Añadir la Toolbar.
 
         // Obtenemos la instancia del adaptador de Base de Datos.
         datos = OperacionesBaseDatos.obtenerInstancia(context);
@@ -72,7 +75,10 @@ public class Registro extends Activity {
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                if (codigoOperarioValidado && dniValidado && nombreValidado && appelidosValidado && fechaNacimientoValidado && numeroSSValidado && dniValidado && telefonoValidado && emailValidado && passwordValidado && confirmarPasswordValidado) {
+                if (codigoOperarioValidado && dniValidado && nombreValidado && appelidosValidado &&
+                        fechaNacimientoValidado && numeroSSValidado && direccionValidado && telefonoValidado
+                        && emailValidado && passwordValidado && confirmarPasswordValidado) {
+
                     String codigoOperario = editTextCodigoOperario.getText().toString();
                     String dni = editTextDni.getText().toString();
                     String nombre = editTextNombre.getText().toString();
@@ -107,6 +113,26 @@ public class Registro extends Activity {
         super.onDestroy();
         datos.close();
     }
+    /**
+     * Método que se encarga de establecer la toolbar.
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_registro);
+        if (toolbar != null) {
+            toolbar.setTitle(getResources().getString(R.string.app_name));
+        }
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar el botón de retroceso en la SupportActionBar.
+    }
+
+    /**
+     * Método al que se llama cuando se utiliza el botón de retroceso de la SupportActionBar.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     /**
      * Clase privada encargada de validar los datos mientras se introducen.
@@ -131,7 +157,7 @@ public class Registro extends Activity {
                     codigoOperarioValidado = validarCodigoOperario(context, editTextCodigoOperario);
                     break;
                 case R.id.editText_DniToRegister:
-                    direccionValidado = validarNieONif(context, editTextDni);
+                    dniValidado = validarNieONif(context, editTextDni);
                     break;
                 case R.id.editText_NombreToRegister:
                     nombreValidado = validarEditTextVacio(context, editTextNombre);
@@ -143,7 +169,7 @@ public class Registro extends Activity {
                     fechaNacimientoValidado = validarFecha(context, editTextFechaNacimiento);
                     break;
                 case R.id.editText_NSSToRegister:
-                    nombreValidado = validarNSS(context, editTextNumeroSS);
+                    numeroSSValidado = validarNSS(context, editTextNumeroSS);
                     break;
                 case R.id.editText_DireccionToRegister:
                     direccionValidado = validarEditTextVacio(context, editTextDireccion);

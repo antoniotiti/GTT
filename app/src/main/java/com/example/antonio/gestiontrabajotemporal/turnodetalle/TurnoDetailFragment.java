@@ -3,7 +3,7 @@ package com.example.antonio.gestiontrabajotemporal.turnodetalle;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,13 +47,14 @@ import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcula
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.calcularHorasTrabajadas;
 import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatter_hora_minutos;
 import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarEditTextVacio;
+import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarHoraVacio;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TurnoDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TurnoDetailFragment extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener {
+public class TurnoDetailFragment extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener{
 
     private static final String ARG_TURNO_ID = "turnoId";
 
@@ -296,10 +298,20 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
      */
     private void showTimeDialog(EditText timeDisplay) {
         activeTimeDisplay = timeDisplay;
-
+        FragmentManager fm = getFragmentManager();
         DialogFragment newFragment = new TimeDialog();
+
         newFragment.setTargetFragment(TurnoDetailFragment.this, 0);
         newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+
+        fm.executePendingTransactions();
+        newFragment.getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {//Al pulsar en el botón cancelar se borra la hora
+                String hora = "00:00";
+                activeTimeDisplay.setText(hora);
+            }
+        });
     }
 
     @Override
@@ -316,7 +328,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId() /*Obtenemos el id de la vista clicada.*/) {
             case R.id.btn_SeleccionColorFondo:
                 colorPickerDialog.show(getActivity().getFragmentManager(), "colorFondo");
@@ -379,18 +390,18 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
 
         nombreTurnoValidado = validarEditTextVacio(context, editTextNombreTurno);
         abreviaturaTurnoValidado = validarEditTextVacio(context, editTextAbreviaturaTurno);
-        horaInicio1Validado = validarEditTextVacio(context, editTextHoraInicio1);
-        horaFin1Validado = validarEditTextVacio(context, editTextHoraFin1);
+        validarHoraVacio(context, editTextHoraInicio1);
+         validarHoraVacio(context, editTextHoraFin1);
         if (switchTurnoPartido.isChecked()) {
-            horaInicio2Validado = validarEditTextVacio(context, editTextHoraInicio2);
-            horaFin2Validado = validarEditTextVacio(context, editTextHoraFin2);
+            validarHoraVacio(context, editTextHoraInicio2);
+            validarHoraVacio(context, editTextHoraFin2);
         }
         precioHoraValidado = validarEditTextVacio(context, editTextPrecioHora);
         if (switchAviso.isChecked()) {
             avisoHoraValidado = validarEditTextVacio(context, editTextAvisoHora);
         }
         //Comprobamos que todos los datos esten validados
-        if (nombreTurnoValidado && abreviaturaTurnoValidado && horaInicio1Validado && horaFin1Validado && precioHoraValidado && horaInicio2Validado && horaFin2Validado && avisoHoraValidado) {
+        if (nombreTurnoValidado && abreviaturaTurnoValidado && precioHoraValidado && avisoHoraValidado) {
             try {
                 String nombreTurno = editTextNombreTurno.getText().toString();
                 String abreviaturaTurno = editTextAbreviaturaTurno.getText().toString();
@@ -684,7 +695,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         /**
          * Obtenemos los datos del turno seleccionado
          *
-         * @param voids
          * @return Cursor con los datos del turno seleccionado.
          */
         @Override
@@ -715,7 +725,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
         /**
          * Eliminamos el turno seleccionado
          *
-         * @param voids
          * @return Si se ha eliminado el turno
          */
         @Override
@@ -735,8 +744,6 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
     private class AddEditTurnoTask extends AsyncTask<Turno, Void, Boolean> {
         /**
          * Insertamos o editamos el turno
-         * @param turnos
-         * @return
          */
         @Override
         protected Boolean doInBackground(Turno... turnos) {
@@ -785,22 +792,18 @@ public class TurnoDetailFragment extends Fragment implements View.OnClickListene
                     textViewPrevisualizacionTurno.setText(editTextAbreviaturaTurno.getText());
                     break;
                 case R.id.editText_valor_hora_inicio_1:
-                    validarEditTextVacio(context, editTextHoraInicio1);
                     textViewHoraTrabajada.setText(calcularHorasTrabajadas(editTextHoraInicio1, editTextHoraFin1, editTextHoraInicio2, editTextHoraFin2, switchTurnoPartido.isChecked()));
                     //editTextHoraTrabajadaNoche.setText(calcularHorasNocturnas(editTextHoraInicio1,editTextHoraFin1,editTextHoraInicio2,editTextHoraFin2,switchTurnoPartido.isChecked()));
                     break;
                 case R.id.editText_valor_hora_fin_1:
-                    validarEditTextVacio(context, editTextHoraFin1);
                     textViewHoraTrabajada.setText(calcularHorasTrabajadas(editTextHoraInicio1, editTextHoraFin1, editTextHoraInicio2, editTextHoraFin2, switchTurnoPartido.isChecked()));
                     // editTextHoraTrabajadaNoche.setText(calcularHorasNocturnas(editTextHoraInicio1,editTextHoraFin1,editTextHoraInicio2,editTextHoraFin2,switchTurnoPartido.isChecked()));
                     break;
                 case R.id.editText_valor_hora_inicio_2:
-                    validarEditTextVacio(context, editTextHoraInicio2);
                     textViewHoraTrabajada.setText(calcularHorasTrabajadas(editTextHoraInicio1, editTextHoraFin1, editTextHoraInicio2, editTextHoraFin2, switchTurnoPartido.isChecked()));
                     //editTextHoraTrabajadaNoche.setText(calcularHorasNocturnas(editTextHoraInicio1,editTextHoraFin1,editTextHoraInicio2,editTextHoraFin2,switchTurnoPartido.isChecked()));
                     break;
                 case R.id.editText_valor_hora_fin_2:
-                    validarEditTextVacio(context, editTextHoraFin2);
                     textViewHoraTrabajada.setText(calcularHorasTrabajadas(editTextHoraInicio1, editTextHoraFin1, editTextHoraInicio2, editTextHoraFin2, switchTurnoPartido.isChecked()));
                     // editTextHoraTrabajadaNoche.setText(calcularHorasNocturnas(editTextHoraInicio1,editTextHoraFin1,editTextHoraInicio2,editTextHoraFin2,switchTurnoPartido.isChecked()));
                     break;

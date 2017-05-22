@@ -15,11 +15,15 @@ import static com.example.antonio.gestiontrabajotemporal.util.Utilidades.formatt
 /**
  * Clase que contiene métodos para validar datos.
  */
-public class Validar {
+public final class Validar {
 
     private static final int MAX_LENGHT_TELEFONO = 9; //Tamaño máximo para un número de teléfono.
     private static final int MAX_LENGHT_CODIGO_OPERARIO = 4; //Tamaño máximo para el código de operario.
     private static final String INICIO_CODIGO_OPERARIO = "8"; //El código de operario debe iniciar por 8.
+
+    private Validar() {
+        throw new UnsupportedOperationException("Not instanciable class!");
+    }
 
     /**
      * Método que se encarga de comprobar que el código de operario introducido sea correcto.
@@ -34,15 +38,16 @@ public class Validar {
         String codigoOperario = eTCodigoOperario.getText().toString();
 
         boolean validado = false;
-        try {
-            if (codigoOperario.length() == MAX_LENGHT_CODIGO_OPERARIO && codigoOperario.startsWith(INICIO_CODIGO_OPERARIO)) {
+
+        if (codigoOperario.length() == MAX_LENGHT_CODIGO_OPERARIO && codigoOperario.startsWith(INICIO_CODIGO_OPERARIO)) {
+            try {
                 Integer.parseInt(codigoOperario);
-                validado = true;
-                eTCodigoOperario.setError(null);
-            } else {
+            } catch (NumberFormatException e) {
                 eTCodigoOperario.setError(context.getString(R.string.codigo_operario_no_valido));
             }
-        } catch (NumberFormatException e) {
+            validado = true;
+            eTCodigoOperario.setError(null);
+        } else {
             eTCodigoOperario.setError(context.getString(R.string.codigo_operario_no_valido));
         }
         return validado;
@@ -62,7 +67,7 @@ public class Validar {
         String password = eTPassword.getText().toString();
         boolean validado = false;
 
-        Pattern p = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+        Pattern p = Pattern.compile(context.getString(R.string.password_reg_exp));
         Matcher m = p.matcher(password);
         if ((m.matches())) {
             validado = true;
@@ -92,6 +97,22 @@ public class Validar {
             eTTexto.setError(context.getString(R.string.campo_vacio));
         }
         return validado;
+    }
+
+    /**
+     * Método que se encarga de comprobar que el EditText con la hora pasado por parámetro no esté vacío,
+     * si está vacio inserta 00:00
+     *
+     * @param context Contexto de la app
+     * @param eTTexto EditText con la hora a comprobar
+     */
+    public static void validarHoraVacio(Context context, EditText eTTexto) {
+
+        String texto = eTTexto.getText().toString();
+        if (texto.isEmpty()) {
+            eTTexto.setText(R.string.hora_00);
+        }
+
     }
 
     /**

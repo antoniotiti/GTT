@@ -183,9 +183,11 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:focusable="false"
                         android:hint="@string/horasExtras2Puntos"
                         android:imeOptions="flagNoExtractUi"
-                        android:inputType="numberDecimal"
+                        android:inputType="time"
+                        android:maxLength="5"
                         android:labelFor="@+id/editText_HorasExtraFichajeDetalle"
                         android:textStyle="bold"
                         android:theme="@style/colorEditText" />

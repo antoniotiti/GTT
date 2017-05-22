@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contenedor_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.antonio.gestiontrabajotemporal.ui.Info"
+    tools:showIn="@layout/activity_info">
+
+    <TextView
+        android:id="@+id/textViewTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewVersion"
+        android:layout_marginBottom="13dp"
+        android:gravity="center"
+        android:text="@string/app_name_large"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/logo"
+        app:srcCompat="@mipmap/ic_gtt"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/textViewVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewAppVersion"
+        android:layout_alignTop="@+id/textViewAppVersion"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/textViewAppVersion"
+        android:text="@string/version"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewAppVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageViewLogo"
+        android:layout_alignEnd="@+id/imageViewLogo"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="35dp"
+        android:text="@string/app_version"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewDerechosReservados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/derechos_reservados"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/imageViewLogo"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textViewAutor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:gravity="center"
+        android:text="@string/autor"
+        android:textSize="18sp"
+        android:autoLink="email"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewDerechosReservados"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textViewAcercaDe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingEnd="@dimen/color_swatch_margins_large"
+        android:paddingStart="@dimen/color_swatch_margins_large"
+        android:text="@string/acerca_de"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/textViewAutor"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

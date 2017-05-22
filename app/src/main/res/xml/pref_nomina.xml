@@ -1,0 +1,41 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_retencion_irpf"
+        android:inputType="numberDecimal"
+        android:key="pref_retencion_irpf"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_retencion_irpf" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_retencion_extra"
+        android:inputType="numberDecimal"
+        android:key="pref_retencion_extras"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_retencion_extras" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_retencion_contingencias_comunes"
+        android:inputType="numberDecimal"
+        android:key="pref_retencion_contingencias_comunes"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_retencion_contingencias_comunes" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_retencion_formacion_desempleo_accd"
+        android:inputType="numberDecimal"
+        android:key="pref_retencion_formacion_desempleo_accd"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_retencion_formacion_desempleo_accd" />
+</PreferenceScreen>

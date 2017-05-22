@@ -13,8 +13,13 @@
         android:title="@string/pref_header_notifications" />
 
     <header
-        android:fragment="com.example.antonio.gestiontrabajotemporal.ui.SettingsActivity$DataSyncPreferenceFragment"
+        android:fragment="com.example.antonio.gestiontrabajotemporal.ui.SettingsActivity$CalendarioPuestoPreferenceFragment"
         android:icon="@drawable/sync"
         android:title="@string/pref_header_data_sync" />
+
+    <header
+        android:fragment="com.example.antonio.gestiontrabajotemporal.ui.SettingsActivity$NominasPreferenceFragment"
+        android:icon="@drawable/sync"
+        android:title="@string/pref_header_nomina" />
 
 </preference-headers>
