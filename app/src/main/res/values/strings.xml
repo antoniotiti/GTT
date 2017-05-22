@@ -250,6 +250,15 @@
     <string name="selecciona_imagen">No seleccionaste una imagen</string>
     <string name="error_permisos">No has dado los permisos necesarios</string>
     <string name="pref_header_nomina">Datos Nómina</string>
+    <string name="link_to_datos_prueba">Crear datos de prueba</string>
+    <string name="link_to_borrar_datos_prueba">Borrar datos</string>
+    <string name="debe_borrar_bbdd">Para introducir los datos de prueba debe borrar primero los datos creados.</string>
+    <string name="datos_borrados">Todos los datos han sido borrados correctamente</string>
+    <string name="no_hay_datos">No existen datos para borrar</string>
+    <string name="datos_prueba_correctos">Datos de prueba intoducidos correctamente</string>
+    <string name="error_datos_prueba">Error al introducir los datos de prueba</string>
+    <string name="pref_default_vacio" />
+    <string name="error_crear_operario">Error al crear el operario, datos duplicados en la BBDD</string>
 
 
 </resources>

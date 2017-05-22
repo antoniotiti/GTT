@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -38,7 +39,7 @@ import static com.example.antonio.gestiontrabajotemporal.util.Validar.validarPas
 public class MainActivity extends AppCompatActivity {
 
     Button btnLogin;
-    TextView txtRegister, txtRecuperarPassword;
+    TextView txtRegister, txtRecuperarPassword, txtCrearDatosPueba, txtBorrarDatosPueba;
     EditText editTextCodigoOperario, editTextPassword;
     boolean codigoOperarioValidado, passwordValidado;
     OperacionesBaseDatos datos;
@@ -52,19 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
         setToolbar(); //Añadir la Toolbar.
 
-        if (!checkDataBase()) { //Comprobamos si existe ls BBDD.
+        //datos = OperacionesBaseDatos.obtenerInstancia(context);
+
+        /*if (!checkDataBase()) { //Comprobamos si existe ls BBDD.
             //Si no existe la creamos.
             datos = OperacionesBaseDatos.obtenerInstancia(context);
-            //Introducimos los datos de prueba
-            new TareaInsertarDatosPredeterminados().execute();//TODO Borrar cuando no hagan falta los datos de prueba
         } else {
             //Si existe la abrimos.
             datos = OperacionesBaseDatos.obtenerInstancia(context);
-        }
+        }*/
 
         //Obtenemos las referencias de las vistas.
         txtRegister = (TextView) findViewById(R.id.txt_LinkToRegister);
         txtRecuperarPassword = (TextView) findViewById(R.id.txt_LinkToRecuperarPassword);
+        txtCrearDatosPueba = (TextView) findViewById(R.id.txt_LinkToDatosPrueba);
+        txtBorrarDatosPueba = (TextView) findViewById(R.id.txt_LinkToBorrarDatosPrueba);
         editTextCodigoOperario = (EditText) findViewById(R.id.editText_CodigoOperarioToLogin);
         editTextPassword = (EditText) findViewById(R.id.editText_PasswordToLogin);
         btnLogin = (Button) findViewById(R.id.btn_Login);
@@ -85,6 +88,38 @@ public class MainActivity extends AppCompatActivity {
                 //Pasamos a la pantalla para recuerar password
                 Intent i = new Intent(getApplicationContext(), RecuperarPassword.class);
                 startActivity(i);
+            }
+        });
+
+        txtCrearDatosPueba.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                if (!checkDataBase()) {
+                    //Creamos o abrimos la BBDD
+                    datos = OperacionesBaseDatos.obtenerInstancia(context);
+                    //Introducimos los datos de prueba
+                    new TareaInsertarDatosPredeterminados().execute();//TODO Borrar cuando no hagan falta los datos de prueba
+                } else{
+                    Toast.makeText(MainActivity.this, context.getString(R.string.debe_borrar_bbdd), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        txtBorrarDatosPueba.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                //Borramos la BBDD
+               if(checkDataBase()){
+                   datos = OperacionesBaseDatos.obtenerInstancia(context);
+                   getApplicationContext().deleteDatabase("Fichajes.db");
+                   datos.close();
+                   Toast.makeText(MainActivity.this, context.getString(R.string.datos_borrados), Toast.LENGTH_SHORT).show();
+
+                   //Establecemos los valores por defecto de las preferencias
+                   PreferenceManager.getDefaultSharedPreferences(context).edit().clear().apply();
+               }else{
+                   Toast.makeText(MainActivity.this, context.getString(R.string.no_hay_datos), Toast.LENGTH_SHORT).show();
+               }
             }
         });
 
@@ -133,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     if (codigoOperarioValidado) {//Se comprueba que el código de operario introducido sea correcto
                         if (passwordValidado) {//Se comprueba que la contraseña introducida sea correcta
                             try {
+                                datos = OperacionesBaseDatos.obtenerInstancia(context);
                                 // Se recupera la contraseña del operario desde la base de datos.
                                 String passwordAlmacenada = datos.obtenerPasswordOperarioId(codigoOperario);
                                 // Se comprueba que la contraseña almacenada en la base de datos coincida con la contraseña introducida por el usuario.
@@ -146,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                                     editTextPassword.setError(context.getString(R.string.password_erroneo));
                                     Toast.makeText(MainActivity.this, context.getString(R.string.password_erroneo), Toast.LENGTH_LONG).show();
                                 }
-                            } catch (CursorIndexOutOfBoundsException CIOOBE) {//Si el código de operario no esta registrado mustra un mensaje indicándolo.
+                            } catch (CursorIndexOutOfBoundsException | NullPointerException CIOOBE) {//Si el código de operario no esta registrado mustra un mensaje indicándolo.
                                 editTextPassword.setError(context.getString(R.string.operario_no_registrado));
                                 Toast.makeText(MainActivity.this, context.getString(R.string.operario_no_registrado), Toast.LENGTH_LONG).show();
                             }
@@ -207,16 +243,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //Cerramos la BBDD
-        datos.close();
+        if (checkDataBase()) {
+            datos.close();
+        }
     }
 
     /**
      * Tarea encargada de introducir los datos de prueba.
      */
-    private class TareaInsertarDatosPredeterminados extends AsyncTask<Void, Void, Void> {
+    private class TareaInsertarDatosPredeterminados extends AsyncTask<Void, Void, Boolean> {
         @Override
-        protected Void doInBackground(Void... params) {
-
+        protected Boolean doInBackground(Void... params) {
+            Boolean correcto=false;
             try {
                 datos.getDb().beginTransaction();
 
@@ -365,12 +403,21 @@ public class MainActivity extends AppCompatActivity {
                 datos.insertarFichaje(new Fichaje(idOperario1, "2017-05-29", idTurno2, idPuesto2, idCalendario1, null, "comentario"));
                 datos.insertarFichaje(new Fichaje(idOperario1, "2017-05-30", idTurno2, idPuesto2, idCalendario1, null, "comentario"));
                 datos.insertarFichaje(new Fichaje(idOperario1, "2017-05-31", idTurno2, idPuesto2, idCalendario1, null, "comentario"));
-
+                correcto=true;
                 datos.getDb().setTransactionSuccessful();
             } finally {
                 datos.getDb().endTransaction();
             }
-            return null;
+            return correcto;
+        }
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                Toast.makeText(MainActivity.this, context.getString(R.string.datos_prueba_correctos), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(MainActivity.this, context.getString(R.string.error_datos_prueba), Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

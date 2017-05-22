@@ -94,10 +94,15 @@ public class Registro extends AppCompatActivity {
                     //Comprobar si coinciden las passwords
                     if (password.equals(confirmarPassword)) {
                         Operario operarioInsertar = new Operario(codigoOperario, dni, nombre, apellidos, direccion, fechaNacimiento, telefono, email, numeroSS, password);
+                        //Creamos o abrimos la BBDD
+                        datos = OperacionesBaseDatos.obtenerInstancia(context);
                         //Insertamos el Operario
-                        datos.insertarOperario(operarioInsertar);
+                       if(datos.insertarOperario(operarioInsertar)!=null){
                         Toast.makeText(getApplicationContext(), context.getString(R.string.operario_creado_correctamente), Toast.LENGTH_LONG).show();
                         finish();//Cerramos pantalla de registro
+                       }else{
+                           Toast.makeText(getApplicationContext(), context.getString(R.string.error_crear_operario), Toast.LENGTH_LONG).show();
+                       }
                     } else {
                         Toast.makeText(getApplicationContext(), context.getString(R.string.password_no_coinciden), Toast.LENGTH_LONG).show();
                     }

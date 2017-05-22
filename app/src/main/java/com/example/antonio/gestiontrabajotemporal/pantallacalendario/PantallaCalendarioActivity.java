@@ -102,6 +102,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
 
         //Establecemos los valores por defecto de las preferencias
         PreferenceManager.setDefaultValues(this, R.xml.pref_calendario_puesto, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_nomina, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
     }
@@ -280,6 +281,7 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
 
             @Override
             public void onCaldroidViewCreated() {
+
             }
         };
 
@@ -404,7 +406,6 @@ public class PantallaCalendarioActivity extends AppCompatActivity implements Sim
         Cursor cursorDatosNomina = datos.obtenerDatosNomina(idCalendario, codigoOperario, primerDiaMes, ultimoDiaMes);
 
         if (cursorDatosNomina.moveToFirst()) {
-            // numeroDiasTrabajados = cursorDatosNomina.getCount();
             //Recorremos el cursor hasta que no haya más registros
             do {
                 double horasTrabajadas = cursorDatosNomina.getDouble(cursorDatosNomina.getColumnIndex(NombresColumnasBaseDatos.Turnos.HORAS_TRABAJADAS));

@@ -90,8 +90,6 @@ class BaseDatosFichajes extends SQLiteOpenHelper {
                 Tablas.FICHAJE, BaseColumns._ID, Fichajes.ID_OPERARIO, Referencias.ID_OPERARIO, Fichajes.FECHA,
                 Fichajes.ID_TURNO, Referencias.ID_TURNO, Fichajes.ID_PUESTO, Referencias.ID_PUESTO,
                 Fichajes.ID_CALENDARIO, Referencias.ID_CALENDARIO, Fichajes.HORA_EXTRA, Fichajes.COMENTARIO));
-        //TODO añadir comentario al fichaje
-
     }
 
     @Override

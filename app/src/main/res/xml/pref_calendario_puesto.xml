@@ -1,6 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:key="pref_calendario_predeterminado" />
+        android:key="pref_calendario_predeterminado"
+        android:defaultValue="@string/pref_default_vacio"/>
     <ListPreference
-        android:key="pref_puesto_predeterminado" />
+        android:key="pref_puesto_predeterminado"
+        android:defaultValue="@string/pref_default_vacio"/>
 </PreferenceScreen>

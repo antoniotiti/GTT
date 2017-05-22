@@ -117,6 +117,32 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
 
+            <TextView
+                android:id="@+id/txt_LinkToDatosPrueba"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="40dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="30dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/link_to_datos_prueba"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txt_LinkToBorrarDatosPrueba"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="40dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="15dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/link_to_borrar_datos_prueba"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
     </ScrollView>
